@@ -7,7 +7,14 @@ Copyright (c) 2019 - present AppSeed.us
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, SignUpForm
+from apps.devices.models import Device
+from django.utils.crypto import get_random_string
+import string
 
+# Create your models here.
+def create_new_ref_number():
+    code = get_random_string(8, allowed_chars=string.ascii_uppercase + string.digits)
+    return code
 
 def login_view(request):
     form = LoginForm(request.POST or None)
@@ -45,6 +52,24 @@ def register_user(request):
 
             msg = 'User created successfully.'
             success = True
+            device = request.POST.get("device")
+            print("device cua chung ta", username)
+
+            print("device cua chung ta", device)
+            if user is not None:
+                if device != None and device != '':
+                # Create new device
+                    device_type = 3
+                    if device == 'IOS':
+                        device_type = 2
+                    elif device == 'ANDROID':
+                        device_type = 1
+                    
+                    device_id = device + create_new_ref_number()
+                    while len(Device.objects.filter(id= device_id))>0:
+                        device_id = device + create_new_ref_number()
+                    device_object = Device(type = device_type, user = user, id =device_id)
+                    device_object.save()
 
             # return redirect("/login/")
 
