@@ -90,9 +90,9 @@ def GetThongtintaixe(driver_id):
 def tatcachuyendicuataixe(emmployeeid = None):
     # user = order.user
     if emmployeeid:
-        url = f'http://127.0.0.1:8069/api/fleet.trip?employee_id={emmployeeid}'
+        url = f'https://vantaihahai.com/api/fleet.trip?employee_id={emmployeeid}'
     else:
-        url = 'http://127.0.0.1:8069/api/fleet.trip'
+        url = 'https://vantaihahai.com/api/fleet.trip'
     access_token = settings.VANTAIHAHAI_CONFIG['access_token']
     headers = {
         # 'Content-Type': 'application/json',
