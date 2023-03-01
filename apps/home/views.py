@@ -8,12 +8,15 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
-
+from apps.vantai.unity import cacchuyendihomnaycuataixe, tatcachuyendicuataixe
 
 @login_required(login_url="/login/")
 def index(request):
-    context = {'segment': 'index'}
-
+    # chuyendi = cacchuyendihomnaycuataixe(4)
+    chuyendi= tatcachuyendicuataixe(4)
+    print(chuyendi)
+    context = {'segment': 'index', 'joyneys' : chuyendi['data']['results']}
+    
     html_template = loader.get_template('home/index.html')
     return HttpResponse(html_template.render(context, request))
 

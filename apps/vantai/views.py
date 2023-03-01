@@ -3,11 +3,19 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView
-from .forms import HanhtrinhForm
+from django.views.generic import TemplateView, View
+# import generic UpdateView
+from django.views.generic.edit import UpdateView
+  
+from .forms import HanhtrinhForm, HahaiMembershipForm
 from .models import AttackmentHanhTrinh, MemberSalary, VantaihahaiMember,VantaihahaiMembership
-from django.views.generic import DetailView
-from .models import Hanhtrinh
+from django.views.generic import DetailView, ListView
+from .models import Hanhtrinh, Device, VantaihahaiMember
+from .unity import GetThongtintaixe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
+from django.utils import timezone
+
 
 class HanhtrinhImage(TemplateView):
 
@@ -66,3 +74,168 @@ def vantaihahai_view(request):
         return render(request, 'vantai/vantaihahai.html', context)
     else:
         return HttpResponseRedirect('/auth')
+    
+
+class HahaiMemberListView(LoginRequiredMixin, ListView):
+    model = VantaihahaiMember
+    context_object_name = "members"
+    template_name = "vantai/danhsachmember.html"
+    def get_queryset(self):
+        # queryset = self.model.objects.all().select_related("account")
+        # queryset = super(PodDetailView, self).get_queryset()
+        print('abc',self.request.user)
+        # if self.request.user.role != "ADMIN" and not self.request.user.is_superuser:
+        #     queryset = self.model.objects.filter(
+        #         Q(assign_to=self.request.user)).annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # else :
+        #     queryset = self.model.objects.annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # # return queryset.prefetch_related("contacts", "account")
+        queryset= self.model.objects.all()
+        return queryset
+
+class ChuyendiListView(LoginRequiredMixin, ListView):
+    model = Hanhtrinh
+    context_object_name = "joyneys"
+    template_name = "vantai/tatcachuyendi.html"
+    def get_queryset(self):
+        # queryset = self.model.objects.all().select_related("account")
+        # queryset = super(PodDetailView, self).get_queryset()
+        print('abc',self.request.user)
+        # if self.request.user.role != "ADMIN" and not self.request.user.is_superuser:
+        #     queryset = self.model.objects.filter(
+        #         Q(assign_to=self.request.user)).annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # else :
+        #     queryset = self.model.objects.annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # # return queryset.prefetch_related("contacts", "account")
+        queryset= tatcachuyendicuataixe(4)['data']['results']
+        print(queryset)
+        return queryset
+
+class DeviceListView(LoginRequiredMixin, ListView):
+    model = Device
+    context_object_name = "devices"
+    template_name = "vantai/listdevices.html"
+    def get_queryset(self):
+        # queryset = self.model.objects.all().select_related("account")
+        # queryset = super(PodDetailView, self).get_queryset()
+        print('abc',self.request.user)
+        # if self.request.user.role != "ADMIN" and not self.request.user.is_superuser:
+        #     queryset = self.model.objects.filter(
+        #         Q(assign_to=self.request.user)).annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # else :
+        #     queryset = self.model.objects.annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # # return queryset.prefetch_related("contacts", "account")
+        queryset= self.model.objects.all()
+        print(queryset)
+        return queryset
+
+def tatcachuyendicuataixe_view(request):
+    user = request.user
+    print(user)
+    is_superuser = user.is_superuser
+    # admin_boad = AdminBoard.objects.filter(user=user).first()
+    # if not is_superuser and  not admin_boad :
+    #     return HttpResponseRedirect('/auth')
+    # if is_superuser or admin_boad.is_vantaihahai_admin :
+    if is_superuser:
+        members = list(VantaihahaiMember.objects.all().values('name','member_id'))
+        member_ship = list(VantaihahaiMembership.objects.select_related().all().order_by('-member'))
+        dic = {}
+
+        # for mem in member_ship:
+        #     if mem['member__name'] not in dic :
+        #         dic[mem['member__name']] = [{'id_mbs':mem['id'],'id':mem['device__id'],'type':mem['device__type']}]
+        #     else :
+        #         dic[mem['member__name']].append({'id_mbs':mem['id'],'id':mem['device__id'],'type':mem['device__type']})
+        # lis_membership = []
+        # for key,val in dic.items():
+        #     dic_1 = {
+        #         "name":key,
+        #         "count_device":len(val),
+        #         "devices":{
+        #             "first_device":val[0],
+        #             "device":val[1:] if len(val) > 1 else []
+        #         }
+        #     }
+        #     lis_membership.append(dic_1)
+        context = {'members': members,'memberships': member_ship}
+        return render(request, 'vantai/vantaihahai.html', context)
+    else:
+        return HttpResponseRedirect('/auth')
+
+class EditMemberShipView(UpdateView):
+    model = VantaihahaiMembership
+    form_class = HahaiMembershipForm
+    template_name = 'vantai/editHahaimbership.html'
+
+    
+    def get_context_data(self, **kwargs):
+        context = super(EditMemberShipView, self).get_context_data(**kwargs)
+        context["members"] = self.get_queryset()
+        return context
+    def get_object(self):
+     
+        memberships = VantaihahaiMembership.objects.filter(member__pk=self.kwargs['pk'])
+        if len(memberships) > 0:
+            return memberships[0]
+        else:
+            print("find member: ",self.kwargs['pk'])
+            member = VantaihahaiMember.objects.get(pk = self.kwargs['pk'])
+            membership_object = VantaihahaiMembership(member=member)
+            membership_object.save()
+            return membership_object 
+
+    def get_success_url(self):
+        pass
+
+class UpdatedanhsachmemberWeb(LoginRequiredMixin, View): 
+ 
+    # authentication_classes = [authentication.SessionAuthentication]
+    def get(self, request, *args, **kwargs): 
+        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaa DR aaaaaaaaaaaaaa")
+        # equitment = kwargs.get('equitment')
+        # note = request.data.get('note')
+        # user = request.user 
+        try:
+            # device = user.user_device
+        # if device:
+            # body = request.data
+            for i in range(0, 200):
+                taixe = GetThongtintaixe(i)
+                if taixe:
+                    try:
+                        print(f" member {i} existed")
+                        member = VantaihahaiMember.objects.get(member_id=i)
+                        member.name = taixe['data']['name']
+                        member.employee_id = taixe['data']['employee_id']['id']
+                        member.mobile_phone = taixe['data']['employee_id']['mobile_phone']
+                        member.save()
+                    except VantaihahaiMember.DoesNotExist:
+                        print("Create new member", taixe)
+                        member = VantaihahaiMember(member_id = i, name = taixe['data']['name'],
+                                                employee_id = taixe['data']['employee_id']['id'],
+                                                mobile_phone = taixe['data']['employee_id']['mobile_phone'],
+                                                updated_time = timezone.now())
+                        member.save()
+            return JsonResponse({
+                            'status': 'OK', 
+                            
+                        })
+        except Exception as ex:
+            print(ex)
+            return JsonResponse({
+                            'status': False, 
+                            'error' : "You does not own any device, please create a new one"
+                        })

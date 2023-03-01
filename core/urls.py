@@ -10,7 +10,7 @@ from django.conf.urls.static import static
 from apps.vantai.views import  HanhtrinhImage, EmpImageDisplay
 urlpatterns = [
     path('admin/', admin.site.urls),          # Django admin route
-    path("vantai", include("apps.vantai.urls")), # Auth routes - login / register
+    path("vantai/", include("apps.vantai.urls")), # Auth routes - login / register
     path("", include("apps.authentication.urls")), # Auth routes - login / register
     path('hanhtrinh', HanhtrinhImage.as_view(), name='home'),
     path('emp-image/<int:pk>/', EmpImageDisplay.as_view(), name='emp_image_display'),

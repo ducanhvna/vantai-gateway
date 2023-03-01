@@ -149,3 +149,19 @@ STATICFILES_DIRS = (
 
 #############################################################
 #############################################################
+VANTAIHAHAI_CONFIG = {
+
+        "user_id": 2,
+        "user_context": {
+            "lang": "vi_VN",
+            "tz": "Asia/Saigon",
+            "uid": 2
+        },
+        "company_id": 1,
+        "access_token": "d9de1fc889b8e71650abb95b6de862d71b3ae3c9",
+        "expires_in": 72000000,
+        "refresh_token": "7a93d01fc62b2ebd0b1632ea0532ed96131d3bf0",
+        "refresh_expires_in": 72000000,
+        'register_token':'123456'
+   
+}

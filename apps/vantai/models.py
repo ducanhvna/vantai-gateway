@@ -28,8 +28,10 @@ class MemberSalary(models.Model):
         return f'{self.member}-{self.date}'
 
 class VantaihahaiMembership(models.Model):
-    device = models.OneToOneField(Device, on_delete= models.CASCADE, related_name='device_membership')
-    member = models.ForeignKey(VantaihahaiMember, on_delete=models.CASCADE)
+    device = models.ForeignKey(Device, on_delete= models.CASCADE, related_name='device_membership', null=True)
+    member = models.OneToOneField(VantaihahaiMember, on_delete=models.CASCADE)
+    is_actived = models.BooleanField(default=True)
+
     def __str__(self) -> str:
         
         return self.device.name
