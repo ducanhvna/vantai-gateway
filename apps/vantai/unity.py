@@ -88,30 +88,32 @@ def GetThongtintaixe(driver_id):
         return None
 
 def tatcachuyendicuataixe(emmployeeid = None):
-    # user = order.user
-    if emmployeeid:
-        url = f'https://vantaihahai.com/api/fleet.trip?employee_id={emmployeeid}'
-    else:
-        url = 'https://vantaihahai.com/api/fleet.trip'
-    access_token = settings.VANTAIHAHAI_CONFIG['access_token']
-    headers = {
-        # 'Content-Type': 'application/json',
-        'access_token': f'{access_token}'
-    }
+    try:
+        # user = order.user
+        if emmployeeid:
+            url = f'https://vantaihahai.com/api/fleet.trip?employee_id={emmployeeid}'
+        else:
+            url = 'https://vantaihahai.com/api/fleet.trip'
+        access_token = settings.VANTAIHAHAI_CONFIG['access_token']
+        headers = {
+            # 'Content-Type': 'application/json',
+            'access_token': f'{access_token}'
+        }
 
-    print("Lay tatca chuyen tai xe: ")
-   
-    response = requests.request("GET", url, headers=headers)
-    print(response)
+        print("Lay tatca chuyen tai xe: ")
     
-    if response.status_code == 200:
-        # order.haravan_order = response_json['order']['name']
-        # order.save() 
-        response_json =  response.json()
-        return response_json
-    else:
-        return None
-
+        response = requests.request("GET", url, headers=headers)
+        print(response)
+        
+        if response.status_code == 200:
+            # order.haravan_order = response_json['order']['name']
+            # order.save() 
+            response_json =  response.json()
+            return response_json
+        else:
+            return {'data':{'results':[]}}
+    except Exception as ex:
+        return {'data':{'results':[]}}
 
 def cacchuyendihomnaycuataixe(emmployeeid):
     # user = order.user
