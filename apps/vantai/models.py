@@ -33,8 +33,10 @@ class VantaihahaiMembership(models.Model):
     is_actived = models.BooleanField(default=True)
 
     def __str__(self) -> str:
-        
-        return self.device.name
+        if self.device:
+            return f'{self.device.name}-{self.member.name}'
+        else:
+            return self.member.name
 
 
 class Hanhtrinh(models.Model):
@@ -43,6 +45,18 @@ class Hanhtrinh(models.Model):
     location_dest_name = models.TextField(null=True)
     equipment_id = models.IntegerField(null=True)
     name = models.CharField(max_length=50)
+    schedule_date = models.DateTimeField(null=True)
+    location_id = models.IntegerField()
+    location_dest_id = models.IntegerField()
+    location_name = models.TextField(null=True, blank=True)
+    location_dest_name= models.TextField(null=True, blank = True)
+    ward_id = models.IntegerField()
+    ward_dest_id = models.IntegerField()
+    district_id = models.IntegerField()
+    district_dest_id = models.IntegerField(default=0)
+    state_id = models.IntegerField()
+    state_dest_id = models.IntegerField()
+
     emp_image = models.ImageField(upload_to='images/')
 
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name='hanhtrinh_created', null=True)
@@ -52,3 +66,15 @@ class Hanhtrinh(models.Model):
 class AttackmentHanhTrinh(models.Model):
     hanhtrinh= models.ForeignKey(Hanhtrinh, on_delete=models.CASCADE, related_name='hanhtrinh_attackments')
     url = models.TextField()
+
+class VantaiLocation(models.Model):
+    name = models.TextField()
+    location_id = models.IntegerField()
+    ward_id = models.IntegerField()
+    ward_name = models.TextField()
+    district_id = models.IntegerField()
+    district_name = models.TextField()
+    state_id = models.IntegerField()
+    state_name = models.TextField()
+    def __str__(self) -> str:
+        return self.name
