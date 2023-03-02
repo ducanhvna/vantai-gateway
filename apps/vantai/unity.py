@@ -418,3 +418,28 @@ def chitiethanhtrinh(hanhtrinh):
     else:
         return None
 
+
+def tatcadiadiem():
+    try:
+       
+        url = 'https://vantaihahai.com/api/fleet.location'
+        access_token = settings.VANTAIHAHAI_CONFIG['access_token']
+        headers = {
+            # 'Content-Type': 'application/json',
+            'access_token': f'{access_token}'
+        }
+
+        print("Lay tat ca dia diem cua xe: ")
+    
+        response = requests.request("GET", url, headers=headers)
+        print(response)
+        
+        if response.status_code == 200:
+            # order.haravan_order = response_json['order']['name']
+            # order.save() 
+            response_json =  response.json()
+            return response_json
+        else:
+            return {'data':{'results':[]}}
+    except Exception as ex:
+        return {'data':{'results':[]}}

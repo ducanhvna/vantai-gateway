@@ -11,6 +11,20 @@ services:
     volumes:
       - ./apps:/apps
       - ./core:/core
+    links:
+      - db:db
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: postgres:13
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+    networks:
+      - db_network
+      - web_network
   nginx:
     container_name: nginx
     restart: always
@@ -29,3 +43,5 @@ networks:
   web_network:
     driver: bridge
  
+volumes:
+  pg_data:

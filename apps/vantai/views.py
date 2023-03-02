@@ -11,7 +11,7 @@ from .forms import HanhtrinhForm, HahaiMembershipForm
 from .models import AttackmentHanhTrinh, MemberSalary, VantaihahaiMember,VantaihahaiMembership
 from django.views.generic import DetailView, ListView
 from .models import Hanhtrinh, Device, VantaihahaiMember
-from .unity import GetThongtintaixe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe
+from .unity import GetThongtintaixe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe, tatcadiadiem
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.utils import timezone
@@ -95,6 +95,28 @@ class HahaiMemberListView(LoginRequiredMixin, ListView):
         #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
         # # return queryset.prefetch_related("contacts", "account")
         queryset= self.model.objects.all()
+        return queryset
+# DiadiemListView
+class DiadiemListView(LoginRequiredMixin, ListView):
+    model = Hanhtrinh
+    context_object_name = "joyneys"
+    template_name = "vantai/tatcadiadiem.html"
+    def get_queryset(self):
+        # queryset = self.model.objects.all().select_related("account")
+        # queryset = super(PodDetailView, self).get_queryset()
+        print('abc',self.request.user)
+        # if self.request.user.role != "ADMIN" and not self.request.user.is_superuser:
+        #     queryset = self.model.objects.filter(
+        #         Q(assign_to=self.request.user)).annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # else :
+        #     queryset = self.model.objects.annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # # return queryset.prefetch_related("contacts", "account")
+        queryset= tatcadiadiem()['data']['results']
+        print(queryset)
         return queryset
 
 class ChuyendiListView(LoginRequiredMixin, ListView):
