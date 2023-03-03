@@ -261,3 +261,47 @@ class UpdatedanhsachmemberWeb(LoginRequiredMixin, View):
                             'status': False, 
                             'error' : "You does not own any device, please create a new one"
                         })
+
+
+
+def register_user(request):
+    msg = None
+    success = False
+
+    if request.method == "POST":
+        # form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # username = form.cleaned_data.get("username")
+            # raw_password = form.cleaned_data.get("password1")
+            # user = authenticate(username=username, password=raw_password)
+
+            # msg = 'User created successfully.'
+            # success = True
+            # device = request.POST.get("device")
+            # print("device cua chung ta", username)
+
+            # print("device cua chung ta", device)
+            # if user is not None:
+            #     if device != None and device != '':
+            #     # Create new device
+            #         device_type = 3
+            #         if device == 'IOS':
+            #             device_type = 2
+            #         elif device == 'ANDROID':
+            #             device_type = 1
+                    
+            #         device_id = device + create_new_ref_number()
+            #         while len(Device.objects.filter(id= device_id))>0:
+            #             device_id = device + create_new_ref_number()
+            #         device_object = Device(type = device_type, user = user, id =device_id)
+            #         device_object.save()
+
+            # return redirect("/login/")
+
+        else:
+            msg = 'Form is not valid'
+    else:
+        form = HanhtrinhForm()
+    joyneys = tatcadiadiem()['data']['results']
+    return render(request, "vantai/taohanhtrinh.html", {"form": form, "joyneys": joyneys, "msg": msg, "success": success})

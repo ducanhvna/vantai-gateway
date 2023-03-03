@@ -41,8 +41,6 @@ class VantaihahaiMembership(models.Model):
 
 class Hanhtrinh(models.Model):
     hanhtrinh_id = models.IntegerField(null=True)
-    location_name = models.TextField(null=True)
-    location_dest_name = models.TextField(null=True)
     equipment_id = models.IntegerField(null=True)
     name = models.CharField(max_length=50)
     schedule_date = models.DateTimeField(null=True)

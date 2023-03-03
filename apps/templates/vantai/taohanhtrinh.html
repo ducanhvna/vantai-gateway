@@ -1,0 +1,341 @@
+{% extends "layouts/base-fullscreen.html" %}
+
+{% block title %} Register {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        <div class="container">
+            <div class="row pt-5">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header text-center py-4">
+                            <h4 class="title">
+                                Bắt đầu
+                            </h4>
+                        </div>
+                        <div class="card-body px-5 py-3">
+                            
+                                <div class="row">
+                                    
+                                    <div class="col-md-6 px-md-1">
+                                        <div class="form-group">   <!-- <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/> -->
+                                            <label>Ngày bắt đầu</label>
+                                            {{ form.start_date}}
+                                         </div>
+                                   </div>
+                                   
+                                    <div class="col-md-6 px-md-1">
+                                        <div class="form-group">
+                                            <label>Giờ bắt đầu</label>
+                                            {{ form.start_time}}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4 px-md-1">
+                                        <div class="form-group">
+                                            <label>Xã</label>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 px-md-1">
+                                        <div class="form-group">
+                                            <label>Huyện</label>
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 px-md-1">
+                                        <div class="form-group">
+                                            <label>Tỉnh</label>
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 px-md-1">
+                                        <div class="form-group">
+                                            <button id="toggle">Toggle device dropdown</button>
+                                            <div id="dropdown">
+                                
+                                                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."
+                                                    title="Type in a name">
+                                
+                                                <table id="myTable">
+                                                    <thead class=" text-primary">
+                                                        <tr>
+                                                          <th>
+                                                            Tên địa điểm
+                                                          </th>
+                                                          <th>
+                                                            Xã
+                                                          </th>
+                                                          <th>
+                                                            Huyện
+                                                          </th>
+                                                          <th>
+                                                            Tỉnh
+                                                          </th>
+                                                          <th class="text-center">
+                                                            Action
+                                                          </th>
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                        {% for member in joyneys %}
+                                                        <tr>
+                                                          <td>
+                                                            {{ member.name }}
+                                                          </td>
+                                                          <td>
+                                                            {{ member.ward_id.name }}
+                                                          </td>
+                                                          <td>
+                                                            {{ member.district_id.name }}
+                                                          </td>
+                                                          <td>
+                                                            {{ member.state_id.name }}
+                                                          </td>
+                                                          <td class="text-center">
+                                                            <a href="#" class="btn btn-info view" title="View" ><i
+                                                              class="fas fa-eye"></i></a>
+                                                            
+                                                          </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                      </tbody>
+                                                </table>
+                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header text-center py-4">
+                            <h4 class="title">
+                                Điểm đến
+                            </h4>
+                        </div>
+                        <div class="card-body px-5 py-3">
+                         
+                                <div class="row">
+                                 
+                                        <div class="col-md-6 px-md-1">
+                                            <div class="form-group">   <!-- <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/> -->
+                                                <label>Ngày Kết thúc</label>
+                                                {{ form.start_date}}
+                                             </div>
+                                       </div>
+                                       
+                                        <div class="col-md-6 px-md-1">
+                                            <div class="form-group">
+                                                <label>Giờ kết thúc</label>
+                                                {{ form.start_time}}
+                                            </div>
+                                        </div>
+
+                                    <div class="col-md-4 px-md-1">
+                                        <div class="form-group">
+                                            <label>Xã</label>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 px-md-1">
+                                        <div class="form-group">
+                                            <label>Huyện</label>
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 px-md-1">
+                                        <div class="form-group">
+                                            <label>Tỉnh</label>
+                                            
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12 px-md-1">
+                                        <div class="form-group">
+                                            <button id="toggle2">Toggle device dropdown</button>
+                                            <div id="dropdown2">
+                                
+                                                <input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="Search for names.."
+                                                    title="Type in a name">
+                                
+                                                <table id="myTable2">
+                                                    <thead class=" text-primary">
+                                                        <tr>
+                                                          <th>
+                                                            Tên địa điểm
+                                                          </th>
+                                                          <th>
+                                                            Xã
+                                                          </th>
+                                                          <th>
+                                                            Huyện
+                                                          </th>
+                                                          <th>
+                                                            Tỉnh
+                                                          </th>
+                                                          <th class="text-center">
+                                                            Action
+                                                          </th>
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                        {% for member in joyneys %}
+                                                        <tr>
+                                                          <td>
+                                                            {{ member.name }}
+                                                          </td>
+                                                          <td>
+                                                            {{ member.ward_id.name }}
+                                                          </td>
+                                                          <td>
+                                                            {{ member.district_id.name }}
+                                                          </td>
+                                                          <td>
+                                                            {{ member.state_id.name }}
+                                                          </td>
+                                                          <td class="text-center">
+                                                            <a href="#" class="btn btn-info view" title="View" ><i
+                                                              class="fas fa-eye"></i></a>
+                                                            
+                                                          </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                      </tbody>
+                                                </table>
+                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+                      
+                    </div>
+                </div>
+                
+            </div>
+            <div class="card-footer text-center">
+                <button type="submit" class="btn btn-fill btn-primary">Register</button>
+
+                <br /><br />
+                
+                <p>
+                    Have an account? <a href="/login.html" class="text-primary">Login</a>
+                </p> 
+            </div>
+        </div>
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+const devices = ['Desktops', 'Laptops', 'Tablets', 'Mobile phones', 'Smart watches', 'Gaming consoles', 'Hand-held consoles'];
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    td1 = tr[i].getElementsByTagName("td")[1];
+    td2 = tr[i].getElementsByTagName("td")[2];
+    td3 = tr[i].getElementsByTagName("td")[3];
+    if (td && td2 && td3) {
+      txtValue = td.textContent || td.innerText || td1.textContent || td1.innerText || td2.textContent || td2.innerText || td3.textContent || td3.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+function myFunction2() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput2");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable2");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    td1 = tr[i].getElementsByTagName("td")[1];
+    td2 = tr[i].getElementsByTagName("td")[2];
+    td3 = tr[i].getElementsByTagName("td")[3];
+    if (td && td2 && td3) {
+      txtValue = td.textContent || td.innerText || td1.textContent || td1.innerText || td2.textContent || td2.innerText || td3.textContent || td3.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+function filterDropDown(button, dropdown, input, items) {
+    //Create dropdown items from a list of items
+    // for (let i=0; i<items.length; i++) {
+    //     let dropdown_item = document.createElement('a');
+    //     dropdown_item.setAttribute('href', '#'+items[i]);
+    //     dropdown_item.setAttribute('class', 'dropdown-item');
+    //     dropdown_item.innerHTML = items[i];
+    //     dropdown.appendChild(dropdown_item);
+    // }
+    //Hide the dropdown list
+    dropdown.style.display = 'none';
+
+    //Make the button toggle the display of dropdown
+    button.addEventListener('click', function () {
+        if (dropdown.style.display == 'none')
+            dropdown.style.display = 'block';
+        else
+            dropdown.style.display = 'none';
+    });
+
+    // input.addEventListener('input', function () {
+    //     let dropdown_items = dropdown.querySelectorAll('.dropdown-item');
+    //     if (!dropdown_items)
+    //         return false;
+    //     for (let i=0; i<dropdown_items.length; i++) {
+    //         if (dropdown_items[i].innerHTML.toUpperCase().includes(input.value.toUpperCase()))
+    //             dropdown_items[i].style.display = 'block';
+    //         else
+    //             dropdown_items[i].style.display = 'none';
+    //     }
+    // });
+}
+
+//Call filterDropDown function
+filterDropDown(
+    document.getElementById('toggle'),
+    document.getElementById('dropdown'),
+    document.getElementById('input'),
+    devices
+)
+filterDropDown(
+    document.getElementById('toggle2'),
+    document.getElementById('dropdown2'),
+    document.getElementById('input2'),
+    devices
+)
+</script>
+
+{% endblock javascripts %}
