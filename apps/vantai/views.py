@@ -269,7 +269,25 @@ class UpdatedanhsachmemberWeb(LoginRequiredMixin, View):
 def register_user(request):
     msg = None
     success = False
+    user = request.user
+    print(user)
+    is_superuser = user.is_superuser
+    # admin_boad = AdminBoard.objects.filter(user=user).first()
+    # if not is_superuser and  not admin_boad :
+    #     return HttpResponseRedirect('/auth')
+    # if is_superuser or admin_boad.is_vantaihahai_admin :
+    user_devices = Device.objects.filter(user = user)
+    hahai_member = None
+    if  len(user_devices)>0:
+        print('ha hai member: ', hahai_member)
+        user_device = user_devices[0]
+        memberships = VantaihahaiMembership.objects.filter(device = user_device)
 
+        if len(memberships)>0:
+            membership = memberships[0]
+            hahai_member = membership.member
+    else:
+        print("khong thay device cho member")
     if request.method == "POST":
         # form = SignUpForm(request.POST)
         if form.is_valid():
@@ -306,7 +324,7 @@ def register_user(request):
     else:
         form = HanhtrinhForm()
     joyneys = tatcadiadiem()['data']['results']
-    return render(request, "vantai/taohanhtrinh.html", {"form": form, "joyneys": joyneys, "msg": msg, "success": success})
+    return render(request, "vantai/taohanhtrinh.html", {"form": form, 'member':hahai_member, "joyneys": joyneys, "msg": msg, "success": success})
 
 # Create your models here.
 def create_new_ref_number():
