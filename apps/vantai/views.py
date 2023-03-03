@@ -1,13 +1,15 @@
 from django.shortcuts import render
-
+from django.contrib.auth import authenticate, login
+from django.utils.crypto import get_random_string
 # Create your views here.
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, View
 # import generic UpdateView
 from django.views.generic.edit import UpdateView
-  
+import string
 from .forms import HanhtrinhForm, HahaiMembershipForm
+from apps.authentication.forms import SignUpForm
 from .models import AttackmentHanhTrinh, MemberSalary, VantaihahaiMember,VantaihahaiMembership
 from django.views.generic import DetailView, ListView
 from .models import Hanhtrinh, Device, VantaihahaiMember
@@ -305,3 +307,52 @@ def register_user(request):
         form = HanhtrinhForm()
     joyneys = tatcadiadiem()['data']['results']
     return render(request, "vantai/taohanhtrinh.html", {"form": form, "joyneys": joyneys, "msg": msg, "success": success})
+
+# Create your models here.
+def create_new_ref_number():
+    code = get_random_string(8, allowed_chars=string.ascii_uppercase + string.digits)
+    return code
+
+def register_user_for_member(request, pk):
+    msg = None
+    success = False
+    membership = VantaihahaiMembership.objects.get(pk= pk)
+    member = membership.member
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get("username")
+            raw_password = form.cleaned_data.get("password1")
+            user = authenticate(username=username, password=raw_password)
+
+            msg = 'User created successfully.'
+            success = True
+            device = request.POST.get("device")
+            print("device cua chung ta", username)
+
+            print("device cua chung ta", device)
+            if user is not None:
+                if device != None and device != '':
+                # Create new device
+                    device_type = 3
+                    if device == 'IOS':
+                        device_type = 2
+                    elif device == 'ANDROID':
+                        device_type = 1
+                    
+                    device_id = device + create_new_ref_number()
+                    while len(Device.objects.filter(id= device_id))>0:
+                        device_id = device + create_new_ref_number()
+                    device_object = Device(type = device_type, user = user, id =device_id)
+                    device_object.save()
+                    membership.device = device_object
+                    membership.save()
+            # return redirect("/login/")
+
+        else:
+            msg = 'Form is not valid'
+    else:
+        form = SignUpForm()
+        
+    return render(request, "vantai/register_for_member.html", {"form": form, "member":member, "msg": msg, "success": success})

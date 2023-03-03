@@ -1,6 +1,8 @@
 # forms.py 
 from django import forms 
 from .models import Hanhtrinh, VantaihahaiMembership, Hanhtrinh
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class HanhtrinhForm(forms.ModelForm): 
   

@@ -29,7 +29,7 @@ class MemberSalary(models.Model):
 
 class VantaihahaiMembership(models.Model):
     device = models.ForeignKey(Device, on_delete= models.CASCADE, related_name='device_membership', null=True)
-    member = models.OneToOneField(VantaihahaiMember, on_delete=models.CASCADE)
+    member = models.OneToOneField(VantaihahaiMember, related_name='member_memberships', on_delete=models.CASCADE)
     is_actived = models.BooleanField(default=True)
 
     def __str__(self) -> str:

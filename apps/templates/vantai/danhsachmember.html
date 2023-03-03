@@ -46,7 +46,7 @@
                       
                     </td>
                     <td class="text-center">
-                      <a href="#" class="btn btn-info view" title="View" ><i
+                      <a href="{% url 'apps.vantai:register_user_for_member' member.id %}" class="btn btn-info view" title="View" ><i
                         class="fas fa-eye"></i></a>
                       <a href="{% url 'apps.vantai:hahaimembership-update' member.id %}" class="btn btn-info edit" title="Edit" ><i
                           class="fas fa-pencil-alt"></i></a>
