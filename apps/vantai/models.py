@@ -28,7 +28,7 @@ class MemberSalary(models.Model):
         return f'{self.member}-{self.date}'
 
 class VantaihahaiMembership(models.Model):
-    device = models.ForeignKey(Device, on_delete= models.CASCADE, related_name='device_membership', null=True)
+    device = models.OneToOneField(Device, on_delete= models.CASCADE, related_name='device_membership', null=True)
     member = models.OneToOneField(VantaihahaiMember, related_name='member_memberships', on_delete=models.CASCADE)
     is_actived = models.BooleanField(default=True)
 
@@ -44,16 +44,16 @@ class Hanhtrinh(models.Model):
     equipment_id = models.IntegerField(null=True)
     name = models.CharField(max_length=50)
     schedule_date = models.DateTimeField(null=True)
-    location_id = models.IntegerField()
-    location_dest_id = models.IntegerField()
+    location_id = models.IntegerField(default=0)
+    location_dest_id = models.IntegerField(default=0)
     location_name = models.TextField(null=True, blank=True)
     location_dest_name= models.TextField(null=True, blank = True)
-    ward_id = models.IntegerField()
-    ward_dest_id = models.IntegerField()
-    district_id = models.IntegerField()
+    ward_id = models.IntegerField(default=0)
+    ward_dest_id = models.IntegerField(default=0)
+    district_id = models.IntegerField(default=0)
     district_dest_id = models.IntegerField(default=0)
-    state_id = models.IntegerField()
-    state_dest_id = models.IntegerField()
+    state_id = models.IntegerField(default=0)
+    state_dest_id = models.IntegerField(default=0)
 
     emp_image = models.ImageField(upload_to='images/')
 
@@ -67,12 +67,12 @@ class AttackmentHanhTrinh(models.Model):
 
 class VantaiLocation(models.Model):
     name = models.TextField()
-    location_id = models.IntegerField()
-    ward_id = models.IntegerField()
+    location_id = models.IntegerField(default=0)
+    ward_id = models.IntegerField(default=0)
     ward_name = models.TextField()
-    district_id = models.IntegerField()
+    district_id = models.IntegerField(default=0)
     district_name = models.TextField()
-    state_id = models.IntegerField()
+    state_id = models.IntegerField(default=0)
     state_name = models.TextField()
     def __str__(self) -> str:
         return self.name

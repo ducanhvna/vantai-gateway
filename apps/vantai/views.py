@@ -96,7 +96,8 @@ class HahaiMemberListView(LoginRequiredMixin, ListView):
         #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
         #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
         # # return queryset.prefetch_related("contacts", "account")
-        queryset= self.model.objects.all()
+        queryset= self.model.objects.select_related().all()
+        print(queryset)
         return queryset
 # DiadiemListView
 class DiadiemListView(LoginRequiredMixin, ListView):
@@ -334,8 +335,13 @@ def create_new_ref_number():
 def register_user_for_member(request, pk):
     msg = None
     success = False
-    membership = VantaihahaiMembership.objects.get(pk= pk)
-    member = membership.member
+    member = VantaihahaiMember.objects.get(pk= pk)
+    memberships = VantaihahaiMembership.objects.filter(member__id=pk)
+    if len(memberships)==0:
+        membership = VantaihahaiMembership(member = member)
+        membership.save()
+    else:
+        membership = memberships[0]
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():

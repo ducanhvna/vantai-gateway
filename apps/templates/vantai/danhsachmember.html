@@ -43,7 +43,8 @@
                       {{ member.employee_id }}
                     </td>
                     <td>
-                      
+                      {{ member.member_memberships }}
+                   
                     </td>
                     <td class="text-center">
                       <a href="{% url 'apps.vantai:register_user_for_member' member.id %}" class="btn btn-info view" title="View" ><i
