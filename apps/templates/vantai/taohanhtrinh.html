@@ -63,40 +63,43 @@
                                     <div class="col-md-6 px-md-1">
                                         <div class="form-group">   <!-- <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/> -->
                                             <label>Ngày bắt đầu</label>
-                                            {{ form.start_date}}
+                                            {{ form.end_date}}
                                          </div>
+                                         <span class="text-danger">{{ form.end_date.errors }}</span>
                                    </div>
                                    
                                     <div class="col-md-6 px-md-1">
                                         <div class="form-group">
                                             <label>Giờ bắt đầu</label>
-                                            {{ form.start_time}}
+                                            {{ form.end_time}}
                                         </div>
+                                        <span class="text-danger">{{ form.end_time.errors }}</span>
                                     </div>
                                     
-                                    <div class="col-md-4 px-md-1">
+                                    <div class="col-md-12 px-md-1">
                                         <div class="form-group">
-                                            <label>Xã</label>
+                                            <label>Tên: </label>
+                                            <span id="startlocationName"></span>
                                             
                                         </div>
                                     </div>
-                                    <div class="col-md-4 px-md-1">
+                                    <div class="col-md-12 px-md-1">
                                         <div class="form-group">
-                                            <label>Huyện</label>
-                                            
+                                            <label>Chi tiết: </label>
+                                            <span id="startlocationdetailName"></span>
                                         </div>
                                     </div>
 
                                     <div class="col-md-4 px-md-1">
                                         <div class="form-group">
-                                            <label>Tỉnh</label>
-                                            
+                                            <label>id:</label>
+                                            <input id="startLocationid" readonly />
                                         </div>
                                     </div>
 
                                     <div class="col-md-12 px-md-1">
                                         <div class="form-group">
-                                            <button id="toggle">Toggle device dropdown</button>
+                                            <a class="btn" id="toggle">Toggle device dropdown</a>
                                             <div id="dropdown">
                                 
                                                 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."
@@ -109,13 +112,7 @@
                                                             Tên địa điểm
                                                           </th>
                                                           <th>
-                                                            Xã
-                                                          </th>
-                                                          <th>
-                                                            Huyện
-                                                          </th>
-                                                          <th>
-                                                            Tỉnh
+                                                            Chi tiết
                                                           </th>
                                                           <th class="text-center">
                                                             Action
@@ -130,15 +127,13 @@
                                                           </td>
                                                           <td>
                                                             {{ member.ward_id.name }}
-                                                          </td>
-                                                          <td>
+                                                            <span> - </span>
                                                             {{ member.district_id.name }}
-                                                          </td>
-                                                          <td>
+                                                            <span> - </span>
                                                             {{ member.state_id.name }}
                                                           </td>
                                                           <td class="text-center">
-                                                            <a href="#" class="btn btn-info view" title="View" ><i
+                                                            <a onclick="SelectStartLocation({{ forloop.counter }} , {{ member.id}} )" class="btn btn-info edit" title="select" ><i
                                                               class="fas fa-eye"></i></a>
                                                             
                                                           </td>
@@ -172,6 +167,7 @@
                                                 <label>Ngày Kết thúc</label>
                                                 {{ form.start_date}}
                                              </div>
+                                             <span class="text-danger">{{ form.start_date.errors }}</span>
                                        </div>
                                        
                                         <div class="col-md-6 px-md-1">
@@ -179,32 +175,34 @@
                                                 <label>Giờ kết thúc</label>
                                                 {{ form.start_time}}
                                             </div>
+                                            <span class="text-danger">{{ form.start_time.errors }}</span>
                                         </div>
 
-                                    <div class="col-md-4 px-md-1">
-                                        <div class="form-group">
-                                            <label>Xã</label>
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 px-md-1">
-                                        <div class="form-group">
-                                            <label>Huyện</label>
-                                            
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4 px-md-1">
-                                        <div class="form-group">
-                                            <label>Tỉnh</label>
-                                            
-                                        </div>
-                                    </div>
+                                        <div class="col-md-12 px-md-1">
+                                          <div class="form-group">
+                                              <label>Tên: </label>
+                                              <span id="endlocationName"></span>
+                                              
+                                          </div>
+                                      </div>
+                                      <div class="col-md-12 px-md-1">
+                                          <div class="form-group">
+                                              <label>Chi tiết: </label>
+                                              <span id="endlocationdetailName"></span>
+                                          </div>
+                                      </div>
+  
+                                      <div class="col-md-4 px-md-1">
+                                          <div class="form-group">
+                                              <label>id:</label>
+                                              <input id="endLocationid" readonly />
+                                          </div>
+                                      </div>
 
 
                                     <div class="col-md-12 px-md-1">
                                         <div class="form-group">
-                                            <button id="toggle2">Toggle device dropdown</button>
+                                            <a class="btn" id="toggle2">Toggle device dropdown</a>
                                             <div id="dropdown2">
                                 
                                                 <input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="Search for names.."
@@ -217,14 +215,9 @@
                                                             Tên địa điểm
                                                           </th>
                                                           <th>
-                                                            Xã
+                                                            chi tiết
                                                           </th>
-                                                          <th>
-                                                            Huyện
-                                                          </th>
-                                                          <th>
-                                                            Tỉnh
-                                                          </th>
+                                                          
                                                           <th class="text-center">
                                                             Action
                                                           </th>
@@ -238,15 +231,13 @@
                                                           </td>
                                                           <td>
                                                             {{ member.ward_id.name }}
-                                                          </td>
-                                                          <td>
+                                                            <span> - </span>
                                                             {{ member.district_id.name }}
-                                                          </td>
-                                                          <td>
+                                                            <span> - </span>
                                                             {{ member.state_id.name }}
                                                           </td>
                                                           <td class="text-center">
-                                                            <a href="#" class="btn btn-info view" title="View" ><i
+                                                            <a onclick="SelectEndLocation({{ forloop.counter }} , {{ member.id}} )" class="btn btn-info view" title="View" ><i
                                                               class="fas fa-eye"></i></a>
                                                             
                                                           </td>
@@ -286,6 +277,7 @@
 {% block javascripts %}
 <script>
 const devices = ['Desktops', 'Laptops', 'Tablets', 'Mobile phones', 'Smart watches', 'Gaming consoles', 'Hand-held consoles'];
+
 function myFunction() {
   var input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("myInput");
@@ -295,10 +287,9 @@ function myFunction() {
   for (i = 0; i < tr.length; i++) {
     td = tr[i].getElementsByTagName("td")[0];
     td1 = tr[i].getElementsByTagName("td")[1];
-    td2 = tr[i].getElementsByTagName("td")[2];
-    td3 = tr[i].getElementsByTagName("td")[3];
+
     if (td && td2 && td3) {
-      txtValue = td.textContent || td.innerText || td1.textContent || td1.innerText || td2.textContent || td2.innerText || td3.textContent || td3.innerText;
+      txtValue = td.textContent || td.innerText || td1.textContent || td1.innerText ;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";
       } else {
@@ -306,6 +297,32 @@ function myFunction() {
       }
     }       
   }
+}
+function SelectStartLocation(index, member_id){
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr")[index];
+  
+  td = tr.getElementsByTagName("td")[0];
+  td1 = tr.getElementsByTagName("td")[1];
+  element = document.getElementById("startlocationName")
+  element.innerHTML = td.innerHTML
+  document.getElementById("startlocationdetailName").innerHTML = td1.innerHTML
+  element.scrollIntoView();
+  document.getElementById("startLocationid").value = member_id
+}
+
+function SelectEndLocation(index, member_id){
+  table = document.getElementById("myTable2");
+  tr = table.getElementsByTagName("tr")[index];
+  
+  td = tr.getElementsByTagName("td")[0];
+  td1 = tr.getElementsByTagName("td")[1];
+  element = document.getElementById("endlocationName")
+  element.innerHTML = td.innerHTML
+  document.getElementById("endlocationdetailName").innerHTML = td1.innerHTML
+  element.scrollIntoView();
+  document.getElementById("endLocationid").value = member_id
+
 }
 function myFunction2() {
   var input, filter, table, tr, td, i, txtValue;
@@ -316,10 +333,9 @@ function myFunction2() {
   for (i = 0; i < tr.length; i++) {
     td = tr[i].getElementsByTagName("td")[0];
     td1 = tr[i].getElementsByTagName("td")[1];
-    td2 = tr[i].getElementsByTagName("td")[2];
-    td3 = tr[i].getElementsByTagName("td")[3];
+  
     if (td && td2 && td3) {
-      txtValue = td.textContent || td.innerText || td1.textContent || td1.innerText || td2.textContent || td2.innerText || td3.textContent || td3.innerText;
+      txtValue = td.textContent || td.innerText || td1.textContent || td1.innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";
       } else {

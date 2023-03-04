@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.conf import settings
 # Create your models here.
 
 # class Hanhtrinh(models.Model):
@@ -67,6 +67,8 @@ class Hanhtrinh(models.Model):
     emp_image = models.ImageField(upload_to='images/')
 
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name='hanhtrinh_created', null=True)
+    created_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+   
     def __str__(self) -> str:
         return f"{self.location_name} - {self.location_dest_name}"
 

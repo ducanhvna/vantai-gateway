@@ -367,6 +367,11 @@ def register_user(request):
     if request.method == "POST":
         form = HanhtrinhForm(request.POST)
         if form.is_valid():
+            print('valid form')
+            schedule_date = form.cleaned_data['start_date']
+            schedule_time = form.cleaned_data['start_time']
+            
+            print("hanh trinh bat dau: ", schedule_date)
             form.save()
         
 
@@ -375,14 +380,14 @@ def register_user(request):
 
         print("test tạo mới hành trình")
         body = {
-            "equipment_id":3,
+            "equipment_id":xe_phutrach.hahai_id,
             "schedule_date": "2023-03-04 07:30:00",
             "location_id": 1,
             "location_dest_id": 2,
             "location_name": "Hà Nội",
             "location_dest_name": "Sài Gòn"
         }
-        abc = themmoichuyendi(body)
+        # abc = themmoichuyendi(body)
         # {'success': True, 'data': 
         # {'id': 7299, 
         #   'equipment_id': {'id': 3, 'name': 'Xe 01', 'license_plate': '001'}, 
@@ -395,10 +400,11 @@ def register_user(request):
         #   'district_id': None, 'state_id': None, 'ward_dest_id': None, 'district_dest_id': None, 
         #   'state_dest_id': None, 'company_name': None, 'eating_fee': 0.0, 'law_money': 0.0, 'road_tiket_fee': 0.0, 
         # 'fee_total': 0.0, 'odometer_start': 0, 'odometer_dest': 0, 'attachment_ids': []}, 'errorData': {}}
-        print("Kết quả", abc)
+        # print("Kết quả", abc)
     else:
         form = HanhtrinhForm()
     joyneys = tatcadiadiem()['data']['results']
+    print(joyneys)
     return render(request, "vantai/taohanhtrinh.html", {"form": form, 'member':hahai_member, "xe": xe_phutrach, "joyneys": joyneys, "msg": msg, "success": success})
 
 # Create your models here.

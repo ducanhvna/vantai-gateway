@@ -59,7 +59,7 @@ class HanhtrinhForm(forms.ModelForm):
     end_time = forms.TimeField(widget=TimeInput())
     class Meta:
         model = Hanhtrinh
-        fields = ('hanhtrinh_id', )
+        fields = ( )
         # widgets = {
         #     'start_date': DateInput(),
         # }
