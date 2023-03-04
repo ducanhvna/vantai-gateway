@@ -175,11 +175,12 @@ class EquipmentListView(LoginRequiredMixin, ListView):
                 member.save()
             else:
                 print("Create new member", thongtintaixe)
-                member = VantaihahaiMember(member_id = owner_user_id, name = thongtintaixe['data']['name'],
-                                        employee_id = thongtintaixe['data']['employee_id']['id'],
-                                        mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone'],
-                                        updated_time = timezone.now())
-                member.save()
+                if thongtintaixe['data']['employee_id']:
+                    member = VantaihahaiMember(member_id = owner_user_id, name = thongtintaixe['data']['name'],
+                                            employee_id = thongtintaixe['data']['employee_id']['id'],
+                                            mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone'],
+                                            updated_time = timezone.now())
+                    member.save()
         
         return queryset
     
