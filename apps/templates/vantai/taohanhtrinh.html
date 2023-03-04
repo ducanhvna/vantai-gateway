@@ -11,6 +11,9 @@
 
     <div class="content">
         <div class="container">
+          <form method="post">
+            {% csrf_token %}
+
             <div class="card-header text-center py-4">
                 <h1 class="title">
                     Khởi tạo
@@ -37,7 +40,7 @@
                           {{ xe.name}}
 
                        </div>
-                       
+
                     </div>
                     
                   </div>
@@ -264,7 +267,7 @@
                 
             </div>
             <div class="card-footer text-center">
-                <button type="submit" class="btn btn-fill btn-primary">Register</button>
+                <input type="submit"  class="btn btn-fill btn-primary">Register</input>
 
                 <br /><br />
                 
@@ -272,6 +275,7 @@
                     Have an account? <a href="/login.html" class="text-primary">Login</a>
                 </p> 
             </div>
+          </form>
         </div>
 
     </div>

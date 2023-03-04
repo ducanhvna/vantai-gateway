@@ -13,7 +13,7 @@ from apps.authentication.forms import SignUpForm
 from .models import AttackmentHanhTrinh, MemberSalary, VantaihahaiEquipment, VantaihahaiMember,VantaihahaiMembership
 from django.views.generic import DetailView, ListView
 from .models import Hanhtrinh, Device, VantaihahaiMember
-from .unity import GetThongtintaixe, danhsachtatcaxe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe, tatcadiadiem
+from .unity import GetThongtintaixe, danhsachtatcaxe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe, tatcadiadiem, themmoichuyendi
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.utils import timezone
@@ -365,38 +365,37 @@ def register_user(request):
     else:
         print("khong thay device cho member")
     if request.method == "POST":
-        # form = SignUpForm(request.POST)
+        form = HanhtrinhForm(request.POST)
         if form.is_valid():
             form.save()
-            # username = form.cleaned_data.get("username")
-            # raw_password = form.cleaned_data.get("password1")
-            # user = authenticate(username=username, password=raw_password)
-
-            # msg = 'User created successfully.'
-            # success = True
-            # device = request.POST.get("device")
-            # print("device cua chung ta", username)
-
-            # print("device cua chung ta", device)
-            # if user is not None:
-            #     if device != None and device != '':
-            #     # Create new device
-            #         device_type = 3
-            #         if device == 'IOS':
-            #             device_type = 2
-            #         elif device == 'ANDROID':
-            #             device_type = 1
-                    
-            #         device_id = device + create_new_ref_number()
-            #         while len(Device.objects.filter(id= device_id))>0:
-            #             device_id = device + create_new_ref_number()
-            #         device_object = Device(type = device_type, user = user, id =device_id)
-            #         device_object.save()
-
-            # return redirect("/login/")
+        
 
         else:
             msg = 'Form is not valid'
+
+        print("test tạo mới hành trình")
+        body = {
+            "equipment_id":3,
+            "schedule_date": "2023-03-04 07:30:00",
+            "location_id": 1,
+            "location_dest_id": 2,
+            "location_name": "Hà Nội",
+            "location_dest_name": "Sài Gòn"
+        }
+        abc = themmoichuyendi(body)
+        # {'success': True, 'data': 
+        # {'id': 7299, 
+        #   'equipment_id': {'id': 3, 'name': 'Xe 01', 'license_plate': '001'}, 
+        #   'location_name': 'Hà Nội', 
+        #   'location_dest_name': 'Sài Gòn', 
+        #   'incurred_fee': 0.0, 'incurred_note': None, 
+        #   'incurred_fee_2': 0.0, 'incurred_note_2': None, 
+        #   'schedule_date': '2023-03-04', 'start_date': None, 
+        #   'end_date': None, 'state': '1_draft', 'ward_id': None, 
+        #   'district_id': None, 'state_id': None, 'ward_dest_id': None, 'district_dest_id': None, 
+        #   'state_dest_id': None, 'company_name': None, 'eating_fee': 0.0, 'law_money': 0.0, 'road_tiket_fee': 0.0, 
+        # 'fee_total': 0.0, 'odometer_start': 0, 'odometer_dest': 0, 'attachment_ids': []}, 'errorData': {}}
+        print("Kết quả", abc)
     else:
         form = HanhtrinhForm()
     joyneys = tatcadiadiem()['data']['results']
