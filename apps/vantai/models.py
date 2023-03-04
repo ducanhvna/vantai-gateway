@@ -19,6 +19,15 @@ class VantaihahaiMember(models.Model):
 
     def __str__(self) -> str:
         return self.name
+class VantaihahaiEquipment(models.Model):
+    hahai_id = models.IntegerField(unique=True)
+    owner_user_id = models.IntegerField(default=0)
+    owner_user_name = models.TextField()
+    name = models.TextField()
+    license_plate = models.TextField()
+
+    def __str__(self) -> str:
+        return self.name
 
 class MemberSalary(models.Model):
     member = models.ForeignKey(VantaihahaiMember, on_delete=models.CASCADE)

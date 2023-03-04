@@ -10,10 +10,10 @@ from django.views.generic.edit import UpdateView
 import string
 from .forms import HanhtrinhForm, HahaiMembershipForm
 from apps.authentication.forms import SignUpForm
-from .models import AttackmentHanhTrinh, MemberSalary, VantaihahaiMember,VantaihahaiMembership
+from .models import AttackmentHanhTrinh, MemberSalary, VantaihahaiEquipment, VantaihahaiMember,VantaihahaiMembership
 from django.views.generic import DetailView, ListView
 from .models import Hanhtrinh, Device, VantaihahaiMember
-from .unity import GetThongtintaixe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe, tatcadiadiem
+from .unity import GetThongtintaixe, danhsachtatcaxe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe, tatcadiadiem
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.utils import timezone
@@ -121,6 +121,68 @@ class DiadiemListView(LoginRequiredMixin, ListView):
         queryset= tatcadiadiem()['data']['results']
         print(queryset)
         return queryset
+    
+
+# EquimentListView
+class EquipmentListView(LoginRequiredMixin, ListView):
+    model = Hanhtrinh
+    context_object_name = "joyneys"
+    template_name = "vantai/equipmentlist.html"
+    def get_queryset(self):
+        # queryset = self.model.objects.all().select_related("account")
+        # queryset = super(PodDetailView, self).get_queryset()
+        print('abc',self.request.user)
+        # if self.request.user.role != "ADMIN" and not self.request.user.is_superuser:
+        #     queryset = self.model.objects.filter(
+        #         Q(assign_to=self.request.user)).annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # else :
+        #     queryset = self.model.objects.annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # # return queryset.prefetch_related("contacts", "account")
+        queryset= danhsachtatcaxe()['data']['results']
+        print(queryset)
+        for item in queryset:
+            hahai_id = item['id']
+            owner_user_id = item['owner_user_id']['id']
+            owner_user_name = item['owner_user_id']['name']
+            license_plate = item['license_plate']
+            name = item['name']
+            object_xes = VantaihahaiEquipment.objects.filter(hahai_id=hahai_id)
+            if len(object_xes) == 0:
+                object_xe = VantaihahaiEquipment()
+            else:
+                object_xe = object_xes[0]
+            object_xe.hahai_id = hahai_id
+            object_xe.owner_user_id = owner_user_id
+            object_xe.owner_user_name = owner_user_name
+            object_xe.license_plate = license_plate
+            object_xe.name = name
+            object_xe.save()
+
+            print("Thông tin tai xe: ", owner_user_id)
+            thongtintaixe =  GetThongtintaixe(owner_user_id)
+            print(thongtintaixe)
+            members = VantaihahaiMember.objects.filter(member_id=owner_user_id)
+            if len(members)>0:
+                member = members[0]
+                member.name = thongtintaixe['data']['name']
+                if thongtintaixe['data']['employee_id']:
+                    member.employee_id = thongtintaixe['data']['employee_id']['id']
+                    member.mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone']
+                member.save()
+            else:
+                print("Create new member", thongtintaixe)
+                member = VantaihahaiMember(member_id = owner_user_id, name = thongtintaixe['data']['name'],
+                                        employee_id = thongtintaixe['data']['employee_id']['id'],
+                                        mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone'],
+                                        updated_time = timezone.now())
+                member.save()
+        
+        return queryset
+    
 
 class ChuyendiListView(LoginRequiredMixin, ListView):
     model = Hanhtrinh
@@ -239,21 +301,29 @@ class UpdatedanhsachmemberWeb(LoginRequiredMixin, View):
             # body = request.data
             for i in range(0, 200):
                 taixe = GetThongtintaixe(i)
+                print (taixe)
                 if taixe:
                     try:
                         print(f" member {i} existed")
-                        member = VantaihahaiMember.objects.get(member_id=i)
-                        member.name = taixe['data']['name']
-                        member.employee_id = taixe['data']['employee_id']['id']
-                        member.mobile_phone = taixe['data']['employee_id']['mobile_phone']
-                        member.save()
-                    except VantaihahaiMember.DoesNotExist:
-                        print("Create new member", taixe)
-                        member = VantaihahaiMember(member_id = i, name = taixe['data']['name'],
-                                                employee_id = taixe['data']['employee_id']['id'],
-                                                mobile_phone = taixe['data']['employee_id']['mobile_phone'],
-                                                updated_time = timezone.now())
-                        member.save()
+                        members = VantaihahaiMember.objects.filter(member_id=i)
+                        if len(members)>0:
+                            member = members[0]
+                            member.name = taixe['data']['name']
+                            if taixe['data']['employee_id']:
+                                member.employee_id = taixe['data']['employee_id']['id']
+                                member.mobile_phone = taixe['data']['employee_id']['mobile_phone']
+                            member.save()
+                        else:
+                            print("Create new member", taixe)
+                            member = VantaihahaiMember(member_id = i, name = taixe['data']['name'],
+                                                    employee_id = taixe['data']['employee_id']['id'],
+                                                    mobile_phone = taixe['data']['employee_id']['mobile_phone'],
+                                                    updated_time = timezone.now())
+                            member.save()
+
+                    except Exception as ex:
+                        print (taixe)
+                        print(ex)
             return JsonResponse({
                             'status': 'OK', 
                             
