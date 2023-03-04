@@ -349,6 +349,7 @@ def register_user(request):
     # if is_superuser or admin_boad.is_vantaihahai_admin :
     user_devices = Device.objects.filter(user = user)
     hahai_member = None
+    xe_phutrach = None
     if  len(user_devices)>0:
         print('ha hai member: ', hahai_member)
         user_device = user_devices[0]
@@ -357,6 +358,10 @@ def register_user(request):
         if len(memberships)>0:
             membership = memberships[0]
             hahai_member = membership.member
+        print("tim kiem xe cua member_id: ",hahai_member.member_id)
+        xe_phutrachs = VantaihahaiEquipment.objects.filter(owner_user_id= hahai_member.member_id)
+        if len(xe_phutrachs)>0:
+            xe_phutrach = xe_phutrachs[0]
     else:
         print("khong thay device cho member")
     if request.method == "POST":
@@ -395,7 +400,7 @@ def register_user(request):
     else:
         form = HanhtrinhForm()
     joyneys = tatcadiadiem()['data']['results']
-    return render(request, "vantai/taohanhtrinh.html", {"form": form, 'member':hahai_member, "joyneys": joyneys, "msg": msg, "success": success})
+    return render(request, "vantai/taohanhtrinh.html", {"form": form, 'member':hahai_member, "xe": xe_phutrach, "joyneys": joyneys, "msg": msg, "success": success})
 
 # Create your models here.
 def create_new_ref_number():
