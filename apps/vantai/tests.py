@@ -162,6 +162,23 @@ def scan_drive():
             except Exception as ex:
                 print (taixe)
                 print(ex)
+
+def init_data():
+    print("setup")
+    DJANGO_SU_NAME = 'admin'
+    DJANGO_SU_EMAIL = 'admin@hinosoft.com'
+    DJANGO_SU_PASSWORD = 'anphimf12'
+    print("create super user")
+    superuser = User.objects.create_superuser(
+        username=DJANGO_SU_NAME,
+        email=DJANGO_SU_EMAIL,
+        password=DJANGO_SU_PASSWORD)
+
+    superuser.save()
+    print("scan drive")
+    scan_drive()
+    print("scan laixe")
+    scan_car()
 class AnimalTestCase(TestCase):
     def setUp(self):
         # Animal.objects.create(name="lion", sound="roar")
