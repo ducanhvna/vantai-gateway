@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import VantaihahaiMember, VantaihahaiMembership, AttackmentHanhTrinh, MemberSalary, VantaihahaiEquipment
+from .models import VantaihahaiMember, VantaihahaiMembership, AttackmentHanhTrinh, MemberSalary, VantaihahaiEquipment, \
+    VantaiLocation
 # Register your models here.
 admin.site.register(VantaihahaiMember)
 class VantaihahaiMembershipAdmin(admin.ModelAdmin):
@@ -8,3 +9,4 @@ admin.site.register(VantaihahaiMembership,VantaihahaiMembershipAdmin)
 admin.site.register(AttackmentHanhTrinh)
 admin.site.register(MemberSalary)
 admin.site.register(VantaihahaiEquipment)
+admin.site.register(VantaiLocation)

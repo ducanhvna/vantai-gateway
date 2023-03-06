@@ -78,12 +78,12 @@ class AttackmentHanhTrinh(models.Model):
 
 class VantaiLocation(models.Model):
     name = models.TextField()
-    location_id = models.IntegerField(default=0)
+    location_id = models.IntegerField(default=0, unique=True)
     ward_id = models.IntegerField(default=0)
-    ward_name = models.TextField()
+    ward_name = models.TextField(null=True,blank=True)
     district_id = models.IntegerField(default=0)
-    district_name = models.TextField()
+    district_name = models.TextField(null=True,blank=True)
     state_id = models.IntegerField(default=0)
-    state_name = models.TextField()
+    state_name = models.TextField(null=True,blank=True)
     def __str__(self) -> str:
         return self.name

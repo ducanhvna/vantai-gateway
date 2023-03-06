@@ -17,6 +17,7 @@ from .unity import GetThongtintaixe, danhsachtatcaxe, tatcachuyendicuataixe, cac
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.utils import timezone
+from apps.devices.models import Device
 
 
 class HanhtrinhImage(TemplateView):
@@ -193,6 +194,8 @@ class ChuyendiListView(LoginRequiredMixin, ListView):
         # queryset = self.model.objects.all().select_related("account")
         # queryset = super(PodDetailView, self).get_queryset()
         print('abc',self.request.user)
+        # find device
+        devices = Device.objects.filter(user=self.request.user)
         # if self.request.user.role != "ADMIN" and not self.request.user.is_superuser:
         #     queryset = self.model.objects.filter(
         #         Q(assign_to=self.request.user)).annotate(num_asins=Count('pod_asins'), 
@@ -203,7 +206,19 @@ class ChuyendiListView(LoginRequiredMixin, ListView):
         #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
         #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
         # # return queryset.prefetch_related("contacts", "account")
-        queryset= tatcachuyendicuataixe(4)['data']['results']
+        if len(devices)>0:
+            device = devices[0]
+            memberships = VantaihahaiMembership.objects.filter(device=device)
+            if len(memberships) >0:
+                membership = memberships[0]
+                member = membership.member
+                employee_id = member.employee_id
+                print("Tat ca cac chuyen di cua: ", employee_id)
+                queryset= tatcachuyendicuataixe(employee_id)['data']['results']
+
+                
+        else:        
+            queryset= tatcachuyendicuataixe(4)['data']['results']
         print(queryset)
         return queryset
 

@@ -14,7 +14,7 @@ import string
 from apps.authentication.forms import SignUpForm
 from apps.vantai.models import AttackmentHanhTrinh, MemberSalary, VantaihahaiMember,VantaihahaiMembership
 from django.views.generic import DetailView, ListView
-from apps.vantai.models import Hanhtrinh, Device, VantaihahaiMember, VantaihahaiEquipment
+from apps.vantai.models import Hanhtrinh, Device, VantaihahaiMember, VantaihahaiEquipment, VantaiLocation
 from apps.vantai.unity import GetThongtintaixe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe, tatcadiadiem, danhsachtatcaxe
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
@@ -92,6 +92,27 @@ def scan_car():
                 print(ex)
     return queryset
 
+def scan_location():
+    queryset= tatcadiadiem()['data']['results']
+    for item in queryset:
+        try:
+            if item['ward_id'] != None and item['district_id'] != None and item['state_id'] !=None:
+                vantai = VantaiLocation(name=item['name'], location_id = item['id'],
+                                        ward_id = item['ward_id']['id'],
+                                        ward_name= item['ward_id']['name'],
+                                        district_id = item['district_id']['id'],
+                                        district_name = item['district_id']['name'],
+                                        state_id = item['state_id']['id'],
+                                        state_name = item['state_id']['name'])
+                vantai.save()
+            else:
+                vantai = VantaiLocation(name=item['name'], location_id = item['id'])
+            
+                vantai.save()
+        except Exception as ex:
+            
+            print(ex)
+            
 def create_user_for_member(member, owner_user_name):
     # member = VantaihahaiMember.objects.get(pk= pk)
     memberships = VantaihahaiMembership.objects.filter(member__id=member.id)
@@ -169,16 +190,21 @@ def init_data():
     DJANGO_SU_EMAIL = 'admin@hinosoft.com'
     DJANGO_SU_PASSWORD = 'anphimf12'
     print("create super user")
-    superuser = User.objects.create_superuser(
-        username=DJANGO_SU_NAME,
-        email=DJANGO_SU_EMAIL,
-        password=DJANGO_SU_PASSWORD)
+    try:
+        superuser = User.objects.create_superuser(
+            username=DJANGO_SU_NAME,
+            email=DJANGO_SU_EMAIL,
+            password=DJANGO_SU_PASSWORD)
 
-    superuser.save()
+        superuser.save()
+    except Exception as ex:
+        print(ex)
     print("scan drive")
     scan_drive()
     print("scan laixe")
     scan_car()
+    print("scan locations")
+    scan_location()
 class AnimalTestCase(TestCase):
     def setUp(self):
         # Animal.objects.create(name="lion", sound="roar")
