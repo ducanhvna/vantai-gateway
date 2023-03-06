@@ -46,12 +46,19 @@ class VantaihahaiMembership(models.Model):
             return f'{self.device.name}-{self.member.name}'
         else:
             return self.member.name
+        
+class VantaiProduct(models.Model):
+    name = models.TextField()
+    product_id = models.IntegerField(default=0, unique=True)
+    def __str__(self) -> str:
+        return self.name
 
 
 class Hanhtrinh(models.Model):
     hanhtrinh_id = models.IntegerField(null=True)
     equipment_id = models.IntegerField(null=True)
     name = models.CharField(max_length=50)
+    product = models.ForeignKey(VantaiProduct, on_delete=models.CASCADE, null=True, blank=True)
     schedule_date = models.DateTimeField(null=True)
     location_id = models.IntegerField(default=0)
     location_dest_id = models.IntegerField(default=0)
@@ -87,3 +94,4 @@ class VantaiLocation(models.Model):
     state_name = models.TextField(null=True,blank=True)
     def __str__(self) -> str:
         return self.name
+    

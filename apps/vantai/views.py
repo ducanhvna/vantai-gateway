@@ -10,7 +10,7 @@ from django.views.generic.edit import UpdateView
 import string
 from .forms import HanhtrinhForm, HahaiMembershipForm
 from apps.authentication.forms import SignUpForm
-from .models import AttackmentHanhTrinh, MemberSalary, VantaihahaiEquipment, VantaihahaiMember,VantaihahaiMembership
+from .models import AttackmentHanhTrinh, MemberSalary, VantaiLocation, VantaiProduct, VantaihahaiEquipment, VantaihahaiMember,VantaihahaiMembership
 from django.views.generic import DetailView, ListView
 from .models import Hanhtrinh, Device, VantaihahaiMember
 from .unity import GetThongtintaixe, danhsachtatcaxe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe, tatcadiadiem, themmoichuyendi
@@ -18,7 +18,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.utils import timezone
 from apps.devices.models import Device
-
+import datetime
 
 class HanhtrinhImage(TemplateView):
 
@@ -122,7 +122,28 @@ class DiadiemListView(LoginRequiredMixin, ListView):
         queryset= tatcadiadiem()['data']['results']
         print(queryset)
         return queryset
-    
+# MathangListView
+class MathangListView(LoginRequiredMixin, ListView):
+    model = VantaiProduct
+    context_object_name = "joyneys"
+    template_name = "vantai/tatcamathang.html"
+    def get_queryset(self):
+        # queryset = self.model.objects.all().select_related("account")
+        # queryset = super(PodDetailView, self).get_queryset()
+        print('abc',self.request.user)
+        # if self.request.user.role != "ADMIN" and not self.request.user.is_superuser:
+        #     queryset = self.model.objects.filter(
+        #         Q(assign_to=self.request.user)).annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # else :
+        #     queryset = self.model.objects.annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # # return queryset.prefetch_related("contacts", "account")
+        queryset= VantaiProduct.objects.all()
+        print(queryset)
+        return queryset
 
 # EquimentListView
 class EquipmentListView(LoginRequiredMixin, ListView):
@@ -194,6 +215,7 @@ class ChuyendiListView(LoginRequiredMixin, ListView):
         # queryset = self.model.objects.all().select_related("account")
         # queryset = super(PodDetailView, self).get_queryset()
         print('abc',self.request.user)
+        queryset = []
         # find device
         devices = Device.objects.filter(user=self.request.user)
         # if self.request.user.role != "ADMIN" and not self.request.user.is_superuser:
@@ -382,45 +404,84 @@ def register_user(request):
         print("khong thay device cho member")
     if request.method == "POST":
         form = HanhtrinhForm(request.POST)
-        if form.is_valid():
+        # if form.is_valid():
+        if form.is_valid() or True:
             print('valid form')
+            startlocation_id = request.POST['StartLocationId']
+            endlocation_id = request.POST['EndLocationId']
+            print(f'start , end: {startlocation_id} - {endlocation_id}' )
+            try:
+                startlocation_object = VantaiLocation.objects.get(location_id=startlocation_id)
+                endlocation_object = VantaiLocation.objects.get(location_id=endlocation_id)
+            except VantaiLocation.DoesNotExist:
+                startlocation_object = None
+                endlocation_object = None
             schedule_date = form.cleaned_data['start_date']
+            # schedule_date = request.POST['start_date']
             schedule_time = form.cleaned_data['start_time']
-            
+            # schedule_time = request.POST['start_time']
+            product = form.cleaned_data['product']
+            # product = request.POST['product']
+            # product = VantaiProduct.objects.get(pk= product)
+            print('get product', product.product_id)
             print("hanh trinh bat dau: ", schedule_date)
-            form.save()
-        
+            print("hanh trinh bat dau: ", schedule_date.year)
+            print("hanh trinh bat dau: ", schedule_date.month)
+            print("hanh trinh bat dau: ", schedule_date.day)
+            print("hanh trinh  bat dau loc: ", schedule_time.hour)
+            print("hanh trinh  bat dau loc: ", schedule_time.minute)
+            print("hanh trinh  bat dau loc: ", schedule_time.second)
 
+            # form.save()
+        
+            start_date_str = schedule_date.strftime('%Y-%m-%d')
+            start_time_string = schedule_time.strftime('%H:%M:%S')
+            
+            end_date_str = schedule_date.strftime('%Y-%m-%d')
+            end_time_string = schedule_time.strftime('%H:%M:%S')
+            print(end_time_string)
+            # body = {
+            #     "equipment_id":xe_phutrach.hahai_id,
+            #     "schedule_date": f"{s_y}-{s_m}-{s_d} {s_h}:{s_minute}:{s_s}",
+            #     "location_id": startlocation_id,
+            #     # "location_name": startlocation_object.name,
+
+            #     "location_dest_id": endlocation_id,
+                
+            # }
+            body = {
+                "equipment_id":xe_phutrach.hahai_id,
+                "schedule_date": f"{start_date_str} {start_time_string}",
+                "end_date": f"{end_date_str} {end_time_string}",
+                "location_id": startlocation_id,
+                "location_dest_id": endlocation_id,
+                "employee_id":hahai_member.employee_id,
+                "fleet_product_id": product.product_id
+                # "location_name": "Hà Nội",
+                # "location_dest_name": "Sài Gòn"
+            }
+            print(body)
+            abc = themmoichuyendi(body)
+            # {'success': True, 'data': 
+            # {'id': 7299, 
+            #   'equipment_id': {'id': 3, 'name': 'Xe 01', 'license_plate': '001'}, 
+            #   'location_name': 'Hà Nội', 
+            #   'location_dest_name': 'Sài Gòn', 
+            #   'incurred_fee': 0.0, 'incurred_note': None, 
+            #   'incurred_fee_2': 0.0, 'incurred_note_2': None, 
+            #   'schedule_date': '2023-03-04', 'start_date': None, 
+            #   'end_date': None, 'state': '1_draft', 'ward_id': None, 
+            #   'district_id': None, 'state_id': None, 'ward_dest_id': None, 'district_dest_id': None, 
+            #   'state_dest_id': None, 'company_name': None, 'eating_fee': 0.0, 'law_money': 0.0, 'road_tiket_fee': 0.0, 
+            # 'fee_total': 0.0, 'odometer_start': 0, 'odometer_dest': 0, 'attachment_ids': []}, 'errorData': {}}
+            print("Kết quả", abc)
+            return HttpResponseRedirect('/vantai/tatcachuyendi')
         else:
             msg = 'Form is not valid'
-
-        print("test tạo mới hành trình")
-        body = {
-            "equipment_id":xe_phutrach.hahai_id,
-            "schedule_date": "2023-03-04 07:30:00",
-            "location_id": 1,
-            "location_dest_id": 2,
-            "location_name": "Hà Nội",
-            "location_dest_name": "Sài Gòn"
-        }
-        # abc = themmoichuyendi(body)
-        # {'success': True, 'data': 
-        # {'id': 7299, 
-        #   'equipment_id': {'id': 3, 'name': 'Xe 01', 'license_plate': '001'}, 
-        #   'location_name': 'Hà Nội', 
-        #   'location_dest_name': 'Sài Gòn', 
-        #   'incurred_fee': 0.0, 'incurred_note': None, 
-        #   'incurred_fee_2': 0.0, 'incurred_note_2': None, 
-        #   'schedule_date': '2023-03-04', 'start_date': None, 
-        #   'end_date': None, 'state': '1_draft', 'ward_id': None, 
-        #   'district_id': None, 'state_id': None, 'ward_dest_id': None, 'district_dest_id': None, 
-        #   'state_dest_id': None, 'company_name': None, 'eating_fee': 0.0, 'law_money': 0.0, 'road_tiket_fee': 0.0, 
-        # 'fee_total': 0.0, 'odometer_start': 0, 'odometer_dest': 0, 'attachment_ids': []}, 'errorData': {}}
-        # print("Kết quả", abc)
     else:
         form = HanhtrinhForm()
     joyneys = tatcadiadiem()['data']['results']
-    print(joyneys)
+    # print(joyneys)
     return render(request, "vantai/taohanhtrinh.html", {"form": form, 'member':hahai_member, "xe": xe_phutrach, "joyneys": joyneys, "msg": msg, "success": success})
 
 # Create your models here.

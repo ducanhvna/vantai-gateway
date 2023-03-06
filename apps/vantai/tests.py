@@ -12,10 +12,10 @@ from django.views.generic import TemplateView, View
 from django.views.generic.edit import UpdateView
 import string
 from apps.authentication.forms import SignUpForm
-from apps.vantai.models import AttackmentHanhTrinh, MemberSalary, VantaihahaiMember,VantaihahaiMembership
+from apps.vantai.models import AttackmentHanhTrinh, MemberSalary, VantaihahaiMember,VantaihahaiMembership, VantaiProduct
 from django.views.generic import DetailView, ListView
 from apps.vantai.models import Hanhtrinh, Device, VantaihahaiMember, VantaihahaiEquipment, VantaiLocation
-from apps.vantai.unity import GetThongtintaixe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe, tatcadiadiem, danhsachtatcaxe
+from apps.vantai.unity import GetThongtintaixe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe, tatcadiadiem, danhsachtatcaxe, tatcamathang
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.utils import timezone
@@ -115,7 +115,16 @@ def scan_location():
         except Exception as ex:
             
             print(ex)
-            
+
+def scan_product():
+    queryset= tatcamathang()['data']['results']
+    for item in queryset:
+        try:
+            product = VantaiProduct(name=item['name'], product_id = item['id'])
+            product.save()
+        except Exception as ex:
+            print(ex)
+
 def create_user_for_member(member, owner_user_name):
     # member = VantaihahaiMember.objects.get(pk= pk)
     memberships = VantaihahaiMembership.objects.filter(member__id=member.id)
@@ -208,6 +217,8 @@ def init_data():
     scan_car()
     print("scan locations")
     scan_location()
+    print("scan Product")
+    scan_product()
 class AnimalTestCase(TestCase):
     def setUp(self):
         # Animal.objects.create(name="lion", sound="roar")
