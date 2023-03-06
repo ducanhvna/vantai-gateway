@@ -292,7 +292,7 @@ function myFunction() {
     td = tr[i].getElementsByTagName("td")[0];
     td1 = tr[i].getElementsByTagName("td")[1];
 
-    if (td && td2 && td3) {
+    if (td && td1) {
       txtValue = td.textContent || td.innerText || td1.textContent || td1.innerText ;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";
@@ -338,7 +338,7 @@ function myFunction2() {
     td = tr[i].getElementsByTagName("td")[0];
     td1 = tr[i].getElementsByTagName("td")[1];
   
-    if (td && td2 && td3) {
+    if (td && td1) {
       txtValue = td.textContent || td.innerText || td1.textContent || td1.innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";
