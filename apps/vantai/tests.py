@@ -47,49 +47,52 @@ def scan_car():
     queryset= danhsachtatcaxe()['data']['results']
     print(queryset)
     for item in queryset:
-        hahai_id = item['id']
-        owner_user_id = item['owner_user_id']['id']
-        owner_user_name = item['owner_user_id']['name']
-        license_plate = item['license_plate']
-        name = item['name']
-        object_xes = VantaihahaiEquipment.objects.filter(hahai_id=hahai_id)
-        if len(object_xes) == 0:
-            object_xe = VantaihahaiEquipment()
-        else:
-            object_xe = object_xes[0]
-        object_xe.hahai_id = hahai_id
-        object_xe.owner_user_id = owner_user_id
-        object_xe.owner_user_name = owner_user_name
-        object_xe.license_plate = license_plate
-        object_xe.name = name
-        object_xe.save()
+        try:
+            hahai_id = item['id']
+            owner_user_id = item['owner_user_id']['id']
+            owner_user_name = item['owner_user_id']['name']
+            license_plate = item['license_plate']
+            name = item['name']
+            object_xes = VantaihahaiEquipment.objects.filter(hahai_id=hahai_id)
+            if len(object_xes) == 0:
+                object_xe = VantaihahaiEquipment()
+            else:
+                object_xe = object_xes[0]
+            object_xe.hahai_id = hahai_id
+            object_xe.owner_user_id = owner_user_id
+            object_xe.owner_user_name = owner_user_name
+            object_xe.license_plate = license_plate
+            object_xe.name = name
+            object_xe.save()
 
-        print("Thông tin tai xe: ", owner_user_id)
-        thongtintaixe =  GetThongtintaixe(owner_user_id)
-        print(thongtintaixe)
-        members = VantaihahaiMember.objects.filter(member_id=owner_user_id)
-        member=None
-        if len(members)>0:
-            member = members[0]
-            member.name = thongtintaixe['data']['name']
-            if thongtintaixe['data']['employee_id']:
-                member.employee_id = thongtintaixe['data']['employee_id']['id']
-                member.mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone']
-            member.save()
-        else:
-            print("Create new member", thongtintaixe)
-            if thongtintaixe['data']['employee_id']:
-                member = VantaihahaiMember(member_id = owner_user_id, name = thongtintaixe['data']['name'],
-                                        employee_id = thongtintaixe['data']['employee_id']['id'],
-                                        mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone'],
-                                        updated_time = timezone.now())
+            print("Thông tin tai xe: ", owner_user_id)
+            thongtintaixe =  GetThongtintaixe(owner_user_id)
+            print(thongtintaixe)
+            members = VantaihahaiMember.objects.filter(member_id=owner_user_id)
+            member=None
+            if len(members)>0:
+                member = members[0]
+                member.name = thongtintaixe['data']['name']
+                if thongtintaixe['data']['employee_id']:
+                    member.employee_id = thongtintaixe['data']['employee_id']['id']
+                    member.mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone']
                 member.save()
-            print("Tao user cho memmber")
-        if(member):
-            try:
-                create_user_for_member(member, owner_user_name)
-            except  Exception as ex:
-                print(ex)
+            else:
+                print("Create new member", thongtintaixe)
+                if thongtintaixe['data']['employee_id']:
+                    member = VantaihahaiMember(member_id = owner_user_id, name = thongtintaixe['data']['name'],
+                                            employee_id = thongtintaixe['data']['employee_id']['id'],
+                                            mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone'],
+                                            updated_time = timezone.now())
+                    member.save()
+                print("Tao user cho memmber")
+            if(member):
+                try:
+                    create_user_for_member(member, owner_user_name)
+                except  Exception as ex:
+                    print(ex)
+        except Exception as ex:
+            print(ex)
     return queryset
 
 def scan_location():
