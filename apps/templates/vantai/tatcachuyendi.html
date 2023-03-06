@@ -43,13 +43,13 @@
                   {% for member in joyneys %}
                   <tr>
                     <td>
-                      {{ member.equipment_id.name }}
+                      {{ member.name }}
                     </td>
                     <td>
-                      {{ member.equipment_id.license_plate }}
+                      {{ member.license_plate }}
                     </td>
                     <td>
-                      {{ member.schedule_date }}
+                      {{ member.schedule_date|date:'Y-m-d H:i' }}
                     </td>
                     <td class="text-center">
                       <a href="#" class="btn btn-info view" title="View" ><i

@@ -55,8 +55,10 @@ class VantaiProduct(models.Model):
 
 
 class Hanhtrinh(models.Model):
-    hanhtrinh_id = models.IntegerField(null=True)
+    hanhtrinh_id = models.IntegerField(null=True, unique=True)
+    employee_id = models.IntegerField(default=0)
     equipment_id = models.IntegerField(null=True)
+    license_plate = models.TextField(null=True, blank = True)
     name = models.CharField(max_length=50)
     product = models.ForeignKey(VantaiProduct, on_delete=models.CASCADE, null=True, blank=True)
     schedule_date = models.DateTimeField(null=True)

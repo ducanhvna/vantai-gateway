@@ -237,10 +237,33 @@ class ChuyendiListView(LoginRequiredMixin, ListView):
                 employee_id = member.employee_id
                 print("Tat ca cac chuyen di cua: ", employee_id)
                 queryset= tatcachuyendicuataixe(employee_id)['data']['results']
-
-                
-        else:        
-            queryset= tatcachuyendicuataixe(4)['data']['results']
+                results= []
+                for item in queryset:
+                    try:
+                        hanhtrinh= None
+                        hanhtrinh_list = Hanhtrinh.objects.filter(hanhtrinh_id=item['id'])
+                        if len(hanhtrinh_list)>0:
+                            hanhtrinh= hanhtrinh_list[0]
+                        else:
+                            hanhtrinh= Hanhtrinh()
+                        if hanhtrinh:
+                            hanhtrinh.employee_id = employee_id
+                            print("employee: ", employee_id)
+                            hanhtrinh.hanhtrinh_id = item['id']
+                            hanhtrinh.equipment_id = item['equipment_id']['id']
+                            hanhtrinh.license_plate = item['equipment_id']['license_plate']
+                            hanhtrinh.name = item['equipment_id']['name']
+                            hanhtrinh.schedule_date = datetime.datetime.strptime(item['schedule_date'], "%Y-%m-%d")
+                            hanhtrinh.location_name = item['location_name']
+                            hanhtrinh.location_dest_name = item['location_dest_name']
+                            if item['ward_id']:
+                                hanhtrinh.ward_id  = item['ward_id']
+                            hanhtrinh.save()
+                            
+                    except Exception as ex:
+                        print('sync chuyen di err: ', ex)
+        # else:        
+            queryset= Hanhtrinh.objects.filter(employee_id = employee_id).order_by('-schedule_date', '-created_time')
         print(queryset)
         return queryset
 
