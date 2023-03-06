@@ -115,9 +115,6 @@
                                                           <th>
                                                             Tên địa điểm
                                                           </th>
-                                                          <th>
-                                                            Chi tiết
-                                                          </th>
                                                           <th class="text-center">
                                                             Action
                                                           </th>
@@ -129,11 +126,9 @@
                                                           <td>
                                                             {{ member.name }}
                                                           </td>
-                                                          <td>
-                                                            {{ member.ward_id.name }}
-                                                            <span> - </span>
-                                                            {{ member.district_id.name }}
-                                                            <span> - </span>
+                                                          <td style="display: none;">
+                                                            {{ member.ward_id.name }} ,
+                                                            {{ member.district_id.name }} ,
                                                             {{ member.state_id.name }}
                                                           </td>
                                                           <td class="text-center">
@@ -233,11 +228,9 @@
                                                           <td>
                                                             {{ member.name }}
                                                           </td>
-                                                          <td>
-                                                            {{ member.ward_id.name }}
-                                                            <span> - </span>
-                                                            {{ member.district_id.name }}
-                                                            <span> - </span>
+                                                          <td style="display: none;">
+                                                            {{ member.ward_id.name }} ,
+                                                            {{ member.district_id.name }} ,
                                                             {{ member.state_id.name }}
                                                           </td>
                                                           <td class="text-center">
@@ -293,7 +286,7 @@ function myFunction() {
     td1 = tr[i].getElementsByTagName("td")[1];
 
     if (td && td1) {
-      txtValue = td.textContent || td.innerText || td1.textContent || td1.innerText ;
+      txtValue = (td.textContent || td.innerText).concat(td1.textContent || td1.innerText) ;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";
       } else {
@@ -339,7 +332,7 @@ function myFunction2() {
     td1 = tr[i].getElementsByTagName("td")[1];
   
     if (td && td1) {
-      txtValue = td.textContent || td.innerText || td1.textContent || td1.innerText;
+      txtValue = (td.textContent || td.innerText).concat(td1.textContent || td1.innerText) ;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";
       } else {
