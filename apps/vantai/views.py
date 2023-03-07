@@ -237,6 +237,7 @@ class ChuyendiListView(LoginRequiredMixin, ListView):
                 employee_id = member.employee_id
                 print("Tat ca cac chuyen di cua: ", employee_id)
                 queryset= tatcachuyendicuataixe(employee_id)['data']['results']
+                print(queryset)
                 results= []
                 for item in queryset:
                     try:

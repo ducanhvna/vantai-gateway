@@ -281,9 +281,12 @@ def danhsachcacphuongtheohuyen(district_id):
         return None
 
 
-def capnhatsokmbatdauhanhtrinh(hanhtrinh, sokm, body):
+def capnhatsokmbatdauhanhtrinh(hanhtrinh, sokm, body, attackements=None):
     # user = order.user
     url = f'https://vantaihahai.com/api/fleet.trip/{hanhtrinh}/do_odometer_start?odometer_start={sokm}'
+    if attackements:
+        url = url + '&attachments={}'.format(attackements)
+    print("call: ",url)
     access_token = settings.VANTAIHAHAI_CONFIG['access_token']
     headers = {
         # 'Content-Type': 'application/json',
@@ -303,9 +306,11 @@ def capnhatsokmbatdauhanhtrinh(hanhtrinh, sokm, body):
     else:
         return None
 
-def capnhatsokmketthuchanhtrinh(hanhtrinh, sokm, body):
+def capnhatsokmketthuchanhtrinh(hanhtrinh, sokm, body, attackements=None):
     # user = order.user
     url = f'https://vantaihahai.com/api/fleet.trip/{hanhtrinh}/do_odometer_end?odometer_end={sokm}'
+    if attackements:
+        url = url + '&attachments={}'.format(attackements)
     access_token = settings.VANTAIHAHAI_CONFIG['access_token']
     headers = {
         # 'Content-Type': 'application/json',
