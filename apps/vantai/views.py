@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.utils.crypto import get_random_string
 # Create your views here.
@@ -8,7 +8,7 @@ from django.views.generic import TemplateView, View
 # import generic UpdateView
 from django.views.generic.edit import UpdateView
 import string
-from .forms import HanhtrinhForm, HahaiMembershipForm
+from .forms import HanhtrinhForm, HahaiMembershipForm, AttackmentForm
 from apps.authentication.forms import SignUpForm
 from .models import AttackmentHanhTrinh, MemberSalary, VantaiLocation, VantaiProduct, VantaihahaiEquipment, VantaihahaiMember,VantaihahaiMembership
 from django.views.generic import DetailView, ListView
@@ -22,12 +22,12 @@ import datetime
 
 class HanhtrinhImage(TemplateView):
 
-    form = HanhtrinhForm
+    form = AttackmentForm
     template_name = 'vantai/emp_image.html'
 
     def post(self, request, *args, **kwargs):
 
-        form = HanhtrinhForm(request.POST, request.FILES)
+        form = AttackmentForm(request.POST, request.FILES)
 
         if form.is_valid():
             obj = form.save()
@@ -40,7 +40,7 @@ class HanhtrinhImage(TemplateView):
         return self.post(request, *args, **kwargs)
 
 class EmpImageDisplay(DetailView):
-    model = Hanhtrinh
+    model = AttackmentHanhTrinh
     template_name = 'vantai/emp_image_display.html'
     context_object_name = 'emp'
 
@@ -560,3 +560,31 @@ def register_user_for_member(request, pk):
         form = SignUpForm()
         
     return render(request, "vantai/register_for_member.html", {"form": form, "member":member, "msg": msg, "success": success})
+
+ 
+# Create your views here.
+ 
+ 
+def hotel_image_view(request):
+ 
+    if request.method == 'POST':
+        form = AttackmentForm(request.POST, request.FILES)
+ 
+        if form.is_valid():
+            form.save()
+            return redirect('success')
+    else:
+        form = AttackmentForm()
+    return render(request, 'vantai/up_image.html', {'form': form})
+ 
+ 
+def success(request):
+    return HttpResponse('successfully uploaded')
+
+def display_hotel_images(request):
+ 
+    if request.method == 'GET':
+ 
+        # getting all the objects of hotel.
+        Hotels = AttackmentHanhTrinh.objects.all()
+        return render(request, 'vantai/display_image.html',{'hotel_images': Hotels})

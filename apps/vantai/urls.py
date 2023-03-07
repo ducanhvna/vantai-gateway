@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import vantaihahai_view, UpdatedanhsachmemberWeb, HahaiMemberListView, EditMemberShipView, \
                 ChuyendiListView, DeviceListView, DiadiemListView, register_user, register_user_for_member, \
-                EquipmentListView, MathangListView
+                EquipmentListView, MathangListView, hotel_image_view, display_hotel_images, success
 from django.views.generic import TemplateView
 app_name = "apps.vantai"
 urlpatterns = [
@@ -15,5 +15,8 @@ urlpatterns = [
     path('taohanhtrinh', register_user,name="taohanhtrinh"),
     path('regist_for_member/<int:pk>/', register_user_for_member,name='register_user_for_member'),
     path('devices', DeviceListView.as_view(), name= 'devices'),
-    path('edihahaimembership/<int:pk>/', EditMemberShipView.as_view(),name='hahaimembership-update')
+    path('edihahaimembership/<int:pk>/', EditMemberShipView.as_view(),name='hahaimembership-update'),
+    path('image_upload', hotel_image_view, name='image_upload'),
+    path('hotel_images', display_hotel_images, name = 'hotel_images'),
+    path('success', success, name='success'),
 ]

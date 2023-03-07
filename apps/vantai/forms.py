@@ -1,8 +1,9 @@
 # forms.py 
 from django import forms 
-from .models import Hanhtrinh, VantaihahaiMembership, Hanhtrinh
+from .models import Hanhtrinh, VantaihahaiMembership, Hanhtrinh, AttackmentHanhTrinh
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+
 
 class HanhtrinhForm(forms.ModelForm): 
   
@@ -64,3 +65,11 @@ class HanhtrinhForm(forms.ModelForm):
         # widgets = {
         #     'start_date': DateInput(),
         # }
+
+
+ 
+class AttackmentForm(forms.ModelForm):
+ 
+    class Meta:
+        model = AttackmentHanhTrinh
+        fields = ['name','hanhtrinh', 'main_img']

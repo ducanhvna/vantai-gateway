@@ -82,8 +82,9 @@ class Hanhtrinh(models.Model):
         return f"{self.location_name} - {self.location_dest_name}"
 
 class AttackmentHanhTrinh(models.Model):
+    name = models.TextField(null=True, blank=True)
     hanhtrinh= models.ForeignKey(Hanhtrinh, on_delete=models.CASCADE, related_name='hanhtrinh_attackments')
-    url = models.TextField()
+    main_img = models.ImageField(upload_to='images/', null=True,blank= True)
 
 class VantaiLocation(models.Model):
     name = models.TextField()
