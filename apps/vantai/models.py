@@ -72,6 +72,8 @@ class Hanhtrinh(models.Model):
     district_dest_id = models.IntegerField(default=0)
     state_id = models.IntegerField(default=0)
     state_dest_id = models.IntegerField(default=0)
+    odo_start = models.IntegerField(default= 0)
+    odo_end = models.ImageField(default=0)
 
     emp_image = models.ImageField(upload_to='images/')
 
@@ -79,7 +81,7 @@ class Hanhtrinh(models.Model):
     created_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
    
     def __str__(self) -> str:
-        return f"{self.location_name} - {self.location_dest_name}"
+        return f"{self.location_name} - {self.location_dest_name} - {self.hanhtrinh_id}"
 
 class AttackmentHanhTrinh(models.Model):
     name = models.TextField(null=True, blank=True)

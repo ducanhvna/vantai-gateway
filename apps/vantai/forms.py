@@ -69,7 +69,22 @@ class HanhtrinhForm(forms.ModelForm):
 
  
 class AttackmentForm(forms.ModelForm):
- 
+    
     class Meta:
         model = AttackmentHanhTrinh
         fields = ['name','hanhtrinh', 'main_img']
+
+class KmHanhtrinhForm(forms.ModelForm):
+    odo = forms.IntegerField(
+        widget=forms.NumberInput(
+            attrs={
+                "placeholder": "Username",
+                "class": "form-control"
+            }
+        ))
+    
+    class Meta:
+        model = AttackmentHanhTrinh
+        fields = ['name','hanhtrinh', 'main_img']
+        widgets = {'hanhtrinh': forms.HiddenInput(),
+                   'name': forms.HiddenInput()}

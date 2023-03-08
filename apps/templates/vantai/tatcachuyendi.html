@@ -52,9 +52,9 @@
                       {{ member.schedule_date|date:'Y-m-d H:i' }}
                     </td>
                     <td class="text-center">
-                      <a href="#" class="btn btn-info view" title="View" ><i
+                      <a href="{% url 'apps.vantai:chitiethanhtrinh' member.id %}" class="btn btn-info view" title="View" ><i
                         class="fas fa-eye"></i></a>
-                      <a href="{% url 'apps.vantai:hahaimembership-update' member.id %}" class="btn btn-info edit" title="Edit" ><i
+                      <a href="{% url 'apps.vantai:capnhatbatdau' member.id %}" class="btn btn-info edit" title="Edit" ><i
                           class="fas fa-pencil-alt"></i></a>
                           <a href="#" class="btn btn-info edit" title="Delete" ><i
                             class="fas fa-trash-alt"></i></a>

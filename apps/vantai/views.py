@@ -8,7 +8,7 @@ from django.views.generic import TemplateView, View
 # import generic UpdateView
 from django.views.generic.edit import UpdateView
 import string
-from .forms import HanhtrinhForm, HahaiMembershipForm, AttackmentForm
+from .forms import HanhtrinhForm, HahaiMembershipForm, AttackmentForm, KmHanhtrinhForm
 from apps.authentication.forms import SignUpForm
 from .models import AttackmentHanhTrinh, MemberSalary, VantaiLocation, VantaiProduct, VantaihahaiEquipment, VantaihahaiMember,VantaihahaiMembership
 from django.views.generic import DetailView, ListView
@@ -22,7 +22,7 @@ import datetime
 
 class HanhtrinhImage(TemplateView):
 
-    form = AttackmentForm
+    form = KmHanhtrinhForm
     template_name = 'vantai/emp_image.html'
 
     def post(self, request, *args, **kwargs):
@@ -35,9 +35,17 @@ class HanhtrinhImage(TemplateView):
 
         context = self.get_context_data(form=form)
         return self.render_to_response(context)     
+    def get_context_data(self, **kwargs):
+        context = super(HanhtrinhImage, self).get_context_data(**kwargs)
 
-    def get(self, request, *args, **kwargs):
-        return self.post(request, *args, **kwargs)
+        form = KmHanhtrinhForm(initial={'odo':1000,'hanhtrinh': Hanhtrinh.objects.get(hanhtrinh_id=7321)})  # instance= None
+
+        context["form"] = form
+        #context["latest_article"] = latest_article
+
+        return context
+    # def get(self, request, *args, **kwargs):
+    #     return self.post(request, *args, **kwargs)
 
 class EmpImageDisplay(DetailView):
     model = AttackmentHanhTrinh
@@ -589,3 +597,60 @@ def display_hotel_images(request):
         # getting all the objects of hotel.
         Hotels = AttackmentHanhTrinh.objects.all()
         return render(request, 'vantai/display_image.html',{'hotel_images': Hotels})
+    
+# CapnhatBatdauHanhtrinh
+class CapnhatBatdauHanhtrinhView(TemplateView):
+    
+    form = KmHanhtrinhForm
+    template_name = 'vantai/batdauhanhtrinh.html'
+
+    def post(self, request, *args, **kwargs):
+        """ Check post data
+        """
+        form = KmHanhtrinhForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            obj = form.save()
+            hanhtrinh_pk = self.kwargs['pk']
+            hanhtrinh = Hanhtrinh.objects.get(pk=hanhtrinh_pk)
+            odo_start = form.cleaned_data['odo']
+            hanhtrinh.odo_start = odo_start
+            hanhtrinh.save()
+            return HttpResponseRedirect(reverse_lazy('emp_image_display', kwargs={'pk': obj.id}))
+
+        context = self.get_context_data(form=form)
+        return self.render_to_response(context)     
+    def get_context_data(self, **kwargs):
+        """Overide get_context_data method
+        """
+        
+        context = super(CapnhatBatdauHanhtrinhView, self).get_context_data(**kwargs)
+        hanhtrinh_pk = self.kwargs['pk']
+        hanhtrinh = Hanhtrinh.objects.get(pk=hanhtrinh_pk)
+        form = KmHanhtrinhForm(initial={'name':f"Start-{hanhtrinh.hanhtrinh_id}",'odo':1000,'hanhtrinh': hanhtrinh})  # instance= None
+
+        context["form"] = form
+        #context["latest_article"] = latest_article
+
+        return context
+    # def get(self, request, *args, **kwargs):
+    #     return self.post(request, *args, **kwargs)
+
+
+class ChitiethanhtrinhView(DetailView):
+    model = Hanhtrinh
+    template_name = 'vantai/emp_image_display.html'
+    context_object_name = 'emp'
+    def get_context_data(self, **kwargs):
+        """Overide get_context_data method
+        """
+        
+        context = super(ChitiethanhtrinhView, self).get_context_data(**kwargs)
+        hanhtrinh_pk = self.kwargs['pk']
+        # hanhtrinh = Hanhtrinh.objects.get(pk=hanhtrinh_pk)
+        # form = KmHanhtrinhForm(initial={'name':f"Start-{hanhtrinh.hanhtrinh_id}",'odo':1000,'hanhtrinh': hanhtrinh})  # instance= None
+        attackments = AttackmentHanhTrinh.objects.filter(hanhtrinh__id =hanhtrinh_pk)
+        context["attackments"] = attackments
+        #context["latest_article"] = latest_article
+
+        return context
