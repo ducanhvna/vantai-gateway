@@ -266,6 +266,8 @@ class ChuyendiListView(LoginRequiredMixin, ListView):
                             hanhtrinh.schedule_date = datetime.datetime.strptime(item['schedule_date'], "%Y-%m-%d")
                             hanhtrinh.location_name = item['location_name']
                             hanhtrinh.location_dest_name = item['location_dest_name']
+                            hanhtrinh.odo_start = item['odometer_start']
+                            hanhtrinh.odo_end = item['odometer_dest']
                             if item['ward_id']:
                                 hanhtrinh.ward_id  = item['ward_id']
                             hanhtrinh.save()
