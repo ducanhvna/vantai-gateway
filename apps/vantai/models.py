@@ -73,7 +73,7 @@ class Hanhtrinh(models.Model):
     state_id = models.IntegerField(default=0)
     state_dest_id = models.IntegerField(default=0)
     odo_start = models.IntegerField(default= 0)
-    odo_end = models.ImageField(default=0)
+    odo_end = models.IntegerField(default=0)
 
     emp_image = models.ImageField(upload_to='images/')
 

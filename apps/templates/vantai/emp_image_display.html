@@ -16,12 +16,16 @@
           </div>
           <div class="card-body">
             <div class="row">
-                <div class="col-md-5 pr-md-1">
+                <div class="col-md-9 pr-md-1">
                     <label>{{emp.name}}</label>
                 </div>
-                <div class="col-md-5 pr-md-1">
+                <div class="col-md-9 pr-md-1">
                     <label>Số km bắt đầu hành trình</label>
                     <a> {{emp.odo_start}}</a>
+                </div>
+                <div class="col-md-9 pr-md-1">
+                    <label>Số km Ket thuc hành trình</label>
+                    <a> {{emp.odo_end}}</a>
                 </div>
             </div>
     {% for item in attackments %}

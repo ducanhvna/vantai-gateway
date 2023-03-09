@@ -13,7 +13,8 @@ from apps.authentication.forms import SignUpForm
 from .models import AttackmentHanhTrinh, MemberSalary, VantaiLocation, VantaiProduct, VantaihahaiEquipment, VantaihahaiMember,VantaihahaiMembership
 from django.views.generic import DetailView, ListView
 from .models import Hanhtrinh, Device, VantaihahaiMember
-from .unity import GetThongtintaixe, danhsachtatcaxe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe, tatcadiadiem, themmoichuyendi
+from .unity import GetThongtintaixe, danhsachtatcaxe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe, tatcadiadiem, themmoichuyendi, \
+    capnhatsokmketthuchanhtrinh, capnhatsokmbatdauhanhtrinh
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.utils import timezone
@@ -614,14 +615,20 @@ class CapnhatBatdauHanhtrinhView(TemplateView):
             hanhtrinh_pk = self.kwargs['pk']
             hanhtrinh = Hanhtrinh.objects.get(pk=hanhtrinh_pk)
             odo_start = form.cleaned_data['odo']
-            print(form.cleaned_data['main_img'])
+
+            main_img =form.cleaned_data['main_img']
             print(obj.main_img)
             print(odo_start)
             hanhtrinh.odo_start = odo_start
             hanhtrinh.save()
+            attackements = None
+            if main_img:
+                attackements=[main_img]
+            capnhatsokmbatdauhanhtrinh(hanhtrinh.hanhtrinh_id, odo_start, attackements)
             return HttpResponseRedirect('/vantai/chitiethanhtrinh/{}/'.format(hanhtrinh.id))
 
         context = self.get_context_data(form=form)
+        
         return self.render_to_response(context)     
     def get_context_data(self, **kwargs):
         """Overide get_context_data method
@@ -631,6 +638,52 @@ class CapnhatBatdauHanhtrinhView(TemplateView):
         hanhtrinh_pk = self.kwargs['pk']
         hanhtrinh = Hanhtrinh.objects.get(pk=hanhtrinh_pk)
         form = KmHanhtrinhForm(initial={'name':f"Start-{hanhtrinh.hanhtrinh_id}",'odo':1000,'hanhtrinh': hanhtrinh})  # instance= None
+
+        context["form"] = form
+        #context["latest_article"] = latest_article
+
+        return context
+    # def get(self, request, *args, **kwargs):
+    #     return self.post(request, *args, **kwargs)
+
+
+# CapnhatKetthucHanhtrinh
+class CapnhatKetthucHanhtrinhView(TemplateView):
+    
+    form = KmHanhtrinhForm
+    template_name = 'vantai/ketthuchanhtrinh.html'
+
+    def post(self, request, *args, **kwargs):
+        """ Check post data
+        """
+        form = KmHanhtrinhForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            obj = form.save()
+            hanhtrinh_pk = self.kwargs['pk']
+            hanhtrinh = Hanhtrinh.objects.get(pk=hanhtrinh_pk)
+            odo_end = form.cleaned_data['odo']
+            main_img = form.cleaned_data['main_img']
+            print(obj.main_img)
+            print(odo_end)
+            hanhtrinh.odo_end = odo_end
+            hanhtrinh.save()
+            attackements = None
+            if main_img:
+                attackements=[main_img]
+            capnhatsokmketthuchanhtrinh(hanhtrinh.hanhtrinh_id, odo_end, attackements)
+            return HttpResponseRedirect('/vantai/chitiethanhtrinh/{}/'.format(hanhtrinh.id))
+
+        context = self.get_context_data(form=form)
+        return self.render_to_response(context)     
+    def get_context_data(self, **kwargs):
+        """Overide get_context_data method
+        """
+        
+        context = super(CapnhatKetthucHanhtrinhView, self).get_context_data(**kwargs)
+        hanhtrinh_pk = self.kwargs['pk']
+        hanhtrinh = Hanhtrinh.objects.get(pk=hanhtrinh_pk)
+        form = KmHanhtrinhForm(initial={'name':f"End-{hanhtrinh.hanhtrinh_id}",'odo':1000,'hanhtrinh': hanhtrinh})  # instance= None
 
         context["form"] = form
         #context["latest_article"] = latest_article
