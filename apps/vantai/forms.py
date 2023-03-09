@@ -82,7 +82,7 @@ class KmHanhtrinhForm(forms.ModelForm):
                 "class": "form-control"
             }
         ))
-    
+
     class Meta:
         model = AttackmentHanhTrinh
         fields = ['name','hanhtrinh', 'main_img']

@@ -614,9 +614,12 @@ class CapnhatBatdauHanhtrinhView(TemplateView):
             hanhtrinh_pk = self.kwargs['pk']
             hanhtrinh = Hanhtrinh.objects.get(pk=hanhtrinh_pk)
             odo_start = form.cleaned_data['odo']
+            print(form.cleaned_data['main_img'])
+            print(obj.main_img)
+            print(odo_start)
             hanhtrinh.odo_start = odo_start
             hanhtrinh.save()
-            return HttpResponseRedirect(reverse_lazy('emp_image_display', kwargs={'pk': obj.id}))
+            return HttpResponseRedirect('/vantai/chitiethanhtrinh/{}/'.format(hanhtrinh.id))
 
         context = self.get_context_data(form=form)
         return self.render_to_response(context)     
