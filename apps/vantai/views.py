@@ -272,6 +272,10 @@ class ChuyendiListView(LoginRequiredMixin, ListView):
                                 hanhtrinh.ward_id  = item['ward_id']
                             hanhtrinh.save()
                             
+                            attachments = item['attachment_ids']
+                            for attachment in attachments:
+                                AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
+
                     except Exception as ex:
                         print('sync chuyen di err: ', ex)
         # else:        
