@@ -623,10 +623,11 @@ class CapnhatBatdauHanhtrinhView(TemplateView):
             print(odo_start)
             hanhtrinh.odo_start = odo_start
             hanhtrinh.save()
+            body={}
             attackements = None
             if main_img:
                 attackements=[main_img]
-            capnhatsokmbatdauhanhtrinh(hanhtrinh.hanhtrinh_id, odo_start, attackements)
+            capnhatsokmbatdauhanhtrinh(hanhtrinh.hanhtrinh_id, odo_start, body, attackements)
             return HttpResponseRedirect('/vantai/chitiethanhtrinh/{}/'.format(hanhtrinh.id))
 
         context = self.get_context_data(form=form)
@@ -673,7 +674,8 @@ class CapnhatKetthucHanhtrinhView(TemplateView):
             attackements = None
             if main_img:
                 attackements=[main_img]
-            capnhatsokmketthuchanhtrinh(hanhtrinh.hanhtrinh_id, odo_end, attackements)
+            body={}
+            capnhatsokmketthuchanhtrinh(hanhtrinh.hanhtrinh_id, odo_end, body, attackements)
             return HttpResponseRedirect('/vantai/chitiethanhtrinh/{}/'.format(hanhtrinh.id))
 
         context = self.get_context_data(form=form)
