@@ -267,7 +267,7 @@ class ChuyendiListView(LoginRequiredMixin, ListView):
                             hanhtrinh.location_name = item['location_name']
                             hanhtrinh.location_dest_name = item['location_dest_name']
                             hanhtrinh.odo_start = item['odometer_start']
-                            hanhtrinh.odo_end = item['odometer_dest']
+                            # hanhtrinh.odo_end = item['odometer_dest']
                             if item['ward_id']:
                                 hanhtrinh.ward_id  = item['ward_id']
                             hanhtrinh.save()
@@ -442,83 +442,86 @@ def register_user(request):
     else:
         print("khong thay device cho member")
     if request.method == "POST":
-        form = HanhtrinhForm(request.POST)
-        # if form.is_valid():
-        if form.is_valid() or True:
-            print('valid form')
-            startlocation_id = request.POST['StartLocationId']
-            endlocation_id = request.POST['EndLocationId']
-            print(f'start , end: {startlocation_id} - {endlocation_id}' )
-            try:
-                startlocation_object = VantaiLocation.objects.get(location_id=startlocation_id)
-                endlocation_object = VantaiLocation.objects.get(location_id=endlocation_id)
-            except VantaiLocation.DoesNotExist:
-                startlocation_object = None
-                endlocation_object = None
-            schedule_date = form.cleaned_data['start_date']
-            # schedule_date = request.POST['start_date']
-            schedule_time = form.cleaned_data['start_time']
-            # schedule_time = request.POST['start_time']
-            product = form.cleaned_data['product']
-            # product = request.POST['product']
-            # product = VantaiProduct.objects.get(pk= product)
-            print('get product', product.product_id)
-            print("hanh trinh bat dau: ", schedule_date)
-            print("hanh trinh bat dau: ", schedule_date.year)
-            print("hanh trinh bat dau: ", schedule_date.month)
-            print("hanh trinh bat dau: ", schedule_date.day)
-            print("hanh trinh  bat dau loc: ", schedule_time.hour)
-            print("hanh trinh  bat dau loc: ", schedule_time.minute)
-            print("hanh trinh  bat dau loc: ", schedule_time.second)
+        try:
+            form = HanhtrinhForm(request.POST)
+            # if form.is_valid():
+            if form.is_valid() or True:
+                print('valid form')
+                startlocation_id = request.POST['StartLocationId']
+                endlocation_id = request.POST['EndLocationId']
+                print(f'start , end: {startlocation_id} - {endlocation_id}' )
+                try:
+                    startlocation_object = VantaiLocation.objects.get(location_id=startlocation_id)
+                    endlocation_object = VantaiLocation.objects.get(location_id=endlocation_id)
+                except VantaiLocation.DoesNotExist:
+                    startlocation_object = None
+                    endlocation_object = None
+                schedule_date = form.cleaned_data['start_date']
+                # schedule_date = request.POST['start_date']
+                schedule_time = form.cleaned_data['start_time']
+                # schedule_time = request.POST['start_time']
+                product = form.cleaned_data['product']
+                # product = request.POST['product']
+                # product = VantaiProduct.objects.get(pk= product)
+                print('get product', product.product_id)
+                print("hanh trinh bat dau: ", schedule_date)
+                print("hanh trinh bat dau: ", schedule_date.year)
+                print("hanh trinh bat dau: ", schedule_date.month)
+                print("hanh trinh bat dau: ", schedule_date.day)
+                print("hanh trinh  bat dau loc: ", schedule_time.hour)
+                print("hanh trinh  bat dau loc: ", schedule_time.minute)
+                print("hanh trinh  bat dau loc: ", schedule_time.second)
 
-            # form.save()
-        
-            start_date_str = schedule_date.strftime('%Y-%m-%d')
-            start_time_string = schedule_time.strftime('%H:%M:%S')
+                # form.save()
             
-            end_date_str = schedule_date.strftime('%Y-%m-%d')
-            end_time_string = schedule_time.strftime('%H:%M:%S')
-            print(end_time_string)
-            # body = {
-            #     "equipment_id":xe_phutrach.hahai_id,
-            #     "schedule_date": f"{s_y}-{s_m}-{s_d} {s_h}:{s_minute}:{s_s}",
-            #     "location_id": startlocation_id,
-            #     # "location_name": startlocation_object.name,
-
-            #     "location_dest_id": endlocation_id,
+                start_date_str = schedule_date.strftime('%Y-%m-%d')
+                start_time_string = schedule_time.strftime('%H:%M:%S')
                 
-            # }
-            body = {
-                "equipment_id":xe_phutrach.hahai_id,
-                "schedule_date": f"{start_date_str} {start_time_string}",
-                "end_date": f"{end_date_str} {end_time_string}",
-                "location_id": startlocation_id,
-                "location_dest_id": endlocation_id,
-                "employee_id":hahai_member.employee_id,
-                "fleet_product_id": product.product_id
-                # "location_name": "Hà Nội",
-                # "location_dest_name": "Sài Gòn"
-            }
-            print(body)
-            abc = themmoichuyendi(body)
-            # {'success': True, 'data': 
-            # {'id': 7299, 
-            #   'equipment_id': {'id': 3, 'name': 'Xe 01', 'license_plate': '001'}, 
-            #   'location_name': 'Hà Nội', 
-            #   'location_dest_name': 'Sài Gòn', 
-            #   'incurred_fee': 0.0, 'incurred_note': None, 
-            #   'incurred_fee_2': 0.0, 'incurred_note_2': None, 
-            #   'schedule_date': '2023-03-04', 'start_date': None, 
-            #   'end_date': None, 'state': '1_draft', 'ward_id': None, 
-            #   'district_id': None, 'state_id': None, 'ward_dest_id': None, 'district_dest_id': None, 
-            #   'state_dest_id': None, 'company_name': None, 'eating_fee': 0.0, 'law_money': 0.0, 'road_tiket_fee': 0.0, 
-            # 'fee_total': 0.0, 'odometer_start': 0, 'odometer_dest': 0, 'attachment_ids': []}, 'errorData': {}}
-            print("Kết quả", abc)
-            return HttpResponseRedirect('/vantai/tatcachuyendi')
-        else:
+                end_date_str = schedule_date.strftime('%Y-%m-%d')
+                end_time_string = schedule_time.strftime('%H:%M:%S')
+                print(end_time_string)
+                # body = {
+                #     "equipment_id":xe_phutrach.hahai_id,
+                #     "schedule_date": f"{s_y}-{s_m}-{s_d} {s_h}:{s_minute}:{s_s}",
+                #     "location_id": startlocation_id,
+                #     # "location_name": startlocation_object.name,
+
+                #     "location_dest_id": endlocation_id,
+                    
+                # }
+                body = {
+                    "equipment_id":xe_phutrach.hahai_id,
+                    "schedule_date": f"{start_date_str} {start_time_string}",
+                    # "end_date": f"{end_date_str} {end_time_string}",
+                    "location_id": startlocation_id,
+                    "location_dest_id": endlocation_id,
+                    "employee_id":hahai_member.employee_id,
+                    "fleet_product_id": product.product_id
+                    # "location_name": "Hà Nội",
+                    # "location_dest_name": "Sài Gòn"
+                }
+                print(body)
+                abc = themmoichuyendi(body)
+                # {'success': True, 'data': 
+                # {'id': 7299, 
+                #   'equipment_id': {'id': 3, 'name': 'Xe 01', 'license_plate': '001'}, 
+                #   'location_name': 'Hà Nội', 
+                #   'location_dest_name': 'Sài Gòn', 
+                #   'incurred_fee': 0.0, 'incurred_note': None, 
+                #   'incurred_fee_2': 0.0, 'incurred_note_2': None, 
+                #   'schedule_date': '2023-03-04', 'start_date': None, 
+                #   'end_date': None, 'state': '1_draft', 'ward_id': None, 
+                #   'district_id': None, 'state_id': None, 'ward_dest_id': None, 'district_dest_id': None, 
+                #   'state_dest_id': None, 'company_name': None, 'eating_fee': 0.0, 'law_money': 0.0, 'road_tiket_fee': 0.0, 
+                # 'fee_total': 0.0, 'odometer_start': 0, 'odometer_dest': 0, 'attachment_ids': []}, 'errorData': {}}
+                print("Kết quả", abc)
+                return HttpResponseRedirect('/vantai/tatcachuyendi')
+            else:
+                msg = 'Form is not valid'
+        except Exception as ex:
             msg = 'Form is not valid'
     else:
-        form = HanhtrinhForm()
+        form = HanhtrinhForm(initial={'start_date':datetime.datetime.now().date(),'start_time':datetime.datetime.now().time()})
     joyneys = tatcadiadiem()['data']['results']
     # print(joyneys)
     return render(request, "vantai/taohanhtrinh.html", {"form": form, 'member':hahai_member, "xe": xe_phutrach, "joyneys": joyneys, "msg": msg, "success": success})
