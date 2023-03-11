@@ -275,13 +275,14 @@ class ChuyendiListView(LoginRequiredMixin, ListView):
                             attachments = item['attachment_ids']
                             for attachment in attachments:
                                 AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
-
+                        if hanhtrinh.id:
+                            results.append(hanhtrinh)
                     except Exception as ex:
                         print('sync chuyen di err: ', ex)
         # else:        
-            queryset= Hanhtrinh.objects.filter(employee_id = employee_id).order_by('-schedule_date', '-created_time')
+            # queryset= Hanhtrinh.objects.filter(employee_id = employee_id).order_by('-schedule_date', '-created_time')
         print(queryset)
-        return queryset
+        return results
 
 class DeviceListView(LoginRequiredMixin, ListView):
     model = Device
