@@ -522,7 +522,7 @@ def register_user(request):
         except Exception as ex:
             msg = 'Form is not valid'
     else:
-        form = HanhtrinhForm(initial={'start_date':datetime.datetime.now().date(),'start_time':datetime.datetime.now().time()})
+        form = HanhtrinhForm(initial={'start_date':datetime.datetime.now().date(),'start_time':datetime.datetime.now().strftime("%H:%M")})
     joyneys = tatcadiadiem()['data']['results']
     # print(joyneys)
     return render(request, "vantai/taohanhtrinh.html", {"form": form, 'member':hahai_member, "xe": xe_phutrach, "joyneys": joyneys, "msg": msg, "success": success})
