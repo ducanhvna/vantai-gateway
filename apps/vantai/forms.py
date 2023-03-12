@@ -55,7 +55,7 @@ class HanhtrinhForm(forms.ModelForm):
     #         }
     #     ))
     start_date=forms.DateField(widget=DateInput())
-    start_time = forms.TimeField(widget=TimeInput())
+    start_time = forms.TimeField(widget=TimeInput(format='%H:%M'))
     # end_date=forms.DateField(widget=DateInput())
     # end_time = forms.TimeField(widget=TimeInput())
     
