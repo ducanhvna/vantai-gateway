@@ -308,6 +308,7 @@ def capnhatsokmbatdauhanhtrinh(hanhtrinh, sokm, body, attackements=None):
 
 def capnhatsokmketthuchanhtrinh(hanhtrinh, sokm, body, attackements=None):
     # user = order.user
+    print('update: ',hanhtrinh)
     url = f'https://vantaihahai.com/api/fleet.trip/{hanhtrinh}/do_odometer_end?odometer_end={sokm}'
     if attackements:
         url = url + '&attachments={}'.format(attackements)
