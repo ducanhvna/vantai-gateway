@@ -48,8 +48,9 @@ class VantaihahaiMembership(models.Model):
             return self.member.name
         
 class VantaiProduct(models.Model):
-    name = models.TextField()
+    name = models.TextField(default='', null=True, blank=True)
     product_id = models.IntegerField(default=0, unique=True)
+    is_activated = models.BooleanField(default=True)
     def __str__(self) -> str:
         return self.name
 

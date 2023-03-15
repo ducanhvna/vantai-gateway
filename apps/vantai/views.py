@@ -13,7 +13,7 @@ from apps.authentication.forms import SignUpForm
 from .models import AttackmentHanhTrinh, MemberSalary, VantaiLocation, VantaiProduct, VantaihahaiEquipment, VantaihahaiMember,VantaihahaiMembership
 from django.views.generic import DetailView, ListView
 from .models import Hanhtrinh, Device, VantaihahaiMember
-from .unity import GetThongtintaixe, danhsachtatcaxe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe, tatcadiadiem, themmoichuyendi, \
+from .unity import GetThongtintaixe, danhsachtatcaxe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe, tatcadiadiem, tatcamathang, themmoichuyendi, \
     capnhatsokmketthuchanhtrinh, capnhatsokmbatdauhanhtrinh
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
@@ -151,8 +151,23 @@ class MathangListView(LoginRequiredMixin, ListView):
         #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
         # # return queryset.prefetch_related("contacts", "account")
         queryset= VantaiProduct.objects.all()
-        print(queryset)
-        return queryset
+        for item in queryset:
+            item.is_activated = False
+            item.save()
+        queryset= tatcamathang()['data']['results']
+        results = []
+        for item in queryset:
+            
+            product, created = VantaiProduct.objects.get_or_create(product_id = item['id'])
+            # print(product) 
+            product.name = item['name']
+            product.is_activated = True
+            product.save()
+            results.append(product)
+        
+        
+        # print(results)
+        return results
 
 # EquimentListView
 class EquipmentListView(LoginRequiredMixin, ListView):
@@ -523,6 +538,7 @@ def register_user(request):
             msg = 'Form is not valid'
     else:
         form = HanhtrinhForm(initial={'start_date':datetime.datetime.now().date(),'start_time':datetime.datetime.now().strftime("%H:%M")})
+        form.fields['product'].queryset = VantaiProduct.objects.filter(is_activated=True)
     joyneys = tatcadiadiem()['data']['results']
     # print(joyneys)
     return render(request, "vantai/taohanhtrinh.html", {"form": form, 'member':hahai_member, "xe": xe_phutrach, "joyneys": joyneys, "msg": msg, "success": success})
