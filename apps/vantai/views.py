@@ -664,7 +664,7 @@ class CapnhatBatdauHanhtrinhView(TemplateView):
         context = super(CapnhatBatdauHanhtrinhView, self).get_context_data(**kwargs)
         hanhtrinh_pk = self.kwargs['pk']
         hanhtrinh = Hanhtrinh.objects.get(pk=hanhtrinh_pk)
-        form = KmHanhtrinhForm(initial={'name':f"Start-{hanhtrinh.hanhtrinh_id}",'odo':1000,'hanhtrinh': hanhtrinh})  # instance= None
+        form = KmHanhtrinhForm(initial={'name':f"Start-{hanhtrinh.hanhtrinh_id}",'odo':None,'hanhtrinh': hanhtrinh})  # instance= None
 
         context["form"] = form
         #context["latest_article"] = latest_article
@@ -711,7 +711,7 @@ class CapnhatKetthucHanhtrinhView(TemplateView):
         context = super(CapnhatKetthucHanhtrinhView, self).get_context_data(**kwargs)
         hanhtrinh_pk = self.kwargs['pk']
         hanhtrinh = Hanhtrinh.objects.get(pk=hanhtrinh_pk)
-        form = KmHanhtrinhForm(initial={'name':f"End-{hanhtrinh.hanhtrinh_id}",'odo':1000,'hanhtrinh': hanhtrinh})  # instance= None
+        form = KmHanhtrinhForm(initial={'name':f"End-{hanhtrinh.hanhtrinh_id}",'odo':None,'hanhtrinh': hanhtrinh})  # instance= None
 
         context["form"] = form
         #context["latest_article"] = latest_article
