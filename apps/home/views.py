@@ -32,6 +32,7 @@ def index(request):
     #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
     #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
     # # return queryset.prefetch_related("contacts", "account")
+    results= []
     if len(devices)>0:
         device = devices[0]
         memberships = VantaihahaiMembership.objects.filter(device=device)
@@ -42,7 +43,7 @@ def index(request):
             print("Tat ca cac chuyen di cua: ", employee_id)
             queryset= tatcachuyendicuataixe(employee_id)['data']['results']
             print(queryset)
-            results= []
+            
             for item in queryset:
                 try:
                     hanhtrinh= None

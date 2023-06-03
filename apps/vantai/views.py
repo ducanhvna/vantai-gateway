@@ -240,6 +240,7 @@ class ChuyendiListView(LoginRequiredMixin, ListView):
         # queryset = super(PodDetailView, self).get_queryset()
         print('abc',self.request.user)
         queryset = []
+        results= []
         # find device
         devices = Device.objects.filter(user=self.request.user)
         # if self.request.user.role != "ADMIN" and not self.request.user.is_superuser:
@@ -262,7 +263,7 @@ class ChuyendiListView(LoginRequiredMixin, ListView):
                 print("Tat ca cac chuyen di cua: ", employee_id)
                 queryset= tatcachuyendicuataixe(employee_id)['data']['results']
                 print(queryset)
-                results= []
+                
                 for item in queryset:
                     try:
                         hanhtrinh= None
