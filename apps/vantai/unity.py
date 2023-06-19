@@ -2,9 +2,32 @@
 from django.conf import  settings
 import requests, json
 from .models import VantaihahaiMember, VantaihahaiMembership
+import xmlrpc.client
+class VanTaiHaHai():
+    def __init__(self):
+        
+        self.url = settings.VANTAIHAHAI_CONFIG['url']
+        self.db = settings.VANTAIHAHAI_CONFIG['db'] 
+        self.username = settings.VANTAIHAHAI_CONFIG['username']
+        self.password = settings.VANTAIHAHAI_CONFIG['password']
+        self.models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(self.url))
+        common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url))
+        self.uid = common.authenticate(self.db, self.username, self.password, {})
+    def themmoichuyendi(self, body):
+        print(self.uid)
+        print(self.password)
+        print(self.db)
+        # Get list chuyen di
+        location_ids = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.location',  'search', [[]], {})
+        list_locations = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.location', 'read',
+                [list_locations],{'fields':['id','ward_id', 'district_id']})
+        print("danh sach dia chir", list_locations)
+        
+    
 def checkishasmembership(device):
     result = VantaihahaiMembership.objects.filter(device=device)
     return len(result)>0
+
 def CreateVantaihahaiMember(device, member_id, name):
     new_memmber = VantaihahaiMember(member_id= member_id, name = name)
     new_memmber.save()

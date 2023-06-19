@@ -162,6 +162,10 @@ VANTAIHAHAI_CONFIG = {
         "expires_in": 72000000,
         "refresh_token": "7a93d01fc62b2ebd0b1632ea0532ed96131d3bf0",
         "refresh_expires_in": 72000000,
-        'register_token':'123456'
-   
+        'register_token':'123456',
+        'url': 'https://vantaihahai.com',
+        'db': 'fleet',
+        'username':'admin',
+        'password':'admin'
+          
 }
