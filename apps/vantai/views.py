@@ -14,7 +14,7 @@ from .models import AttackmentHanhTrinh, MemberSalary, VantaiLocation, VantaiPro
 from django.views.generic import DetailView, ListView
 from .models import Hanhtrinh, Device, VantaihahaiMember
 from .unity import GetThongtintaixe, danhsachtatcaxe, tatcachuyendicuataixe, cacchuyendihomnaycuataixe, tatcadiadiem, tatcamathang, themmoichuyendi, \
-    capnhatsokmketthuchanhtrinh, capnhatsokmbatdauhanhtrinh
+    capnhatsokmketthuchanhtrinh, capnhatsokmbatdauhanhtrinh, VanTaiHaHai
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.utils import timezone
@@ -517,8 +517,10 @@ def register_user(request):
                     # "location_name": "Hà Nội",
                     # "location_dest_name": "Sài Gòn"
                 }
-                print(body)
-                abc = themmoichuyendi(body)
+                
+                vantai = VanTaiHaHai()
+                print("them moi body: ",body)
+                abc = vantai.themmoichuyendi(body)
                 # {'success': True, 'data': 
                 # {'id': 7299, 
                 #   'equipment_id': {'id': 3, 'name': 'Xe 01', 'license_plate': '001'}, 

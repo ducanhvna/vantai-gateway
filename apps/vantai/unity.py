@@ -5,23 +5,53 @@ from .models import VantaihahaiMember, VantaihahaiMembership
 import xmlrpc.client
 class VanTaiHaHai():
     def __init__(self):
-        
-        self.url = settings.VANTAIHAHAI_CONFIG['url']
-        self.db = settings.VANTAIHAHAI_CONFIG['db'] 
-        self.username = settings.VANTAIHAHAI_CONFIG['username']
-        self.password = settings.VANTAIHAHAI_CONFIG['password']
-        self.models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(self.url))
-        common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url))
-        self.uid = common.authenticate(self.db, self.username, self.password, {})
+        print('init hahai')
+        try:
+            self.url = settings.VANTAIHAHAI_CONFIG['url']
+            self.db = settings.VANTAIHAHAI_CONFIG['db'] 
+            self.username = settings.VANTAIHAHAI_CONFIG['username']
+            self.password = settings.VANTAIHAHAI_CONFIG['password']
+            self.models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(self.url))
+            common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(self.url))
+            self.uid = common.authenticate(self.db, self.username, self.password, {})
+        except Exception as ex:
+            print("day la: ", ex)
     def themmoichuyendi(self, body):
-        print(self.uid)
-        print(self.password)
-        print(self.db)
+        print("Bat dau them moi chuyen di")
         # Get list chuyen di
+       
         location_ids = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.location',  'search', [[]], {})
         list_locations = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.location', 'read',
-                [list_locations],{'fields':['id','ward_id', 'district_id']})
+                [location_ids],{'fields':['id','ward_id', 'district_id','state_id']})
+    
         print("danh sach dia chir", list_locations)
+      
+        location_id = body['location_id']
+        location_dest_id = body['location_dest_id']
+        location_start = None
+        location_dest = None
+        for location in list_locations:
+            try:
+                if location['id'] == int(location_id):
+                    print('tim thay: bat dau', location_id)
+                    location_start = location
+                if location['id'] == int(location_dest_id):
+                    print('tim thay: kt', location_dest)
+                    location_dest = location
+            except Exception as ex:
+                print(ex)
+        if location_start != None:
+            body['ward_id'] = location_start['ward_id'][0]
+            body['district_id'] = location_start['district_id'][0]
+            body['state_id'] = location_start['state_id'][0]
+        if location_dest != None:
+            body['ward_dest_id'] = location_dest['ward_id'][0]
+            body['district_dest_id'] = location_dest['district_id'][0]
+            body['state_dest_id'] = location_dest['state_id'][0]
+        print('chot ha: ', body)
+        id_trip = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'create', [body])
+       
+        return id_trip
         
     
 def checkishasmembership(device):
