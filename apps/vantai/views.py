@@ -702,7 +702,8 @@ class CapnhatKetthucHanhtrinhView(TemplateView):
             if main_img:
                 attackements=[main_img]
             body={}
-            capnhatsokmketthuchanhtrinh(hanhtrinh.hanhtrinh_id, odo_end, body, attackements)
+            vantai = VanTaiHaHai()
+            vantai.capnhatsokmketthuchanhtrinh(hanhtrinh.hanhtrinh_id, odo_end, body, attackements)
             return HttpResponseRedirect('/vantai/chitiethanhtrinh/{}/'.format(hanhtrinh.id))
 
         context = self.get_context_data(form=form)
