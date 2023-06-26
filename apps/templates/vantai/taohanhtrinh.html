@@ -289,6 +289,11 @@ function SelectStartLocation(index, member_id){
   document.getElementById("startlocationdetailName").innerHTML = td1.innerHTML
   element.scrollIntoView();
   document.getElementById("startLocationid").value = member_id
+  dropdown = document.getElementById('dropdown')
+  if (dropdown.style.display == 'none')
+      dropdown.style.display = 'block';
+  else
+      dropdown.style.display = 'none';
 }
 
 function SelectEndLocation(index, member_id){
@@ -302,6 +307,11 @@ function SelectEndLocation(index, member_id){
   document.getElementById("endlocationdetailName").innerHTML = td1.innerHTML
   element.scrollIntoView();
   document.getElementById("endLocationid").value = member_id
+  dropdown = document.getElementById('dropdown2')
+  if (dropdown.style.display == 'none')
+      dropdown.style.display = 'block';
+  else
+      dropdown.style.display = 'none';
 
 }
 function myFunction2() {
