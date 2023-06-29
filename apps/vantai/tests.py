@@ -19,7 +19,7 @@ from apps.vantai.unity import GetThongtintaixe, tatcachuyendicuataixe, cacchuyen
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.utils import timezone
-
+from django.db.models import Q
 from django.test import TestCase
 # from myapp.models import Animal
 from django.contrib.auth.models import User
@@ -118,11 +118,21 @@ def scan_location():
 
 def scan_product():
     queryset= tatcamathang()['data']['results']
+    lst_product = [item['id'] for item in queryset]
+    try:
+        VantaiProduct.objects.filter(~Q(product_id__in = lst_product)).delete()
+    except Exception as ex:
+        print(ex)
     for item in queryset:
         try:
-            product = VantaiProduct(name=item['name'], product_id = item['id'])
+            product = VantaiProduct.objects.get(product_id = item['id'])
+            product.name = item['name']
+            print('update, ', item['name'])
             product.save()
         except Exception as ex:
+            product = VantaiProduct(name=item['name'], product_id = item['id'])
+            print('create: ', item['id'])
+            product.save()
             print(ex)
 
 def create_user_for_member(member, owner_user_name):

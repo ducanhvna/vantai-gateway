@@ -36,10 +36,10 @@ class VanTaiHaHai():
                     print('tim thay: bat dau', location_id)
                     location_start = location
                 if location['id'] == int(location_dest_id):
-                    print('tim thay: kt', location_dest)
+                    print('tim thay: kt', location_id)
                     location_dest = location
             except Exception as ex:
-                print(ex)
+                print("except tao xe", ex)
         if location_start != None:
             body['ward_id'] = location_start['ward_id'][0]
             body['district_id'] = location_start['district_id'][0]

@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, View
 # import generic UpdateView
 from django.views.generic.edit import UpdateView
+from django.db.models import Q
 import string
 from .forms import HanhtrinhForm, HahaiMembershipForm, AttackmentForm, KmHanhtrinhForm
 from apps.authentication.forms import SignUpForm
@@ -155,6 +156,10 @@ class MathangListView(LoginRequiredMixin, ListView):
             item.is_activated = False
             item.save()
         queryset= tatcamathang()['data']['results']
+        try:
+            VantaiProduct.objects.filter(~Q(product_id__in = lst_product)).delete()
+        except Exception as ex:
+            print(ex)
         results = []
         for item in queryset:
             
@@ -297,7 +302,7 @@ class ChuyendiListView(LoginRequiredMixin, ListView):
                         print('sync chuyen di err: ', ex)
         # else:        
             # queryset= Hanhtrinh.objects.filter(employee_id = employee_id).order_by('-schedule_date', '-created_time')
-        print(queryset)
+        # print(queryset)
         return results
 
 class DeviceListView(LoginRequiredMixin, ListView):
