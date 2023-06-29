@@ -156,7 +156,9 @@ class MathangListView(LoginRequiredMixin, ListView):
             item.is_activated = False
             item.save()
         queryset= tatcamathang()['data']['results']
+        
         try:
+            lst_product = [item['id'] for item in queryset]
             VantaiProduct.objects.filter(~Q(product_id__in = lst_product)).delete()
         except Exception as ex:
             print(ex)
@@ -268,7 +270,8 @@ class ChuyendiListView(LoginRequiredMixin, ListView):
                 print("Tat ca cac chuyen di cua: ", employee_id)
                 queryset= tatcachuyendicuataixe(employee_id)['data']['results']
                 print(queryset)
-                
+                lst_htrinh = [item['id'] for item in queryset]
+                Hanhtrinh.objects.filter(~Q(hanhtrinh_id__in = lst_htrinh)).delete()
                 for item in queryset:
                     try:
                         hanhtrinh= None
