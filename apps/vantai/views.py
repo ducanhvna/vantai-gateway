@@ -131,6 +131,29 @@ class DiadiemListView(LoginRequiredMixin, ListView):
         # # return queryset.prefetch_related("contacts", "account")
         queryset= tatcadiadiem()['data']['results']
         print(queryset)
+        lst_location = [item['id'] for item in queryset]
+        VantaiLocation.objects.filter(~Q(location_id__in = lst_location)).delete()
+
+        for item in queryset:
+            try:
+                if item['ward_id'] != None and item['district_id'] != None and item['state_id'] !=None:
+                    vantai = VantaiLocation(name=item['name'], location_id = item['id'],
+                                            ward_id = item['ward_id']['id'],
+                                            ward_name= item['ward_id']['name'],
+                                            district_id = item['district_id']['id'],
+                                            district_name = item['district_id']['name'],
+                                            state_id = item['state_id']['id'],
+                                            state_name = item['state_id']['name'])
+                    vantai.save()
+                    print("Created")
+                else:
+                    print("Created when false")
+                    vantai = VantaiLocation(name=item['name'], location_id = item['id'])
+                    vantai.save()
+                print("Sucess when false")
+            except Exception as ex:
+                
+                print(ex)
         return queryset
 # MathangListView
 class MathangListView(LoginRequiredMixin, ListView):
