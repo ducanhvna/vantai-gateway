@@ -41,13 +41,19 @@ class VanTaiHaHai():
             except Exception as ex:
                 print("except tao xe", ex)
         if location_start != None:
-            body['ward_id'] = location_start['ward_id'][0]
-            body['district_id'] = location_start['district_id'][0]
-            body['state_id'] = location_start['state_id'][0]
+            try:
+                body['ward_id'] = location_start['ward_id'][0]
+                body['district_id'] = location_start['district_id'][0]
+                body['state_id'] = location_start['state_id'][0]
+            except Exception as ex:
+                print('start errr', ex)
         if location_dest != None:
-            body['ward_dest_id'] = location_dest['ward_id'][0]
-            body['district_dest_id'] = location_dest['district_id'][0]
-            body['state_dest_id'] = location_dest['state_id'][0]
+            try:
+                body['ward_dest_id'] = location_dest['ward_id'][0]
+                body['district_dest_id'] = location_dest['district_id'][0]
+                body['state_dest_id'] = location_dest['state_id'][0]
+            except Exception as ex:
+                print('des errr', ex)
         print('chot ha: ', body)
         id_trip = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'create', [body])
        
