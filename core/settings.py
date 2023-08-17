@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'apps.vantai',
     'apps.devices',
     'rest_framework',
-    # 'rest_framework_simplejwt',
+    'rest_framework_simplejwt',
 
 ]
 
