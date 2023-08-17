@@ -11,7 +11,11 @@ from django.template import loader
 from django.urls import reverse
 from apps.devices.models import Device
 from apps.vantai.models import AttackmentHanhTrinh, Hanhtrinh, VantaihahaiMembership
-from apps.vantai.unity import cacchuyendihomnaycuataixe, tatcachuyendicuataixe
+from apps.vantai.unity import cacchuyendihomnaycuataixe, tatcachuyendicuataixe, \
+    GetThongtintaixe
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 @login_required(login_url="/login/")
 def index(request):
@@ -110,3 +114,37 @@ def pages(request):
     except:
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
+
+class ThongtintaixeApi(APIView): 
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = [authentication.SessionAuthentication]
+    def get(self, request, *args, **kwargs): 
+        
+        try:
+            user = self.request.user 
+            devices = Device.objects.filter(user=self.request.user)
+            print("danh sach : ",devices)
+            # device = user.user_device
+            if len(devices)>0:
+                device = devices[0]
+            # if device:
+                data = GetThongtintaixe(device.device_membership.member.member_id)
+                data['data']['code'] = device.name
+                # salaries = MemberSalary.objects.filter(member = device.device_membership.member)
+                # ls = []
+                # for item in salaries:
+                #     ls.append({'date':item.date, 'salary':item.salary})
+                # data['data']['salary'] = ls
+
+                return Response(data)
+
+            return Response({
+                            'status': False, 
+                            'error' : "You does not own any device, please create a new one"
+                        })
+        except Exception as ex:
+            print(ex)
+            return Response({
+                            'status': False, 
+                            'error' : "You does not own any device, please create a new one"
+                        })
