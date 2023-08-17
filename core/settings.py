@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'apps.home',  # Enable the inner home (home)
     'apps.vantai',
     'apps.devices',
-    # 'rest_framework',
+    'rest_framework',
     # 'rest_framework_simplejwt',
 
 ]
