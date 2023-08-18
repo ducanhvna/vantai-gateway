@@ -14,7 +14,7 @@ from apps.devices.models import Device
 from apps.vantai.models import AttackmentHanhTrinh, Hanhtrinh, VantaihahaiEquipment, VantaihahaiMember, VantaihahaiMembership
 from apps.vantai.unity import cacchuyendihomnaycuataixe, chitiethanhtrinh, tatcachuyendicuataixe, \
     GetThongtintaixe, danhsachtatcaxe, VanTaiHaHai, thongtinxe, danhsachyeucaubaotrixe, capnhatghichubaotri, \
-    danhsachcacphuongtheohuyen, danhsachcachuyentheotinh, danhsachcactinh
+    danhsachcacphuongtheohuyen, danhsachcachuyentheotinh, danhsachcactinh, tatcadiadiem
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -542,4 +542,24 @@ class ListPhuongtheohuyen(APIView):
             return Response({
                             'status': False, 
                             'error' : "You does not own any device, please create a new one"
+                        })
+
+
+class TatcaDiadiem(APIView): 
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = [authentication.SessionAuthentication]
+    def get(self, request, *args, **kwargs): 
+        
+        # user = request.user 
+        try:
+            # device = user.user_device
+        # if device:
+            
+            result = tatcadiadiem()
+            return Response(result)
+        except Exception as ex:
+            # print(ex)
+            return Response({
+                            'status': False, 
+                            'error' : ex.message
                         })

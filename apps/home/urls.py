@@ -7,7 +7,7 @@ from django.urls import path, re_path
 from apps.home import views
 from .views import ThongtintaixeApi, Tatcachuyendi, Cacchuyenhomnay, CapnhatkmKetthuc, \
                     CapnhatkmBatdau, Danhsachtatcaxe, Thongtinxe, ListYeucaubaotrixe, \
-                    TaoghichuBaotri, Danhsachcactinh, ListHuyentheotinh
+                    TaoghichuBaotri, Danhsachcactinh, ListHuyentheotinh, TatcaDiadiem
 urlpatterns = [
 
     # The home page
@@ -27,5 +27,6 @@ urlpatterns = [
     path("api/core/<int:province>/danhsachcachuyen/", ListHuyentheotinh.as_view(), name="list_huyen"),
     # district
     path("api/core/<int:district>/danhsachcacphuong/", ListHuyentheotinh.as_view(), name="list_phuong"),
+    path("api/core/danhsachcacdiadiem/", TatcaDiadiem.as_view(), name="list_diadiem"),
     re_path(r'^.*\.*', views.pages, name='pages'),
 ]
