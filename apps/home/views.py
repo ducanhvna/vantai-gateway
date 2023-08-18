@@ -433,8 +433,8 @@ class Thongtinxe(APIView):
         # if device:
             
             result = thongtinxe(ht_object.hahai_id)
-            result['sid'] = result['id']
-            result['id'] = ht_object.pk
+            result['data']['sid'] = result['data']['id']
+            result['data']['id'] = ht_object.pk
             return Response(result)
         except Exception as ex:
             print(ex)
