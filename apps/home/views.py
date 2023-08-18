@@ -396,6 +396,8 @@ class Danhsachtatcaxe(APIView):
             object_xe.license_plate = license_plate
             object_xe.name = name
             object_xe.save()
+            item['sid'] = item['id']
+            item['id'] = object_xe.pk
 
             # print("Thông tin tai xe: ", owner_user_id)
             # thongtintaixe =  GetThongtintaixe(owner_user_id)
