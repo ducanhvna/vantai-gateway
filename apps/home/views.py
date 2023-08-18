@@ -317,7 +317,7 @@ class CapnhatkmKetthuc(APIView):
             #         att = AttackmentHanhTrinh(hanhtrinh = ht_object, url= item)
             #         att.save()
 
-        result = chitiethanhtrinh(ht_object.hanhtrinh_id)
+        result = chitiethanhtrinh(ht_object.hanhtrinh_id)['data']
         result['sid'] = result['id']
         result['id'] = ht_object.pk
         return Response(result)
@@ -368,7 +368,7 @@ class CapnhatkmBatdau(APIView):
             #     if len(atts) == 0:
             #         att = AttackmentHanhTrinh(hanhtrinh = ht_object, url= item)
             #         att.save()
-        result = chitiethanhtrinh(ht_object.hanhtrinh_id)
+        result = chitiethanhtrinh(ht_object.hanhtrinh_id)['data']
         result['sid'] = result['id']
         result['id'] = ht_object.pk
         return Response(result)
