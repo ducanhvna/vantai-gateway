@@ -318,7 +318,7 @@ class CapnhatkmKetthuc(APIView):
             #         att.save()
 
         result = chitiethanhtrinh(ht_object.hanhtrinh_id)
-        result['data']['sid'] = result['id']
+        result['data']['sid'] = result['data']['id']
         result['data']['id'] = ht_object.pk
         return Response(result)
         # except Exception as ex:
@@ -369,6 +369,6 @@ class CapnhatkmBatdau(APIView):
             #         att = AttackmentHanhTrinh(hanhtrinh = ht_object, url= item)
             #         att.save()
         result = chitiethanhtrinh(ht_object.hanhtrinh_id)
-        result['data']['sid'] = result['id']
+        result['data']['sid'] = result['data']['id']
         result['data']['id'] = ht_object.pk
         return Response(result)
