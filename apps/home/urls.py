@@ -6,7 +6,7 @@ Copyright (c) 2019 - present AppSeed.us
 from django.urls import path, re_path
 from apps.home import views
 from .views import ThongtintaixeApi, Tatcachuyendi, Cacchuyenhomnay, CapnhatkmKetthuc, \
-                    CapnhatkmBatdau, Danhsachtatcaxe
+                    CapnhatkmBatdau, Danhsachtatcaxe, Thongtinxe
 urlpatterns = [
 
     # The home page
@@ -18,5 +18,6 @@ urlpatterns = [
     path("api/core/<int:hanhtrinh>/capnhatkmbatdau/", CapnhatkmBatdau.as_view(), name='hahai_capnhatkmbatdau'),
     path("api/core/danhsachtatcaxe/", Danhsachtatcaxe.as_view(), name='hahai_danhsachtatcaxe'),
     # Matches any html file
+    path("api/core/<int:equitment>/thongtinxe", Thongtinxe.as_view(), name="hahai_thongtinxe"),
     re_path(r'^.*\.*', views.pages, name='pages'),
 ]

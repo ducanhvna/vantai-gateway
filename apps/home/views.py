@@ -13,7 +13,7 @@ from django.db.models import Q
 from apps.devices.models import Device
 from apps.vantai.models import AttackmentHanhTrinh, Hanhtrinh, VantaihahaiEquipment, VantaihahaiMember, VantaihahaiMembership
 from apps.vantai.unity import cacchuyendihomnaycuataixe, chitiethanhtrinh, tatcachuyendicuataixe, \
-    GetThongtintaixe, danhsachtatcaxe, VanTaiHaHai
+    GetThongtintaixe, danhsachtatcaxe, VanTaiHaHai, thongtinxe
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -420,3 +420,23 @@ class Danhsachtatcaxe(APIView):
             #         member.save()
         
         return Response(queryset)
+    
+class Thongtinxe(APIView): 
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = [authentication.SessionAuthentication]
+    def get(self, request, *args, **kwargs): 
+        equitment_id = kwargs.get('equitment')
+        ht_object = VantaihahaiEquipment.objects.get(pk=equitment_id)
+        user = request.user 
+        try:
+            # device = user.user_device
+        # if device:
+            
+            result = thongtinxe(ht_object.hahai_id)
+            return Response(result)
+        except Exception as ex:
+            print(ex)
+            return Response({
+                            'status': False, 
+                            'error' : "You does not own any device, please create a new one"
+                        })
