@@ -306,7 +306,7 @@ class CapnhatkmKetthuc(APIView):
         # attackements = request.data.get('attackements')
         attackements = []
         ht_object = Hanhtrinh.objects.get(pk=hanhtrinh)
-        ht_object.location_dest_name= km_end
+        ht_object.odo_end= km_end
         ht_object.save()
         vantai = VanTaiHaHai()
         vantai.capnhatsokmketthuchanhtrinh(ht_object.hanhtrinh_id, km_end, None, attackements)
