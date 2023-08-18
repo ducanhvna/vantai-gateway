@@ -30,6 +30,6 @@ urlpatterns = [
     path("api/core/<int:district>/danhsachcacphuong/", ListHuyentheotinh.as_view(), name="list_phuong"),
     path("api/core/danhsachcacdiadiem/", TatcaDiadiem.as_view(), name="list_diadiem"),
 
-    path("api/core/<int:equitment>/taohanhtrinh/", Taohanhtrinh.as_view(), name="hahai_taohanhtrinh"),
+    path("api/core/taohanhtrinh/", Taohanhtrinh.as_view(), name="hahai_taohanhtrinh"),
     re_path(r'^.*\.*', views.pages, name='pages'),
 ]
