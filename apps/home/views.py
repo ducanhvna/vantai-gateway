@@ -563,3 +563,32 @@ class TatcaDiadiem(APIView):
                             'status': False, 
                             'error' : ex.message
                         })
+
+class Taohanhtrinh(APIView): 
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = [authentication.SessionAuthentication]
+    def post(self, request, *args, **kwargs): 
+        # equitment = kwargs.get('equitment')
+        note = request.data.get('note')
+        # user = request.user 
+        try:
+            # device = user.user_device
+
+            # xe_phutrachs = VantaihahaiEquipment.objects.filter(owner_user_id= hahai_member.member_id)
+            # if device:
+            body = {
+                    "equipment_id": request.data.get('equipment_id'),
+                    "schedule_date": request.data.get('schedule_date'),
+                    "location_id": request.data.get('location_id'),
+                    "location_dest_id": request.data.get('location_dest_id'),
+                    "employee_id":request.data.get('employee_id'),
+                    "fleet_product_id": request.data.get('fleet_product_id')
+                }
+            result = themmoichuyendi(body)
+            return Response(result)
+        except Exception as ex:
+            print(ex)
+            return Response({
+                            'status': False, 
+                            'error' : ex.message
+                        })
