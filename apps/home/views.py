@@ -212,8 +212,8 @@ class Tatcachuyendi(APIView):
                         attachments = item['attachment_ids']
                         for attachment in attachments:
                             AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
-                    if hanhtrinh.id:
-                        results.append(hanhtrinh)
+                    # if hanhtrinh.id:
+                    #     results.append(hanhtrinh)
                     # except Exception as ex:
                     #     return Response({
                     #         'status': False, 
@@ -253,20 +253,37 @@ class Cacchuyenhomnay(APIView):
                 member = membership.member
                 employee_id = member.employee_id
                 result = cacchuyendihomnaycuataixe(employee_id)['data']['results']
-                # if len(result['data']['results']) == 0:
-                #     list_hanhtrinh_created = HanhTrinh.objects.filter(created_by = user)
-                #     list_hanhtrinh_created_id = []
-                #     for item in list_hanhtrinh_created:
-                #         list_hanhtrinh_created_id.append(item.hanhtrinh_id)
-                #     all_hanhtrinh = tatcachuyendicuataixe()
-                #     new_results = []
-                #     for item in all_hanhtrinh['data']['results']:
-                #         if item['id'] in list_hanhtrinh_created_id:
-                #             new_results.append(item)
-                #     all_hanhtrinh['data']['results'] = new_results
-                #     all_hanhtrinh['data']['count'] = len(new_results)
-                #     print('print all hanh trinh')
-                #     return JsonResponse(all_hanhtrinh)
+                for item in result:
+                    # try:
+                    hanhtrinh= None
+                    hanhtrinh_list = Hanhtrinh.objects.filter(hanhtrinh_id=item['id'])
+                    if len(hanhtrinh_list)>0:
+                        hanhtrinh= hanhtrinh_list[0]
+                    else:
+                        hanhtrinh= Hanhtrinh()
+                    if hanhtrinh:
+                        hanhtrinh.employee_id = employee_id
+                        print("employee: ", employee_id)
+                        hanhtrinh.hanhtrinh_id = item['id']
+                        hanhtrinh.equipment_id = item['equipment_id']['id']
+                        hanhtrinh.license_plate = item['equipment_id']['license_plate']
+                        hanhtrinh.name = item['equipment_id']['name']
+                        try:
+                            hanhtrinh.schedule_date = datetime.datetime.strptime(item['schedule_date'], "%Y-%m-%d")
+                        except Exception as ex:
+                            print(item['schedule_date'])
+                            print(ex)
+                        hanhtrinh.location_name = item['location_name']
+                        hanhtrinh.location_dest_name = item['location_dest_name']
+                        hanhtrinh.odo_start = item['odometer_start']
+                        # hanhtrinh.odo_end = item['odometer_dest']
+                        if item['ward_id']:
+                            hanhtrinh.ward_id  = item['ward_id']
+                        hanhtrinh.save()
+                        
+                        attachments = item['attachment_ids']
+                        for attachment in attachments:
+                            AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
                 return Response(result)
             # except Exception as ex:
             #     print(ex)
