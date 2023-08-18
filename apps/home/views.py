@@ -13,7 +13,7 @@ from django.db.models import Q
 from apps.devices.models import Device
 from apps.vantai.models import AttackmentHanhTrinh, Hanhtrinh, VantaihahaiEquipment, VantaihahaiMember, VantaihahaiMembership
 from apps.vantai.unity import cacchuyendihomnaycuataixe, chitiethanhtrinh, tatcachuyendicuataixe, \
-    GetThongtintaixe, danhsachtatcaxe, VanTaiHaHai, thongtinxe, danhsachyeucaubaotrixe
+    GetThongtintaixe, danhsachtatcaxe, VanTaiHaHai, thongtinxe, danhsachyeucaubaotrixe, capnhatghichubaotri
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -462,3 +462,23 @@ class ListYeucaubaotrixe(APIView):
         #                     'status': False, 
         #                     'error' : "You does not own any device, please create a new one"
         #                 })
+
+class TaoghichuBaotri(APIView): 
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = [authentication.SessionAuthentication]
+    def post(self, request, *args, **kwargs): 
+        equitment = kwargs.get('equitment')
+        note = request.data.get('note')
+        # user = request.user 
+        try:
+            # device = user.user_device
+        # if device:
+            body = request.data
+            result = capnhatghichubaotri(equitment, note, body)
+            return Response(result)
+        except Exception as ex:
+            print(ex)
+            return Response({
+                            'status': False, 
+                            'error' : ex.message
+                        })
