@@ -397,24 +397,24 @@ class Danhsachtatcaxe(APIView):
             object_xe.name = name
             object_xe.save()
 
-            print("Thông tin tai xe: ", owner_user_id)
-            thongtintaixe =  GetThongtintaixe(owner_user_id)
-            print(thongtintaixe)
-            members = VantaihahaiMember.objects.filter(member_id=owner_user_id)
-            if len(members)>0:
-                member = members[0]
-                member.name = thongtintaixe['data']['name']
-                if thongtintaixe['data']['employee_id']:
-                    member.employee_id = thongtintaixe['data']['employee_id']['id']
-                    member.mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone']
-                member.save()
-            else:
-                print("Create new member", thongtintaixe)
-                if thongtintaixe['data']['employee_id']:
-                    member = VantaihahaiMember(member_id = owner_user_id, name = thongtintaixe['data']['name'],
-                                            employee_id = thongtintaixe['data']['employee_id']['id'],
-                                            mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone'],
-                                            updated_time = timezone.now())
-                    member.save()
+            # print("Thông tin tai xe: ", owner_user_id)
+            # thongtintaixe =  GetThongtintaixe(owner_user_id)
+            # print(thongtintaixe)
+            # members = VantaihahaiMember.objects.filter(member_id=owner_user_id)
+            # if len(members)>0:
+            #     member = members[0]
+            #     member.name = thongtintaixe['data']['name']
+            #     if thongtintaixe['data']['employee_id']:
+            #         member.employee_id = thongtintaixe['data']['employee_id']['id']
+            #         member.mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone']
+            #     member.save()
+            # else:
+            #     print("Create new member", thongtintaixe)
+            #     if thongtintaixe['data']['employee_id']:
+            #         member = VantaihahaiMember(member_id = owner_user_id, name = thongtintaixe['data']['name'],
+            #                                 employee_id = thongtintaixe['data']['employee_id']['id'],
+            #                                 mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone'],
+            #                                 updated_time = timezone.now())
+            #         member.save()
         
         return Response(queryset)
