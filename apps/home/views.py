@@ -182,39 +182,39 @@ class Tatcachuyendi(APIView):
                     lst_htrinh = [item['id'] for item in queryset]
                     Hanhtrinh.objects.filter(~Q(hanhtrinh_id__in = lst_htrinh)).delete()
                     for item in queryset:
-                        try:
-                            hanhtrinh= None
-                            hanhtrinh_list = Hanhtrinh.objects.filter(hanhtrinh_id=item['id'])
-                            if len(hanhtrinh_list)>0:
-                                hanhtrinh= hanhtrinh_list[0]
-                            else:
-                                hanhtrinh= Hanhtrinh()
-                            if hanhtrinh:
-                                hanhtrinh.employee_id = employee_id
-                                print("employee: ", employee_id)
-                                hanhtrinh.hanhtrinh_id = item['id']
-                                hanhtrinh.equipment_id = item['equipment_id']['id']
-                                hanhtrinh.license_plate = item['equipment_id']['license_plate']
-                                hanhtrinh.name = item['equipment_id']['name']
-                                hanhtrinh.schedule_date = datetime.datetime.strptime(item['schedule_date'], "%Y-%m-%d")
-                                hanhtrinh.location_name = item['location_name']
-                                hanhtrinh.location_dest_name = item['location_dest_name']
-                                hanhtrinh.odo_start = item['odometer_start']
-                                # hanhtrinh.odo_end = item['odometer_dest']
-                                if item['ward_id']:
-                                    hanhtrinh.ward_id  = item['ward_id']
-                                hanhtrinh.save()
-                                
-                                attachments = item['attachment_ids']
-                                for attachment in attachments:
-                                    AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
-                            if hanhtrinh.id:
-                                results.append(hanhtrinh)
-                        except Exception as ex:
-                            return Response({
-                                'status': False, 
-                                'error' : "sync chuyen di err"
-                            })
+                        # try:
+                        hanhtrinh= None
+                        hanhtrinh_list = Hanhtrinh.objects.filter(hanhtrinh_id=item['id'])
+                        if len(hanhtrinh_list)>0:
+                            hanhtrinh= hanhtrinh_list[0]
+                        else:
+                            hanhtrinh= Hanhtrinh()
+                        if hanhtrinh:
+                            hanhtrinh.employee_id = employee_id
+                            print("employee: ", employee_id)
+                            hanhtrinh.hanhtrinh_id = item['id']
+                            hanhtrinh.equipment_id = item['equipment_id']['id']
+                            hanhtrinh.license_plate = item['equipment_id']['license_plate']
+                            hanhtrinh.name = item['equipment_id']['name']
+                            hanhtrinh.schedule_date = datetime.datetime.strptime(item['schedule_date'], "%Y-%m-%d")
+                            hanhtrinh.location_name = item['location_name']
+                            hanhtrinh.location_dest_name = item['location_dest_name']
+                            hanhtrinh.odo_start = item['odometer_start']
+                            # hanhtrinh.odo_end = item['odometer_dest']
+                            if item['ward_id']:
+                                hanhtrinh.ward_id  = item['ward_id']
+                            hanhtrinh.save()
+                            
+                            attachments = item['attachment_ids']
+                            for attachment in attachments:
+                                AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
+                        if hanhtrinh.id:
+                            results.append(hanhtrinh)
+                        # except Exception as ex:
+                        #     return Response({
+                        #         'status': False, 
+                        #         'error' : "sync chuyen di err"
+                        #     })
             return Response(results)
         except Exception as ex:
             print(ex)
