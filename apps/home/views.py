@@ -12,8 +12,8 @@ from django.urls import reverse
 from django.db.models import Q
 from apps.devices.models import Device
 from apps.vantai.models import AttackmentHanhTrinh, Hanhtrinh, VantaihahaiMembership
-from apps.vantai.unity import cacchuyendihomnaycuataixe, tatcachuyendicuataixe, \
-    GetThongtintaixe
+from apps.vantai.unity import cacchuyendihomnaycuataixe, chitiethanhtrinh, tatcachuyendicuataixe, \
+    GetThongtintaixe, VanTaiHaHai
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -192,6 +192,7 @@ class Tatcachuyendi(APIView):
                     if hanhtrinh:
                         hanhtrinh.employee_id = employee_id
                         print("employee: ", employee_id)
+                        
                         hanhtrinh.hanhtrinh_id = item['id']
                         hanhtrinh.equipment_id = item['equipment_id']['id']
                         hanhtrinh.license_plate = item['equipment_id']['license_plate']
@@ -208,7 +209,7 @@ class Tatcachuyendi(APIView):
                         if item['ward_id']:
                             hanhtrinh.ward_id  = item['ward_id']
                         hanhtrinh.save()
-                        
+                        item['sid'] = hanhtrinh.pk
                         attachments = item['attachment_ids']
                         for attachment in attachments:
                             AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
@@ -280,7 +281,7 @@ class Cacchuyenhomnay(APIView):
                         if item['ward_id']:
                             hanhtrinh.ward_id  = item['ward_id']
                         hanhtrinh.save()
-                        
+                        item['sid'] = hanhtrinh.pk
                         attachments = item['attachment_ids']
                         for attachment in attachments:
                             AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
@@ -291,3 +292,65 @@ class Cacchuyenhomnay(APIView):
             #                     'status': False, 
             #                     'error' : "You does not own any device, please create a new one"
             #                 })
+
+    
+
+class CapnhatkmKetthuc(APIView): 
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = [authentication.SessionAuthentication]
+    def put(self, request, *args, **kwargs): 
+        hanhtrinh = kwargs.get('hanhtrinh')
+        km_end = request.data.get('km')
+        # attackements = request.data.get('attackements')
+        attackements = []
+        user = request.user 
+        try:
+            ht_object = HanhTrinh.objects.get(hanhtrinh_id=hanhtrinh)
+        except:
+            result = chitiethanhtrinh(hanhtrinh)
+            ht_object = HanhTrinh(hanhtrinh_id = hanhtrinh, location_name = result['data']['location_name'], \
+                                    location_dest_name= result['data']['location_dest_name'], equipment_id= result['data']['equipment_id']['id'])
+            ht_object.save()
+
+
+        try:
+            device = user.user_device
+        # if device:
+            body = request.data
+            vantai = VanTaiHaHai()
+            vantai.capnhatsokmketthuchanhtrinh(hanhtrinh.hanhtrinh_id, km_end, body, attackements)
+            attachments = body['attachments']
+            for item in attachments:
+                atts= AttackmentHanhTrinh.objects.filter(hanhtrinh = ht_object, url=item)
+                if len(atts) == 0:
+                    att = AttackmentHanhTrinh(hanhtrinh = ht_object, url= item)
+                    att.save()
+
+            return Response(result)
+        except Exception as ex:
+            print(ex)
+            return Response({
+                            'status': False, 
+                            'error' : "You does not own any device, please create a new one"
+                        })
+        #     vantai = VanTaiHaHai()
+        #     vantai.capnhatsokmketthuchanhtrinh(hanhtrinh.hanhtrinh_id, odo_end, body, attackements)
+        #     return HttpResponseRedirect('/vantai/chitiethanhtrinh/{}/'.format(hanhtrinh.id))
+
+        # context = self.get_context_data(form=form)
+        # return self.render_to_response(context)     
+    # def get_context_data(self, **kwargs):
+    #     """Overide get_context_data method
+    #     """
+        
+    #     context = super(CapnhatKetthucHanhtrinhView, self).get_context_data(**kwargs)
+    #     hanhtrinh_pk = self.kwargs['pk']
+    #     hanhtrinh = Hanhtrinh.objects.get(pk=hanhtrinh_pk)
+    #     form = KmHanhtrinhForm(initial={'name':f"End-{hanhtrinh.hanhtrinh_id}",'odo':None,'hanhtrinh': hanhtrinh})  # instance= None
+
+    #     context["form"] = form
+    #     #context["latest_article"] = latest_article
+
+    #     return context
+    # def get(self, request, *args, **kwargs):
+    #     return self.post(request, *args, **kwargs)
