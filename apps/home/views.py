@@ -497,12 +497,12 @@ class Danhsachcactinh(APIView):
         # if device:
             
             result = danhsachcactinh()
-            return JsonResponse(result)
+            return Response(result)
         except Exception as ex:
-            print(ex)
+            # print(ex)
             return Response({
                             'status': False, 
-                            'error' : "You does not own any device, please create a new one"
+                            'error' : ex.message
                         })
 
 
@@ -517,7 +517,7 @@ class ListHuyentheotinh(APIView):
         # if device:
             
             result = danhsachcachuyentheotinh(province_id)
-            return JsonResponse(result)
+            return Response(result)
         except Exception as ex:
             print(ex)
             return Response({
