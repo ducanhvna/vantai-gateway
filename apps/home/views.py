@@ -13,7 +13,8 @@ from django.db.models import Q
 from apps.devices.models import Device
 from apps.vantai.models import AttackmentHanhTrinh, Hanhtrinh, VantaihahaiEquipment, VantaihahaiMember, VantaihahaiMembership
 from apps.vantai.unity import cacchuyendihomnaycuataixe, chitiethanhtrinh, tatcachuyendicuataixe, \
-    GetThongtintaixe, danhsachtatcaxe, VanTaiHaHai, thongtinxe, danhsachyeucaubaotrixe, capnhatghichubaotri
+    GetThongtintaixe, danhsachtatcaxe, VanTaiHaHai, thongtinxe, danhsachyeucaubaotrixe, capnhatghichubaotri, \
+    danhsachcacphuongtheohuyen, danhsachcachuyentheotinh, danhsachcactinh
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -481,4 +482,64 @@ class TaoghichuBaotri(APIView):
             return Response({
                             'status': False, 
                             'error' : ex.message
+                        })
+
+
+
+class Danhsachcactinh(APIView): 
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = [authentication.SessionAuthentication]
+    def get(self, request, *args, **kwargs): 
+        
+        # user = request.user 
+        try:
+            # device = user.user_device
+        # if device:
+            
+            result = danhsachcactinh()
+            return JsonResponse(result)
+        except Exception as ex:
+            print(ex)
+            return Response({
+                            'status': False, 
+                            'error' : "You does not own any device, please create a new one"
+                        })
+
+
+class ListHuyentheotinh(APIView): 
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = [authentication.SessionAuthentication]
+    def get(self, request, *args, **kwargs): 
+        province_id = kwargs.get('province')
+        user = request.user 
+        try:
+            device = user.user_device
+        # if device:
+            
+            result = danhsachcachuyentheotinh(province_id)
+            return JsonResponse(result)
+        except Exception as ex:
+            print(ex)
+            return Response({
+                            'status': False, 
+                            'error' : "You does not own any device, please create a new one"
+                        })
+
+class ListPhuongtheohuyen(APIView): 
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = [authentication.SessionAuthentication]
+    def get(self, request, *args, **kwargs): 
+        district_id = kwargs.get('district')
+        user = request.user 
+        try:
+            # device = user.user_device
+        # if device:
+            
+            result = danhsachcacphuongtheohuyen(district_id)
+            return JsonResponse(result)
+        except Exception as ex:
+            print(ex)
+            return Response({
+                            'status': False, 
+                            'error' : "You does not own any device, please create a new one"
                         })
