@@ -209,7 +209,8 @@ class Tatcachuyendi(APIView):
                         if item['ward_id']:
                             hanhtrinh.ward_id  = item['ward_id']
                         hanhtrinh.save()
-                        item['sid'] = hanhtrinh.pk
+                        item['sid'] = item['id']
+                        item['id'] = hanhtrinh.pk
                         attachments = item['attachment_ids']
                         for attachment in attachments:
                             AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
@@ -281,7 +282,8 @@ class Cacchuyenhomnay(APIView):
                         if item['ward_id']:
                             hanhtrinh.ward_id  = item['ward_id']
                         hanhtrinh.save()
-                        item['sid'] = hanhtrinh.pk
+                        item['sid'] = item['id']
+                        item['id'] = hanhtrinh.pk
                         attachments = item['attachment_ids']
                         for attachment in attachments:
                             AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
@@ -305,10 +307,10 @@ class CapnhatkmKetthuc(APIView):
         attackements = []
         user = request.user 
         try:
-            ht_object = HanhTrinh.objects.get(hanhtrinh_id=hanhtrinh)
+            ht_object = Hanhtrinh.objects.get(hanhtrinh_id=hanhtrinh)
         except:
             result = chitiethanhtrinh(hanhtrinh)
-            ht_object = HanhTrinh(hanhtrinh_id = hanhtrinh, location_name = result['data']['location_name'], \
+            ht_object = Hanhtrinh(hanhtrinh_id = hanhtrinh, location_name = result['data']['location_name'], \
                                     location_dest_name= result['data']['location_dest_name'], equipment_id= result['data']['equipment_id']['id'])
             ht_object.save()
 
