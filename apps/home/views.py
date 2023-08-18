@@ -226,3 +226,51 @@ class Tatcachuyendi(APIView):
         #                     'status': False, 
         #                     'error' : "You does not own any device, please create a new one"
         #                 })
+
+class Cacchuyenhomnay(APIView): 
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = [authentication.SessionAuthentication]
+    def get(self, request, *args, **kwargs): 
+        queryset = []
+        results= []
+        # find device
+        devices = Device.objects.filter(user=self.request.user)
+        # if self.request.user.role != "ADMIN" and not self.request.user.is_superuser:
+        #     queryset = self.model.objects.filter(
+        #         Q(assign_to=self.request.user)).annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # else :
+        #     queryset = self.model.objects.annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # # return queryset.prefetch_related("contacts", "account")
+        if len(devices)>0:
+            device = devices[0]
+            memberships = VantaihahaiMembership.objects.filter(device=device)
+            if len(memberships) >0:
+                membership = memberships[0]
+                member = membership.member
+                employee_id = member.employee_id
+                result = cacchuyendihomnaycuataixe(employee_id)['data']['results']
+                # if len(result['data']['results']) == 0:
+                #     list_hanhtrinh_created = HanhTrinh.objects.filter(created_by = user)
+                #     list_hanhtrinh_created_id = []
+                #     for item in list_hanhtrinh_created:
+                #         list_hanhtrinh_created_id.append(item.hanhtrinh_id)
+                #     all_hanhtrinh = tatcachuyendicuataixe()
+                #     new_results = []
+                #     for item in all_hanhtrinh['data']['results']:
+                #         if item['id'] in list_hanhtrinh_created_id:
+                #             new_results.append(item)
+                #     all_hanhtrinh['data']['results'] = new_results
+                #     all_hanhtrinh['data']['count'] = len(new_results)
+                #     print('print all hanh trinh')
+                #     return JsonResponse(all_hanhtrinh)
+                return Response(result)
+            # except Exception as ex:
+            #     print(ex)
+            #     return Response({
+            #                     'status': False, 
+            #                     'error' : "You does not own any device, please create a new one"
+            #                 })
