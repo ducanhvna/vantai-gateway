@@ -306,35 +306,31 @@ class CapnhatkmKetthuc(APIView):
         # attackements = request.data.get('attackements')
         attackements = []
         user = request.user 
-        try:
-            ht_object = Hanhtrinh.objects.get(hanhtrinh_id=hanhtrinh)
-        except:
-            result = chitiethanhtrinh(hanhtrinh)
-            ht_object = Hanhtrinh(hanhtrinh_id = hanhtrinh, location_name = result['data']['location_name'], \
-                                    location_dest_name= result['data']['location_dest_name'], equipment_id= result['data']['equipment_id']['id'])
-            ht_object.save()
+     
+        ht_object = Hanhtrinh.objects.get(pk=hanhtrinh)
+        
+        ht_object.location_dest_name= result['data']['location_dest_name']
+        ht_object.save()
 
 
-        try:
-            device = user.user_device
-        # if device:
-            body = request.data
-            vantai = VanTaiHaHai()
-            vantai.capnhatsokmketthuchanhtrinh(hanhtrinh.hanhtrinh_id, km_end, body, attackements)
-            attachments = body['attachments']
-            for item in attachments:
-                atts= AttackmentHanhTrinh.objects.filter(hanhtrinh = ht_object, url=item)
-                if len(atts) == 0:
-                    att = AttackmentHanhTrinh(hanhtrinh = ht_object, url= item)
-                    att.save()
+ 
+        vantai = VanTaiHaHai()
+        vantai.capnhatsokmketthuchanhtrinh(hanhtrinh.hanhtrinh_id, km_end, None, attackements)
+            # attachments = body['attachments']
+            # for item in attachments:
+            #     atts= AttackmentHanhTrinh.objects.filter(hanhtrinh = ht_object, url=item)
+            #     if len(atts) == 0:
+            #         att = AttackmentHanhTrinh(hanhtrinh = ht_object, url= item)
+            #         att.save()
+        result = chitiethanhtrinh(ht_object.hanhtrinh_id)
 
-            return Response(result)
-        except Exception as ex:
-            print(ex)
-            return Response({
-                            'status': False, 
-                            'error' : "You does not own any device, please create a new one"
-                        })
+        return Response(result)
+        # except Exception as ex:
+        #     print(ex)
+        #     return Response({
+        #                     'status': False, 
+        #                     'error' : "You does not own any device, please create a new one"
+        #                 })
         #     vantai = VanTaiHaHai()
         #     vantai.capnhatsokmketthuchanhtrinh(hanhtrinh.hanhtrinh_id, odo_end, body, attackements)
         #     return HttpResponseRedirect('/vantai/chitiethanhtrinh/{}/'.format(hanhtrinh.id))
