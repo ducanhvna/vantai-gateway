@@ -427,12 +427,14 @@ class Thongtinxe(APIView):
     def get(self, request, *args, **kwargs): 
         equitment_id = kwargs.get('equitment')
         ht_object = VantaihahaiEquipment.objects.get(pk=equitment_id)
-        user = request.user 
+        # user = request.user 
         try:
             # device = user.user_device
         # if device:
             
             result = thongtinxe(ht_object.hahai_id)
+            result['sid'] = result['id']
+            result['id'] = ht_object.pk
             return Response(result)
         except Exception as ex:
             print(ex)
