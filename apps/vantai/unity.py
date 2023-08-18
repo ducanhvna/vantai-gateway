@@ -456,7 +456,7 @@ def capnhatghichubaotri(equitment, ghichu, body):
 
     print(f"Cap nhat ghi chu: {ghichu} cho xe: {equitment}")
    
-    response = requests.request("POST", url, headers=headers, data=json.dumps(body))
+    response = requests.request("PUT", url, headers=headers, data=json.dumps(body))
     print(response)
     
     if response.status_code == 200:
