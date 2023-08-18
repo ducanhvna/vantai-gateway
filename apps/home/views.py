@@ -154,71 +154,71 @@ class Tatcachuyendi(APIView):
     permission_classes = (IsAuthenticated,)
     # authentication_classes = [authentication.SessionAuthentication]
     def get(self, request, *args, **kwargs): 
-        try:
-            queryset = []
-            results= []
-            # find device
-            devices = Device.objects.filter(user=self.request.user)
-            # if self.request.user.role != "ADMIN" and not self.request.user.is_superuser:
-            #     queryset = self.model.objects.filter(
-            #         Q(assign_to=self.request.user)).annotate(num_asins=Count('pod_asins'), 
-            #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
-            #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
-            # else :
-            #     queryset = self.model.objects.annotate(num_asins=Count('pod_asins'), 
-            #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
-            #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
-            # # return queryset.prefetch_related("contacts", "account")
-            if len(devices)>0:
-                device = devices[0]
-                memberships = VantaihahaiMembership.objects.filter(device=device)
-                if len(memberships) >0:
-                    membership = memberships[0]
-                    member = membership.member
-                    employee_id = member.employee_id
-                    print("Tat ca cac chuyen di cua: ", employee_id)
-                    queryset= tatcachuyendicuataixe(employee_id)['data']['results']
-                    print(queryset)
-                    lst_htrinh = [item['id'] for item in queryset]
-                    Hanhtrinh.objects.filter(~Q(hanhtrinh_id__in = lst_htrinh)).delete()
-                    for item in queryset:
-                        # try:
-                        hanhtrinh= None
-                        hanhtrinh_list = Hanhtrinh.objects.filter(hanhtrinh_id=item['id'])
-                        if len(hanhtrinh_list)>0:
-                            hanhtrinh= hanhtrinh_list[0]
-                        else:
-                            hanhtrinh= Hanhtrinh()
-                        if hanhtrinh:
-                            hanhtrinh.employee_id = employee_id
-                            print("employee: ", employee_id)
-                            hanhtrinh.hanhtrinh_id = item['id']
-                            hanhtrinh.equipment_id = item['equipment_id']['id']
-                            hanhtrinh.license_plate = item['equipment_id']['license_plate']
-                            hanhtrinh.name = item['equipment_id']['name']
-                            hanhtrinh.schedule_date = datetime.datetime.strptime(item['schedule_date'], "%Y-%m-%d")
-                            hanhtrinh.location_name = item['location_name']
-                            hanhtrinh.location_dest_name = item['location_dest_name']
-                            hanhtrinh.odo_start = item['odometer_start']
-                            # hanhtrinh.odo_end = item['odometer_dest']
-                            if item['ward_id']:
-                                hanhtrinh.ward_id  = item['ward_id']
-                            hanhtrinh.save()
-                            
-                            attachments = item['attachment_ids']
-                            for attachment in attachments:
-                                AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
-                        if hanhtrinh.id:
-                            results.append(hanhtrinh)
-                        # except Exception as ex:
-                        #     return Response({
-                        #         'status': False, 
-                        #         'error' : "sync chuyen di err"
-                        #     })
-            return Response(results)
-        except Exception as ex:
-            print(ex)
-            return Response({
-                            'status': False, 
-                            'error' : "You does not own any device, please create a new one"
-                        })
+        # try:
+        queryset = []
+        results= []
+        # find device
+        devices = Device.objects.filter(user=self.request.user)
+        # if self.request.user.role != "ADMIN" and not self.request.user.is_superuser:
+        #     queryset = self.model.objects.filter(
+        #         Q(assign_to=self.request.user)).annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # else :
+        #     queryset = self.model.objects.annotate(num_asins=Count('pod_asins'), 
+        #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
+        #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
+        # # return queryset.prefetch_related("contacts", "account")
+        if len(devices)>0:
+            device = devices[0]
+            memberships = VantaihahaiMembership.objects.filter(device=device)
+            if len(memberships) >0:
+                membership = memberships[0]
+                member = membership.member
+                employee_id = member.employee_id
+                print("Tat ca cac chuyen di cua: ", employee_id)
+                queryset= tatcachuyendicuataixe(employee_id)['data']['results']
+                print(queryset)
+                lst_htrinh = [item['id'] for item in queryset]
+                Hanhtrinh.objects.filter(~Q(hanhtrinh_id__in = lst_htrinh)).delete()
+                for item in queryset:
+                    # try:
+                    hanhtrinh= None
+                    hanhtrinh_list = Hanhtrinh.objects.filter(hanhtrinh_id=item['id'])
+                    if len(hanhtrinh_list)>0:
+                        hanhtrinh= hanhtrinh_list[0]
+                    else:
+                        hanhtrinh= Hanhtrinh()
+                    if hanhtrinh:
+                        hanhtrinh.employee_id = employee_id
+                        print("employee: ", employee_id)
+                        hanhtrinh.hanhtrinh_id = item['id']
+                        hanhtrinh.equipment_id = item['equipment_id']['id']
+                        hanhtrinh.license_plate = item['equipment_id']['license_plate']
+                        hanhtrinh.name = item['equipment_id']['name']
+                        hanhtrinh.schedule_date = datetime.datetime.strptime(item['schedule_date'], "%Y-%m-%d")
+                        hanhtrinh.location_name = item['location_name']
+                        hanhtrinh.location_dest_name = item['location_dest_name']
+                        hanhtrinh.odo_start = item['odometer_start']
+                        # hanhtrinh.odo_end = item['odometer_dest']
+                        if item['ward_id']:
+                            hanhtrinh.ward_id  = item['ward_id']
+                        hanhtrinh.save()
+                        
+                        attachments = item['attachment_ids']
+                        for attachment in attachments:
+                            AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
+                    if hanhtrinh.id:
+                        results.append(hanhtrinh)
+                    # except Exception as ex:
+                    #     return Response({
+                    #         'status': False, 
+                    #         'error' : "sync chuyen di err"
+                    #     })
+        return Response(results)
+        # except Exception as ex:
+        #     print(ex)
+        #     return Response({
+        #                     'status': False, 
+        #                     'error' : "You does not own any device, please create a new one"
+        #                 })
