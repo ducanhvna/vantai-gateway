@@ -84,6 +84,33 @@ class VanTaiHaHai():
         except Exception as ex:
             print(ex)
         return result
+    def capnhatsokmbatdauhanhtrinh(self, hanhtrinh, sokm, body, attackements=None):
+        result = None
+        try:
+            fleet_trip_object = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'read',
+                    [[hanhtrinh]],{'fields':['id','equipment_id', 'odometer_start','odometer_dest']})
+            print('cap nhat file dinh kem')
+            if attackements:
+                # url = url + '&attachments={}'.format(attackements)
+                for attachment in attackements:
+                    id_trip = self.models.execute_kw(self.db, self.uid, self.password, 'ir.attachment', 'create', [{
+                            'name': fleet_trip_object[0]['equipment_id'][1],
+                            'type': 'url',
+                            'url': attachment,
+                            'res_model': 'fleet.trip',
+                            'res_id': hanhtrinh,
+                        }])
+        
+            print("Cap nhat so km ket thuc ")
+        
+            self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'write', [[hanhtrinh], {'odometer_start': sokm}])
+            # get record name after having changed it
+            result =  self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'name_get', [[hanhtrinh]])
+            print('result: ', result)
+        except Exception as ex:
+            print(ex)
+        return result
+        
         
     
 def checkishasmembership(device):
