@@ -305,17 +305,11 @@ class CapnhatkmKetthuc(APIView):
         km_end = request.data.get('km')
         # attackements = request.data.get('attackements')
         attackements = []
-        user = request.user 
-     
         ht_object = Hanhtrinh.objects.get(pk=hanhtrinh)
-        
         ht_object.location_dest_name= km_end
         ht_object.save()
-
-
- 
         vantai = VanTaiHaHai()
-        vantai.capnhatsokmketthuchanhtrinh(hanhtrinh.hanhtrinh_id, km_end, None, attackements)
+        vantai.capnhatsokmketthuchanhtrinh(ht_object.hanhtrinh_id, km_end, None, attackements)
             # attachments = body['attachments']
             # for item in attachments:
             #     atts= AttackmentHanhTrinh.objects.filter(hanhtrinh = ht_object, url=item)
