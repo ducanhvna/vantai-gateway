@@ -177,11 +177,11 @@ class Tatcachuyendi(APIView):
                 member = membership.member
                 employee_id = member.employee_id
                 print("Tat ca cac chuyen di cua: ", employee_id)
-                queryset= tatcachuyendicuataixe(employee_id)['data']['results']
+                queryset= tatcachuyendicuataixe(employee_id)
                 print(queryset)
-                lst_htrinh = [item['id'] for item in queryset]
+                lst_htrinh = [item['id'] for item in queryset['data']['results']]
                 Hanhtrinh.objects.filter(~Q(hanhtrinh_id__in = lst_htrinh)).delete()
-                for item in queryset:
+                for item in queryset['data']['results']:
                     # try:
                     hanhtrinh= None
                     hanhtrinh_list = Hanhtrinh.objects.filter(hanhtrinh_id=item['id'])
@@ -254,8 +254,8 @@ class Cacchuyenhomnay(APIView):
                 membership = memberships[0]
                 member = membership.member
                 employee_id = member.employee_id
-                result = cacchuyendihomnaycuataixe(employee_id)['data']['results']
-                for item in result:
+                result = cacchuyendihomnaycuataixe(employee_id)
+                for item in result['data']['results']:
                     # try:
                     hanhtrinh= None
                     hanhtrinh_list = Hanhtrinh.objects.filter(hanhtrinh_id=item['id'])
@@ -317,9 +317,9 @@ class CapnhatkmKetthuc(APIView):
             #         att = AttackmentHanhTrinh(hanhtrinh = ht_object, url= item)
             #         att.save()
 
-        result = chitiethanhtrinh(ht_object.hanhtrinh_id)['data']
-        result['sid'] = result['id']
-        result['id'] = ht_object.pk
+        result = chitiethanhtrinh(ht_object.hanhtrinh_id)
+        result['data']['sid'] = result['id']
+        result['data']['id'] = ht_object.pk
         return Response(result)
         # except Exception as ex:
         #     print(ex)
@@ -368,7 +368,7 @@ class CapnhatkmBatdau(APIView):
             #     if len(atts) == 0:
             #         att = AttackmentHanhTrinh(hanhtrinh = ht_object, url= item)
             #         att.save()
-        result = chitiethanhtrinh(ht_object.hanhtrinh_id)['data']
-        result['sid'] = result['id']
-        result['id'] = ht_object.pk
+        result = chitiethanhtrinh(ht_object.hanhtrinh_id)
+        result['data']['sid'] = result['id']
+        result['data']['id'] = ht_object.pk
         return Response(result)
