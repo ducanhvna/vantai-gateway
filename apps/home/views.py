@@ -309,7 +309,7 @@ class CapnhatkmKetthuc(APIView):
      
         ht_object = Hanhtrinh.objects.get(pk=hanhtrinh)
         
-        ht_object.location_dest_name= result['data']['location_dest_name']
+        ht_object.location_dest_name= km_end
         ht_object.save()
 
 
