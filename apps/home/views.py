@@ -209,8 +209,8 @@ class Tatcachuyendi(APIView):
                         if item['ward_id']:
                             hanhtrinh.ward_id  = item['ward_id']
                         hanhtrinh.save()
-                        item['sid'] = item['id']
-                        item['id'] = hanhtrinh.pk
+                        # item['sid'] = item['id']
+                        # item['id'] = hanhtrinh.pk
                         attachments = item['attachment_ids']
                         for attachment in attachments:
                             AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
@@ -282,8 +282,8 @@ class Cacchuyenhomnay(APIView):
                         if item['ward_id']:
                             hanhtrinh.ward_id  = item['ward_id']
                         hanhtrinh.save()
-                        item['sid'] = item['id']
-                        item['id'] = hanhtrinh.pk
+                        # item['sid'] = item['id']
+                        # item['id'] = hanhtrinh.pk
                         attachments = item['attachment_ids']
                         for attachment in attachments:
                             AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
@@ -305,7 +305,7 @@ class CapnhatkmKetthuc(APIView):
         km_end = request.data.get('km')
         # attackements = request.data.get('attackements')
         attackements = []
-        ht_object = Hanhtrinh.objects.get(pk=hanhtrinh)
+        ht_object = Hanhtrinh.objects.get(hanhtrinh_id=hanhtrinh)
         ht_object.odo_end= km_end
         ht_object.save()
         vantai = VanTaiHaHai()
@@ -318,8 +318,8 @@ class CapnhatkmKetthuc(APIView):
             #         att.save()
 
         result = chitiethanhtrinh(ht_object.hanhtrinh_id)
-        result['data']['sid'] = result['data']['id']
-        result['data']['id'] = ht_object.pk
+        # result['data']['sid'] = result['data']['id']
+        # result['data']['id'] = ht_object.pk
         return Response(result)
         # except Exception as ex:
         #     print(ex)
@@ -357,7 +357,7 @@ class CapnhatkmBatdau(APIView):
         km_end = request.data.get('km')
         # attackements = request.data.get('attackements')
         attackements = []
-        ht_object = Hanhtrinh.objects.get(pk=hanhtrinh)
+        ht_object = Hanhtrinh.objects.get(hanhtrinh_id=hanhtrinh)
         ht_object.odo_start= km_end
         ht_object.save()
         vantai = VanTaiHaHai()
@@ -369,8 +369,8 @@ class CapnhatkmBatdau(APIView):
             #         att = AttackmentHanhTrinh(hanhtrinh = ht_object, url= item)
             #         att.save()
         result = chitiethanhtrinh(ht_object.hanhtrinh_id)
-        result['data']['sid'] = result['data']['id']
-        result['data']['id'] = ht_object.pk
+        # result['data']['sid'] = result['data']['id']
+        # result['data']['id'] = ht_object.pk
         return Response(result)
 
 class Danhsachtatcaxe(APIView): 
@@ -396,8 +396,8 @@ class Danhsachtatcaxe(APIView):
             object_xe.license_plate = license_plate
             object_xe.name = name
             object_xe.save()
-            item['sid'] = item['id']
-            item['id'] = object_xe.pk
+            # item['sid'] = item['id']
+            # item['id'] = object_xe.pk
 
             # print("Thông tin tai xe: ", owner_user_id)
             # thongtintaixe =  GetThongtintaixe(owner_user_id)
@@ -426,15 +426,15 @@ class Thongtinxe(APIView):
     # authentication_classes = [authentication.SessionAuthentication]
     def get(self, request, *args, **kwargs): 
         equitment_id = kwargs.get('equitment')
-        ht_object = VantaihahaiEquipment.objects.get(pk=equitment_id)
+        ht_object = VantaihahaiEquipment.objects.get(hahai_id=equitment_id)
         # user = request.user 
         try:
             # device = user.user_device
         # if device:
             
             result = thongtinxe(ht_object.hahai_id)
-            result['data']['sid'] = result['data']['id']
-            result['data']['id'] = ht_object.pk
+            # result['data']['sid'] = result['data']['id']
+            # result['data']['id'] = ht_object.pk
             return Response(result)
         except Exception as ex:
             print(ex)
