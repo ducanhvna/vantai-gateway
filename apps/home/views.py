@@ -442,3 +442,23 @@ class Thongtinxe(APIView):
                             'status': False, 
                             'error' : "You does not own any device, please create a new one"
                         })
+
+class ListYeucaubaotrixe(APIView): 
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = [authentication.SessionAuthentication]
+    def get(self, request, *args, **kwargs): 
+        # equitment_id = request.data.get('equitment')
+        equitment_id = kwargs.get('equitment')
+        # user = request.user 
+        try:
+            # device = user.user_device
+        # if device:
+            
+            result = danhsachyeucaubaotrixe(equitment_id)
+            return Response(result)
+        except Exception as ex:
+            print(ex)
+            return Response({
+                            'status': False, 
+                            'error' : "You does not own any device, please create a new one"
+                        })
