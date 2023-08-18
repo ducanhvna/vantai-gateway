@@ -450,15 +450,15 @@ class ListYeucaubaotrixe(APIView):
         # equitment_id = request.data.get('equitment')
         equitment_id = kwargs.get('equitment')
         # user = request.user 
-        try:
+        # try:
             # device = user.user_device
         # if device:
             
-            result = danhsachyeucaubaotrixe(equitment_id)
-            return Response(result)
-        except Exception as ex:
-            print(ex)
-            return Response({
-                            'status': False, 
-                            'error' : "You does not own any device, please create a new one"
-                        })
+        result = danhsachyeucaubaotrixe(equitment_id)
+        return Response(result)
+        # except Exception as ex:
+        #     print(ex)
+        #     return Response({
+        #                     'status': False, 
+        #                     'error' : "You does not own any device, please create a new one"
+        #                 })
