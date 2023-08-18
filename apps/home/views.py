@@ -196,7 +196,11 @@ class Tatcachuyendi(APIView):
                         hanhtrinh.equipment_id = item['equipment_id']['id']
                         hanhtrinh.license_plate = item['equipment_id']['license_plate']
                         hanhtrinh.name = item['equipment_id']['name']
-                        hanhtrinh.schedule_date = datetime.datetime.strptime(item['schedule_date'], "%Y-%m-%d")
+                        try:
+                            hanhtrinh.schedule_date = datetime.datetime.strptime(item['schedule_date'], "%Y-%m-%d")
+                        except Exception as ex:
+                            print(item['schedule_date'])
+                            print(ex)
                         hanhtrinh.location_name = item['location_name']
                         hanhtrinh.location_dest_name = item['location_dest_name']
                         hanhtrinh.odo_start = item['odometer_start']
