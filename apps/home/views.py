@@ -13,7 +13,7 @@ from django.db.models import Q
 from apps.devices.models import Device
 from apps.vantai.models import AttackmentHanhTrinh, Hanhtrinh, VantaihahaiEquipment, VantaihahaiMember, VantaihahaiMembership
 from apps.vantai.unity import cacchuyendihomnaycuataixe, chitiethanhtrinh, tatcachuyendicuataixe, \
-    GetThongtintaixe, danhsachtatcaxe, VanTaiHaHai, thongtinxe
+    GetThongtintaixe, danhsachtatcaxe, VanTaiHaHai, thongtinxe, danhsachyeucaubaotrixe
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
