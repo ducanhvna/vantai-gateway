@@ -18,6 +18,7 @@ from apps.vantai.unity import cacchuyendihomnaycuataixe, chitiethanhtrinh, tatca
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from apps.vantai.models import VantaiLocation, Hanhtrinh, VantaihahaiMember
 
 @login_required(login_url="/login/")
 def index(request):
@@ -569,20 +570,68 @@ class Taohanhtrinh(APIView):
     # authentication_classes = [authentication.SessionAuthentication]
     def post(self, request, *args, **kwargs): 
         # equitment = kwargs.get('equitment')
-        # user = request.user 
+        user = request.user 
+        print(user)
+        is_superuser = user.is_superuser
+        # admin_boad = AdminBoard.objects.filter(user=user).first()
+        # if not is_superuser and  not admin_boad :
+        #     return HttpResponseRedirect('/auth')
+        # if is_superuser or admin_boad.is_vantaihahai_admin :
+        user_devices = Device.objects.filter(user = user)
+        hahai_member = None
+        xe_phutrach = None
+        if  len(user_devices)>0:
+            print('ha hai member: ', hahai_member)
+            user_device = user_devices[0]
+            memberships = VantaihahaiMembership.objects.filter(device = user_device)
+
+            if len(memberships)>0:
+                membership = memberships[0]
+                hahai_member = membership.member
+            print("tim kiem xe cua member_id: ",hahai_member.member_id)
+            xe_phutrachs = VantaihahaiEquipment.objects.filter(owner_user_id= hahai_member.member_id)
+            if len(xe_phutrachs)>0:
+                xe_phutrach = xe_phutrachs[0]
+
+        startlocation_id = request.data.get('location_id'),
+        endlocation_id = request.data.get('location_dest_id'),
+        print(f'start , end: {startlocation_id[0]} - {endlocation_id[0]}' )
+        try:
+            startlocation_object = VantaiLocation.objects.get(location_id=startlocation_id[0])
+            endlocation_object = VantaiLocation.objects.get(location_id=endlocation_id[0])
+        except VantaiLocation.DoesNotExist:
+            startlocation_object = None
+            endlocation_object = None
+        
+        schedule_date = request.data.get('schedule_date')
+        print('schedule_date: ',schedule_date)
+        # schedule_date = request.POST['start_date']
+        # schedule_time = request.data.get('start_time')
+        # schedule_time = request.POST['start_time']
+        # product = request.data.get('product')
+        # print('product: ', product)
+
+        # start_date_str = schedule_date.strftime('%Y-%m-%d')
+        # start_time_string = schedule_time.strftime('%H:%M:%S')
+        
+        # end_date_str = schedule_date.strftime('%Y-%m-%d')
+        # end_time_string = schedule_time.strftime('%H:%M:%S')
         # try:
             # device = user.user_device
 
             # xe_phutrachs = VantaihahaiEquipment.objects.filter(owner_user_id= hahai_member.member_id)
             # if device:
         body = {
-                "equipment_id": request.data.get('equipment_id'),
+
+                # "equipment_id": request.data.get('equipment_id'),
                 "schedule_date": request.data.get('schedule_date'),
                 "location_id": request.data.get('location_id'),
                 "location_dest_id": request.data.get('location_dest_id'),
-                "employee_id":request.data.get('employee_id'),
-                "fleet_product_id": request.data.get('fleet_product_id')
+                "equipment_id":xe_phutrach.hahai_id,
+                "fleet_product_id": request.data.get('fleet_product_id'),
+                "employee_id":hahai_member.employee_id,
             }
+        print('body: ',body)
         result = themmoichuyendi(body)
         return Response(result)
         # except Exception as ex:
