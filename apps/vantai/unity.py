@@ -22,9 +22,20 @@ class VanTaiHaHai():
                         "trip_count", "note", "message_ids"]})
         for item in result:
             try:
-                item['owner_user_id'] = {'name':item['owner_user_id'][1]}
+                item['owner_user_id'] = {'name':item['owner_user_id'][1], 'id':item['owner_user_id'][0]}
             except:
                 print('item: ', item)
+        return result
+    def chitietxe(self, xe_id):
+     # user = order.user
+        [result] = self.models.execute_kw(self.db, self.uid, self.password, 'maintenance.equipment', 'read',
+                [xe_id],{'fields':['id', 'name', "owner_user_id", "last_request", "license_plate",
+                        "trip_count", "note", "message_ids"]})
+        try:
+            result['owner_user_id'] = {'name':result['owner_user_id'][1], 'id':result['owner_user_id'][0]}
+        except:
+            print('item: ', result)
+        print(result)
         return result
     def themmoichuyendi(self, body):
         print("Bat dau them moi chuyen di")

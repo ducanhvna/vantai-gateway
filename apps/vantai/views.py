@@ -224,7 +224,8 @@ class EquipmentListView(LoginRequiredMixin, ListView):
         # # return queryset.prefetch_related("contacts", "account")
             queryset= danhsachtatcaxe()['data']['results']
             print(queryset)
-            for item in queryset:
+        for item in queryset:
+            try:
                 hahai_id = item['id']
                 owner_user_id = item['owner_user_id']['id']
                 owner_user_name = item['owner_user_id']['name']
@@ -241,7 +242,7 @@ class EquipmentListView(LoginRequiredMixin, ListView):
                 object_xe.license_plate = license_plate
                 object_xe.name = name
                 object_xe.save()
-
+                item['id'] = object_xe.pk
                 print("Thông tin tai xe: ", owner_user_id)
                 thongtintaixe =  GetThongtintaixe(owner_user_id)
                 print(thongtintaixe)
@@ -261,6 +262,9 @@ class EquipmentListView(LoginRequiredMixin, ListView):
                                                 mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone'],
                                                 updated_time = timezone.now())
                         member.save()
+            except Exception as ex:
+                print(item)
+                print(ex)
         
         return queryset
     
@@ -759,6 +763,24 @@ class CapnhatKetthucHanhtrinhView(TemplateView):
     # def get(self, request, *args, **kwargs):
     #     return self.post(request, *args, **kwargs)
 
+class ChitietXeView(DetailView):
+    template_name = 'vantai/equiqment.html'
+    context_object_name = 'emp'
+    model = VantaihahaiEquipment
+    def get_context_data(self, **kwargs):
+        """Overide get_context_data method
+        """
+        context = super(ChitietXeView, self).get_context_data(**kwargs)
+        # vantai = VanTaiHaHai()
+        print(context)
+        xe_pk = self.kwargs['pk']
+        obj = VantaihahaiEquipment.objects.get(pk=xe_pk)
+        vantai = VanTaiHaHai()
+        context['info'] = vantai.chitietxe(obj.hahai_id)
+        
+        #context["latest_article"] = latest_article
+
+        return context
 
 class ChitiethanhtrinhView(DetailView):
     model = Hanhtrinh

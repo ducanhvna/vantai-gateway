@@ -2,7 +2,7 @@ from django.urls import path
 from .views import ChitiethanhtrinhView, vantaihahai_view, UpdatedanhsachmemberWeb, HahaiMemberListView, EditMemberShipView, \
                 ChuyendiListView, DeviceListView, DiadiemListView, register_user, register_user_for_member, \
                 EquipmentListView, MathangListView, hotel_image_view, display_hotel_images, success, \
-                CapnhatBatdauHanhtrinhView, CapnhatKetthucHanhtrinhView
+                CapnhatBatdauHanhtrinhView, CapnhatKetthucHanhtrinhView, ChitietXeView
 from django.views.generic import TemplateView
 app_name = "apps.vantai"
 urlpatterns = [
@@ -21,6 +21,7 @@ urlpatterns = [
     # CapnhatKetthucHanhtrinhView
     path('ketthuchanhtrinh/<int:pk>/', CapnhatKetthucHanhtrinhView.as_view(), name='capnhatketthuc'),
     path('chitiethanhtrinh/<int:pk>/', ChitiethanhtrinhView.as_view(), name='chitiethanhtrinh'),
+    path('chitietxe/<int:pk>/', ChitietXeView.as_view(), name='chitietxe'),
     path('image_upload', hotel_image_view, name='image_upload'),
     path('hotel_images', display_hotel_images, name = 'hotel_images'),
     path('success', success, name='success'),
