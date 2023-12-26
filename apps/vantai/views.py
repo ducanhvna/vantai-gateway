@@ -208,6 +208,10 @@ class EquipmentListView(LoginRequiredMixin, ListView):
         # queryset = self.model.objects.all().select_related("account")
         # queryset = super(PodDetailView, self).get_queryset()
         print('abc',self.request.user)
+        if self.request.user.is_superuser:
+            vantai = VanTaiHaHai()
+            queryset= vantai.danhsachtatcaxe()
+        else:
         # if self.request.user.role != "ADMIN" and not self.request.user.is_superuser:
         #     queryset = self.model.objects.filter(
         #         Q(assign_to=self.request.user)).annotate(num_asins=Count('pod_asins'), 
@@ -218,45 +222,45 @@ class EquipmentListView(LoginRequiredMixin, ListView):
         #         num_completed = Count('pod_asins', filter=Q(pod_asins__completed=True)),
         #         num_reviewed = Count('pod_asins', filter=~Q(pod_asins__review_by=None)))
         # # return queryset.prefetch_related("contacts", "account")
-        queryset= danhsachtatcaxe()['data']['results']
-        print(queryset)
-        for item in queryset:
-            hahai_id = item['id']
-            owner_user_id = item['owner_user_id']['id']
-            owner_user_name = item['owner_user_id']['name']
-            license_plate = item['license_plate']
-            name = item['name']
-            object_xes = VantaihahaiEquipment.objects.filter(hahai_id=hahai_id)
-            if len(object_xes) == 0:
-                object_xe = VantaihahaiEquipment()
-            else:
-                object_xe = object_xes[0]
-            object_xe.hahai_id = hahai_id
-            object_xe.owner_user_id = owner_user_id
-            object_xe.owner_user_name = owner_user_name
-            object_xe.license_plate = license_plate
-            object_xe.name = name
-            object_xe.save()
+            queryset= danhsachtatcaxe()['data']['results']
+            print(queryset)
+            for item in queryset:
+                hahai_id = item['id']
+                owner_user_id = item['owner_user_id']['id']
+                owner_user_name = item['owner_user_id']['name']
+                license_plate = item['license_plate']
+                name = item['name']
+                object_xes = VantaihahaiEquipment.objects.filter(hahai_id=hahai_id)
+                if len(object_xes) == 0:
+                    object_xe = VantaihahaiEquipment()
+                else:
+                    object_xe = object_xes[0]
+                object_xe.hahai_id = hahai_id
+                object_xe.owner_user_id = owner_user_id
+                object_xe.owner_user_name = owner_user_name
+                object_xe.license_plate = license_plate
+                object_xe.name = name
+                object_xe.save()
 
-            print("Thông tin tai xe: ", owner_user_id)
-            thongtintaixe =  GetThongtintaixe(owner_user_id)
-            print(thongtintaixe)
-            members = VantaihahaiMember.objects.filter(member_id=owner_user_id)
-            if len(members)>0:
-                member = members[0]
-                member.name = thongtintaixe['data']['name']
-                if thongtintaixe['data']['employee_id']:
-                    member.employee_id = thongtintaixe['data']['employee_id']['id']
-                    member.mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone']
-                member.save()
-            else:
-                print("Create new member", thongtintaixe)
-                if thongtintaixe['data']['employee_id']:
-                    member = VantaihahaiMember(member_id = owner_user_id, name = thongtintaixe['data']['name'],
-                                            employee_id = thongtintaixe['data']['employee_id']['id'],
-                                            mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone'],
-                                            updated_time = timezone.now())
+                print("Thông tin tai xe: ", owner_user_id)
+                thongtintaixe =  GetThongtintaixe(owner_user_id)
+                print(thongtintaixe)
+                members = VantaihahaiMember.objects.filter(member_id=owner_user_id)
+                if len(members)>0:
+                    member = members[0]
+                    member.name = thongtintaixe['data']['name']
+                    if thongtintaixe['data']['employee_id']:
+                        member.employee_id = thongtintaixe['data']['employee_id']['id']
+                        member.mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone']
                     member.save()
+                else:
+                    print("Create new member", thongtintaixe)
+                    if thongtintaixe['data']['employee_id']:
+                        member = VantaihahaiMember(member_id = owner_user_id, name = thongtintaixe['data']['name'],
+                                                employee_id = thongtintaixe['data']['employee_id']['id'],
+                                                mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone'],
+                                                updated_time = timezone.now())
+                        member.save()
         
         return queryset
     
