@@ -54,6 +54,58 @@ class EmpImageDisplay(DetailView):
     template_name = 'vantai/emp_image_display.html'
     context_object_name = 'emp'
 
+def userprofile(request):
+    msg = None
+    success = False
+    user = request.user
+    print(user)
+    is_superuser = user.is_superuser
+    # admin_boad = AdminBoard.objects.filter(user=user).first()
+    # if not is_superuser and  not admin_boad :
+    #     return HttpResponseRedirect('/auth')
+    # if is_superuser or admin_boad.is_vantaihahai_admin :
+    user_devices = Device.objects.filter(user = user)
+    hahai_member = None
+    xe_phutrach = None
+    if  len(user_devices)>0:
+        
+        user_device = user_devices[0]
+        memberships = VantaihahaiMembership.objects.filter(device = user_device)
+
+        if len(memberships)>0:
+            membership = memberships[0]
+            hahai_member = membership.member
+            print("tim kiem xe cua member_id: ",hahai_member.member_id)
+            xe_phutrachs = VantaihahaiEquipment.objects.filter(owner_user_id= hahai_member.member_id)
+            xe_phutrach = None
+            if len(xe_phutrachs)>0:
+                xe_phutrach = xe_phutrachs[0]
+            print('ha hai member: ', hahai_member)
+            context = {'member': hahai_member,'membership': membership, 'xe':xe_phutrach}
+            return render(request, 'vantai/user.html', context)
+    # else:
+    print("khong thay device cho member")
+    return HttpResponseRedirect('/auth')
+
+        # for mem in member_ship:
+        #     if mem['member__name'] not in dic :
+        #         dic[mem['member__name']] = [{'id_mbs':mem['id'],'id':mem['device__id'],'type':mem['device__type']}]
+        #     else :
+        #         dic[mem['member__name']].append({'id_mbs':mem['id'],'id':mem['device__id'],'type':mem['device__type']})
+        # lis_membership = []
+        # for key,val in dic.items():
+        #     dic_1 = {
+        #         "name":key,
+        #         "count_device":len(val),
+        #         "devices":{
+        #             "first_device":val[0],
+        #             "device":val[1:] if len(val) > 1 else []
+        #         }
+        #     }
+        #     lis_membership.append(dic_1)
+
+        
+    
 def vantaihahai_view(request):
     user = request.user
     print(user)

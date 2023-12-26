@@ -2,11 +2,12 @@ from django.urls import path
 from .views import ChitiethanhtrinhView, vantaihahai_view, UpdatedanhsachmemberWeb, HahaiMemberListView, EditMemberShipView, \
                 ChuyendiListView, DeviceListView, DiadiemListView, register_user, register_user_for_member, \
                 EquipmentListView, MathangListView, hotel_image_view, display_hotel_images, success, \
-                CapnhatBatdauHanhtrinhView, CapnhatKetthucHanhtrinhView, ChitietXeView
+                CapnhatBatdauHanhtrinhView, CapnhatKetthucHanhtrinhView, ChitietXeView, userprofile
 from django.views.generic import TemplateView
 app_name = "apps.vantai"
 urlpatterns = [
     path("", vantaihahai_view, name="vantaihahai_view"),
+    path("profile", userprofile, name="profile_view"),
     path('hahaimembers/', HahaiMemberListView.as_view(), name='hahaimember-list'),
     path('updatedanhsachdirect', UpdatedanhsachmemberWeb.as_view(), name  = 'updatedirect'),
     path('tatcachuyendi', ChuyendiListView.as_view(), name= 'tatcachuyendi'),
