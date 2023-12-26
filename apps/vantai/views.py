@@ -232,10 +232,12 @@ class EquipmentListView(LoginRequiredMixin, ListView):
                 license_plate = item['license_plate']
                 name = item['name']
                 object_xes = VantaihahaiEquipment.objects.filter(hahai_id=hahai_id)
+                is_update = True
                 if len(object_xes) == 0:
                     object_xe = VantaihahaiEquipment()
                 else:
                     object_xe = object_xes[0]
+                    is_update = (object_xe.owner_user_id != owner_user_id)
                 object_xe.hahai_id = hahai_id
                 object_xe.owner_user_id = owner_user_id
                 object_xe.owner_user_name = owner_user_name
@@ -244,24 +246,25 @@ class EquipmentListView(LoginRequiredMixin, ListView):
                 object_xe.save()
                 item['id'] = object_xe.pk
                 print("Thông tin tai xe: ", owner_user_id)
-                thongtintaixe =  GetThongtintaixe(owner_user_id)
-                print(thongtintaixe)
-                members = VantaihahaiMember.objects.filter(member_id=owner_user_id)
-                if len(members)>0:
-                    member = members[0]
-                    member.name = thongtintaixe['data']['name']
-                    if thongtintaixe['data']['employee_id']:
-                        member.employee_id = thongtintaixe['data']['employee_id']['id']
-                        member.mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone']
-                    member.save()
-                else:
-                    print("Create new member", thongtintaixe)
-                    if thongtintaixe['data']['employee_id']:
-                        member = VantaihahaiMember(member_id = owner_user_id, name = thongtintaixe['data']['name'],
-                                                employee_id = thongtintaixe['data']['employee_id']['id'],
-                                                mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone'],
-                                                updated_time = timezone.now())
+                if is_update:
+                    thongtintaixe =  GetThongtintaixe(owner_user_id)
+                    print("raw: ", thongtintaixe)
+                    members = VantaihahaiMember.objects.filter(member_id=owner_user_id)
+                    if len(members)>0:
+                        member = members[0]
+                        member.name = thongtintaixe['data']['name']
+                        if thongtintaixe['data']['employee_id']:
+                            member.employee_id = thongtintaixe['data']['employee_id']['id']
+                            member.mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone']
                         member.save()
+                    else:
+                        print("Create new member", thongtintaixe)
+                        if thongtintaixe['data']['employee_id']:
+                            member = VantaihahaiMember(member_id = owner_user_id, name = thongtintaixe['data']['name'],
+                                                    employee_id = thongtintaixe['data']['employee_id']['id'],
+                                                    mobile_phone = thongtintaixe['data']['employee_id']['mobile_phone'],
+                                                    updated_time = timezone.now())
+                            member.save()
             except Exception as ex:
                 print(item)
                 print(ex)
