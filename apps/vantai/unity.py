@@ -16,6 +16,16 @@ class VanTaiHaHai():
             self.uid = common.authenticate(self.db, self.username, self.password, {})
         except Exception as ex:
             print("day la: ", ex)
+    def danhsachtatcaxe(self):
+        result = self.models.execute_kw(self.db, self.uid, self.password, 'maintenance.equipment', 'search_read', 
+                [[]], {'fields': ['id', 'name', "owner_user_id", "last_request", "license_plate",
+                        "trip_count", "note", "message_ids"]})
+        for item in result:
+            try:
+                item['owner_user_id'] = {'name':item['owner_user_id'][1]}
+            except:
+                print('item: ', item)
+        return result
     def themmoichuyendi(self, body):
         print("Bat dau them moi chuyen di")
         # Get list chuyen di
