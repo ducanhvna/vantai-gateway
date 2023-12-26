@@ -78,7 +78,7 @@ class KmHanhtrinhForm(forms.ModelForm):
     odo = forms.IntegerField(
         widget=forms.NumberInput(
             attrs={
-                "placeholder": "Username",
+                "placeholder": "odo xe",
                 "class": "form-control"
             }
         ))
