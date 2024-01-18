@@ -17,22 +17,24 @@
           <div class="card-body">
             <div class="row">
                 <div class="col-md-9 pr-md-1">
-                    <label>{{emp.name}}</label>
+                    <label><h4>{{emp.name}}</h4></label>
                 </div>
                 <div class="col-md-9 pr-md-1">
-                    <label>Số km bắt đầu hành trình</label>
-                    <a> {{emp.odo_start}}</a>
+                    <label>Số km bắt đầu hành trình: </label>
+                    <a> {{emp.odo_start}} km</a>
                 </div>
                 <div class="col-md-9 pr-md-1">
-                    <label>Số km Ket thuc hành trình</label>
-                    <a> {{emp.odo_end}}</a>
+                    <label>Số km kết thúc hành trình: </label>
+                    <a> {{emp.odo_end}} km</a>
                 </div>
             </div>
+            <hr  width="70%" size="3px" align="center"/>
     {% for item in attackments %}
     <img src="{{item.main_img}}" alt="Smiley face" width="250" height="250">
     <br />
+    
     {% endfor %}
-    <a href="/vantai/tatcachuyendi">Go Back!!!</a>
+    <a href="/vantai/tatcachuyendi">Quay lại !</a>
 </div>
 <div class="card-footer">
   <button type="submit" class="btn btn-fill btn-primary">Save</button>

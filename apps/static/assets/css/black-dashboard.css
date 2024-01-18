@@ -8197,10 +8197,10 @@ button.bg-darker:focus {
   color: #ffffff !important; }
 
 .text-primary {
-  color: #e14eca !important; }
+  color: #1493F5 !important; }
 
 a.text-primary:hover, a.text-primary:focus {
-  color: #c221a9 !important; }
+  color: #0c6ab1 !important; }
 
 .text-secondary {
   color: #f4f5f7 !important; }
@@ -9497,6 +9497,12 @@ fieldset[disabled]
     font-size: 0.75rem;
     line-height: 1.8;
     color: #ffffff; }
+  .footer .copyright a {
+    color: #1493F5 !important;
+  }
+  .footer .copyright a:hover {
+    color: #0c6ab1 !important; }
+  
   .footer:after {
     display: table;
     clear: both;
@@ -11297,8 +11303,9 @@ table.tablesorter thead tr .headerSortDown {
 
 .sidebar,
 .off-canvas-sidebar {
-  background: #ba54f5;
-  background: linear-gradient(0deg, #ba54f5 0%, #e14eca 100%);
+
+  /* background: linear-gradient(0deg, #ba54f5 0%, #e14eca 100%); */
+  background: linear-gradient(0deg,  #2dce89 0%, #5e72e4 100%);
   height: calc(100vh - 90px);
   width: 230px;
   position: fixed;
@@ -11645,7 +11652,7 @@ table.tablesorter thead tr .headerSortDown {
   float: right;
   width: 100%;
   min-height: 100vh;
-  border-top: 2px solid #e14eca;
+  border-top: 2px solid #1493F5;
   background: linear-gradient(#1e1e2f, #1e1e24);
   transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1); }
   .main-panel[data="blue"] {
@@ -13048,7 +13055,7 @@ Copyright (c) 2015 Daniel Eden
       background-color: transparent; }
     .card .card-header .card-title {
       color: #ffffff;
-      font-weight: 100; }
+      font-weight: 300; }
     .card .card-header .card-category {
       color: #9A9A9A;
       margin-bottom: 5px;
