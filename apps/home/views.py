@@ -13,7 +13,7 @@ from django.db.models import Q
 from apps.devices.models import Device
 from apps.vantai.models import AttackmentHanhTrinh, Hanhtrinh, VantaihahaiEquipment, VantaihahaiMember, VantaihahaiMembership
 from apps.vantai.unity import cacchuyendihomnaycuataixe, chitiethanhtrinh, tatcachuyendicuataixe, \
-    GetThongtintaixe, danhsachtatcaxe, VanTaiHaHai, thongtinxe, danhsachyeucaubaotrixe, capnhatghichubaotri, \
+    GetThongtintaixe, danhsachtatcaxe, VanTaiHaHai, tatcamathang, thongtinxe, danhsachyeucaubaotrixe, capnhatghichubaotri, \
     danhsachcacphuongtheohuyen, danhsachcachuyentheotinh, danhsachcactinh, tatcadiadiem, themmoichuyendi
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -374,7 +374,13 @@ class CapnhatkmBatdau(APIView):
         # result['data']['sid'] = result['data']['id']
         # result['data']['id'] = ht_object.pk
         return Response(result)
-
+class Danhsachtatcaxe(APIView): 
+    permission_classes = (IsAuthenticated,)
+    def get(self, request, *args, **kwargs): 
+        queryset= tatcamathang()
+        
+        return Response(queryset)
+        
 class Danhsachtatcaxe(APIView): 
     permission_classes = (IsAuthenticated,)
     # authentication_classes = [authentication.SessionAuthentication]
