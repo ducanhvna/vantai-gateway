@@ -8,7 +8,7 @@ from apps.home import views
 from .views import ThongtintaixeApi, Tatcachuyendi, Cacchuyenhomnay, CapnhatkmKetthuc, \
                     CapnhatkmBatdau, Danhsachtatcaxe, Thongtinxe, ListYeucaubaotrixe, \
                     TaoghichuBaotri, Danhsachcactinh, ListHuyentheotinh, TatcaDiadiem, \
-                    Taohanhtrinh
+                    Taohanhtrinh, DanhsachMathang
 urlpatterns = [
 
     # The home page
@@ -29,7 +29,7 @@ urlpatterns = [
     # district
     path("api/core/<int:district>/danhsachcacphuong/", ListHuyentheotinh.as_view(), name="list_phuong"),
     path("api/core/danhsachcacdiadiem/", TatcaDiadiem.as_view(), name="list_diadiem"),
-
+    path("api/core/danhsachmathang/", DanhsachMathang.as_view(), name="list_mathang"),
     path("api/core/taohanhtrinh/", Taohanhtrinh.as_view(), name="hahai_taohanhtrinh"),
     re_path(r'^.*\.*', views.pages, name='pages'),
 ]
