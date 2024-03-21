@@ -374,7 +374,7 @@ class CapnhatkmBatdau(APIView):
         # result['data']['sid'] = result['data']['id']
         # result['data']['id'] = ht_object.pk
         return Response(result)
-class Danhsachtatcaxe(APIView): 
+class DanhsachMathang(APIView): 
     permission_classes = (IsAuthenticated,)
     def get(self, request, *args, **kwargs): 
         queryset= tatcamathang()
