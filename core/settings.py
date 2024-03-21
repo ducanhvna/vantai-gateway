@@ -168,9 +168,9 @@ VANTAIHAHAI_CONFIG = {
             "uid": 2
         },
         "company_id": 1,
-        "access_token": "d9de1fc889b8e71650abb95b6de862d71b3ae3c9",
+        "access_token": "fd949520448ba5966593f194548f24cfc56fc519",
         "expires_in": 72000000,
-        "refresh_token": "7a93d01fc62b2ebd0b1632ea0532ed96131d3bf0",
+        "refresh_token": "7dd3502a2eb684903b7e5c8fecd537796173460e",
         "refresh_expires_in": 72000000,
         'register_token':'123456',
         'url': 'https://vantaihahai.com',
