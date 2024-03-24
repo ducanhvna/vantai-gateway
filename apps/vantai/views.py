@@ -584,11 +584,15 @@ def register_user(request):
                 print("hanh trinh  bat dau loc: ", schedule_time.second)
 
                 # form.save()
-            
-                start_date_str = schedule_date.strftime('%Y-%m-%d')
+                try:
+                    start_date_str = schedule_date.strftime('%Y-%m-%d')
+                except:
+                    start_date_str = schedule_date
                 start_time_string = schedule_time.strftime('%H:%M:%S')
-                
-                end_date_str = schedule_date.strftime('%Y-%m-%d')
+                try:
+                    end_date_str = schedule_date.strftime('%Y-%m-%d')
+                except:
+                    end_date_str = schedule_date
                 end_time_string = schedule_time.strftime('%H:%M:%S')
                 print(end_time_string)
                 # body = {
