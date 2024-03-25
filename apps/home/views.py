@@ -179,7 +179,12 @@ class Tatcachuyendi(APIView):
                 member = membership.member
                 employee_id = member.employee_id
                 print("Tat ca cac chuyen di cua: ", employee_id)
-                queryset= VanTaiHaHai().tatcachuyendicuataixe(employee_id)
+                queryset= tatcachuyendicuataixe(employee_id)
+                queryset2= VanTaiHaHai().tatcachuyendicuataixe(employee_id)
+                for item in queryset:
+                    for item2 in queryset2:
+                        if (item['id'] == item2['id']):
+                            item['location_id'] = item2['location_id']
                 print(queryset)
                 # lst_htrinh = [item['id'] for item in queryset['data']['results']]
                 # Hanhtrinh.objects.filter(~Q(hanhtrinh_id__in = lst_htrinh)).delete()
