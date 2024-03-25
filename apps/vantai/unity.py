@@ -16,6 +16,12 @@ class VanTaiHaHai():
             self.uid = common.authenticate(self.db, self.username, self.password, {})
         except Exception as ex:
             print("day la: ", ex)
+    def tatcachuyendicuataixe(self, employee_id):
+        results = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'search_read', 
+                [[('employee_id','=', employee_id)]], {'fields': ['id', 'company_id', "currency_id", "equipment_id", "location_name",
+                        "location_dest_name", "location_id", "location_dest_id", 'eating_fee', 'note', 'odometer_start', 'odometer_dest',
+                        'odometer_end', 'employee_id', 'schedule_date', 'start_date', 'end_date', 'attachment_ids']})
+        return {'data':{'results': results}}
     def danhsachtatcaxe(self):
         result = self.models.execute_kw(self.db, self.uid, self.password, 'maintenance.equipment', 'search_read', 
                 [[]], {'fields': ['id', 'name', "owner_user_id", "last_request", "license_plate",

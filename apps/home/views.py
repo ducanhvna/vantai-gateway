@@ -179,7 +179,7 @@ class Tatcachuyendi(APIView):
                 member = membership.member
                 employee_id = member.employee_id
                 print("Tat ca cac chuyen di cua: ", employee_id)
-                queryset= tatcachuyendicuataixe(employee_id)
+                queryset= VanTaiHaHai().tatcachuyendicuataixe(employee_id)
                 print(queryset)
                 lst_htrinh = [item['id'] for item in queryset['data']['results']]
                 Hanhtrinh.objects.filter(~Q(hanhtrinh_id__in = lst_htrinh)).delete()
@@ -305,8 +305,9 @@ class CapnhatkmKetthuc(APIView):
     def put(self, request, *args, **kwargs): 
         hanhtrinh = kwargs.get('hanhtrinh')
         km_end = request.data.get('km')
+        url = request.data.get('url')
         # attackements = request.data.get('attackements')
-        attackements = []
+        attackements = [url]
         ht_object = Hanhtrinh.objects.get(hanhtrinh_id=hanhtrinh)
         ht_object.odo_end= km_end
         ht_object.save()
