@@ -181,8 +181,8 @@ class Tatcachuyendi(APIView):
                 print("Tat ca cac chuyen di cua: ", employee_id)
                 queryset= tatcachuyendicuataixe(employee_id)
                 queryset2= VanTaiHaHai().tatcachuyendicuataixe(employee_id)
-                for item in queryset:
-                    for item2 in queryset2:
+                for item in queryset['data']['results']:
+                    for item2 in queryset2['data']['results']:
                         if (item['id'] == item2['id']):
                             item['location_id'] = item2['location_id']
                 print(queryset)
