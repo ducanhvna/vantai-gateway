@@ -181,41 +181,41 @@ class Tatcachuyendi(APIView):
                 print("Tat ca cac chuyen di cua: ", employee_id)
                 queryset= VanTaiHaHai().tatcachuyendicuataixe(employee_id)
                 print(queryset)
-                lst_htrinh = [item['id'] for item in queryset['data']['results']]
-                Hanhtrinh.objects.filter(~Q(hanhtrinh_id__in = lst_htrinh)).delete()
-                for item in queryset['data']['results']:
-                    # try:
-                    hanhtrinh= None
-                    hanhtrinh_list = Hanhtrinh.objects.filter(hanhtrinh_id=item['id'])
-                    if len(hanhtrinh_list)>0:
-                        hanhtrinh= hanhtrinh_list[0]
-                    else:
-                        hanhtrinh= Hanhtrinh()
-                    if hanhtrinh:
-                        hanhtrinh.employee_id = employee_id
-                        print("employee: ", employee_id)
+                # lst_htrinh = [item['id'] for item in queryset['data']['results']]
+                # Hanhtrinh.objects.filter(~Q(hanhtrinh_id__in = lst_htrinh)).delete()
+                # for item in queryset['data']['results']:
+                #     # try:
+                #     hanhtrinh= None
+                #     hanhtrinh_list = Hanhtrinh.objects.filter(hanhtrinh_id=item['id'])
+                #     if len(hanhtrinh_list)>0:
+                #         hanhtrinh= hanhtrinh_list[0]
+                #     else:
+                #         hanhtrinh= Hanhtrinh()
+                #     if hanhtrinh:
+                #         hanhtrinh.employee_id = employee_id
+                #         print("employee: ", employee_id)
                         
-                        hanhtrinh.hanhtrinh_id = item['id']
-                        hanhtrinh.equipment_id = item['equipment_id']['id']
-                        hanhtrinh.license_plate = item['equipment_id']['license_plate']
-                        hanhtrinh.name = item['equipment_id']['name']
-                        try:
-                            hanhtrinh.schedule_date = datetime.datetime.strptime(item['schedule_date'], "%Y-%m-%d")
-                        except Exception as ex:
-                            print(item['schedule_date'])
-                            print(ex)
-                        hanhtrinh.location_name = item['location_name']
-                        hanhtrinh.location_dest_name = item['location_dest_name']
-                        hanhtrinh.odo_start = item['odometer_start']
-                        # hanhtrinh.odo_end = item['odometer_dest']
-                        if item['ward_id']:
-                            hanhtrinh.ward_id  = item['ward_id']
-                        hanhtrinh.save()
-                        # item['sid'] = item['id']
-                        # item['id'] = hanhtrinh.pk
-                        attachments = item['attachment_ids']
-                        for attachment in attachments:
-                            AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
+                #         hanhtrinh.hanhtrinh_id = item['id']
+                #         hanhtrinh.equipment_id = item['equipment_id']['id']
+                #         hanhtrinh.license_plate = item['equipment_id']['license_plate']
+                #         hanhtrinh.name = item['equipment_id']['name']
+                #         try:
+                #             hanhtrinh.schedule_date = datetime.datetime.strptime(item['schedule_date'], "%Y-%m-%d")
+                #         except Exception as ex:
+                #             print(item['schedule_date'])
+                #             print(ex)
+                #         hanhtrinh.location_name = item['location_name']
+                #         hanhtrinh.location_dest_name = item['location_dest_name']
+                #         hanhtrinh.odo_start = item['odometer_start']
+                #         # hanhtrinh.odo_end = item['odometer_dest']
+                #         if item['ward_id']:
+                #             hanhtrinh.ward_id  = item['ward_id']
+                #         hanhtrinh.save()
+                #         # item['sid'] = item['id']
+                #         # item['id'] = hanhtrinh.pk
+                #         attachments = item['attachment_ids']
+                #         for attachment in attachments:
+                #             AttackmentHanhTrinh.objects.get_or_create(hanhtrinh=hanhtrinh, main_img=attachment['url'])
                     # if hanhtrinh.id:
                     #     results.append(hanhtrinh)
                     # except Exception as ex:
