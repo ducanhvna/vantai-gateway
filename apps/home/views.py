@@ -356,7 +356,27 @@ class CapnhatkmKetthuc(APIView):
     #     return context
     # def get(self, request, *args, **kwargs):
     #     return self.post(request, *args, **kwargs)
-
+class CapnhatDiadiemBatdau(APIView): 
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = [authentication.SessionAuthentication]
+    def put(self, request, *args, **kwargs): 
+        hanhtrinh = kwargs.get('hanhtrinh')
+        location_id = request.data.get('location_id')
+        # ht_object = Hanhtrinh.objects.get(hanhtrinh_id=hanhtrinh)
+        # ht_object.odo_start= km_end
+        # ht_object.save()
+        vantai = VanTaiHaHai()
+        vantai.capnhatlocationbatdauhanhtrinh(hanhtrinh, location_id)
+            # attachments = body['attachments']
+            # for item in attachments:
+            #     atts= AttackmentHanhTrinh.objects.filter(hanhtrinh = ht_object, url=item)
+            #     if len(atts) == 0:
+            #         att = AttackmentHanhTrinh(hanhtrinh = ht_object, url= item)
+            #         att.save()
+        result = chitiethanhtrinh(hanhtrinh)
+        # result['data']['sid'] = result['data']['id']
+        # result['data']['id'] = ht_object.pk
+        return Response(result)
 class CapnhatkmBatdau(APIView): 
     permission_classes = (IsAuthenticated,)
     # authentication_classes = [authentication.SessionAuthentication]
