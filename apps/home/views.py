@@ -185,6 +185,7 @@ class Tatcachuyendi(APIView):
                     for item2 in queryset2['data']['results']:
                         if (item['id'] == item2['id']):
                             item['location_id'] = item2['location_id']
+                            item['location_dest_id'] = item2['location_dest_id']
                 print(queryset)
                 # lst_htrinh = [item['id'] for item in queryset['data']['results']]
                 # Hanhtrinh.objects.filter(~Q(hanhtrinh_id__in = lst_htrinh)).delete()
