@@ -147,6 +147,16 @@ class VanTaiHaHai():
         except Exception as ex:
             print(ex)
         return result
+    def capnhatlocationketthuchanhtrinh(self, hanhtrinh, location_id):
+        result = None
+        try:
+            self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'write', [[hanhtrinh], {'location_id': location_id}])
+            # get record name after having changed it
+            result =  self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'name_get', [[hanhtrinh]])
+            print('result: ', result)
+        except Exception as ex:
+            print(ex)
+        return result
         
         
     
