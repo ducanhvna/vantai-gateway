@@ -313,11 +313,11 @@ class CapnhatkmKetthuc(APIView):
         url = request.data.get('url')
         # attackements = request.data.get('attackements')
         attackements = [url]
-        ht_object = Hanhtrinh.objects.get(hanhtrinh_id=hanhtrinh)
-        ht_object.odo_end= km_end
-        ht_object.save()
+        # ht_object = Hanhtrinh.objects.get(hanhtrinh_id=hanhtrinh)
+        # ht_object.odo_end= km_end
+        # ht_object.save()
         vantai = VanTaiHaHai()
-        vantai.capnhatsokmketthuchanhtrinh(ht_object.hanhtrinh_id, km_end, None, attackements)
+        vantai.capnhatsokmketthuchanhtrinh(hanhtrinh, km_end, None, attackements)
             # attachments = body['attachments']
             # for item in attachments:
             #     atts= AttackmentHanhTrinh.objects.filter(hanhtrinh = ht_object, url=item)
@@ -325,7 +325,7 @@ class CapnhatkmKetthuc(APIView):
             #         att = AttackmentHanhTrinh(hanhtrinh = ht_object, url= item)
             #         att.save()
 
-        result = chitiethanhtrinh(ht_object.hanhtrinh_id)
+        result = chitiethanhtrinh(hanhtrinh)
         # result['data']['sid'] = result['data']['id']
         # result['data']['id'] = ht_object.pk
         return Response(result)
@@ -365,18 +365,18 @@ class CapnhatkmBatdau(APIView):
         km_end = request.data.get('km')
         # attackements = request.data.get('attackements')
         attackements = []
-        ht_object = Hanhtrinh.objects.get(hanhtrinh_id=hanhtrinh)
-        ht_object.odo_start= km_end
-        ht_object.save()
+        # ht_object = Hanhtrinh.objects.get(hanhtrinh_id=hanhtrinh)
+        # ht_object.odo_start= km_end
+        # ht_object.save()
         vantai = VanTaiHaHai()
-        vantai.capnhatsokmbatdauhanhtrinh(ht_object.hanhtrinh_id, km_end, None, attackements)
+        vantai.capnhatsokmbatdauhanhtrinh(hanhtrinh, km_end, None, attackements)
             # attachments = body['attachments']
             # for item in attachments:
             #     atts= AttackmentHanhTrinh.objects.filter(hanhtrinh = ht_object, url=item)
             #     if len(atts) == 0:
             #         att = AttackmentHanhTrinh(hanhtrinh = ht_object, url= item)
             #         att.save()
-        result = chitiethanhtrinh(ht_object.hanhtrinh_id)
+        result = chitiethanhtrinh(hanhtrinh)
         # result['data']['sid'] = result['data']['id']
         # result['data']['id'] = ht_object.pk
         return Response(result)
