@@ -245,6 +245,10 @@ class ThongtintaixeApi(APIView):
             # device = user.user_device
             if len(devices)>0:
                 device = devices[0]
+                if device.user_owner:
+                    owner_devices = Device.objects.filter(user=device.user_owner)
+                    if len(owner_devices)>0:
+                        device = owner_devices[0]
             # if device:
                 data = GetThongtintaixe(device.device_membership.member.member_id)
                 data['data']['code'] = device.name
