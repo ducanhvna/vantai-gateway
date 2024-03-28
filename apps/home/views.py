@@ -292,6 +292,10 @@ class Tatcachuyendi(APIView):
         # # return queryset.prefetch_related("contacts", "account")
         if len(devices)>0:
             device = devices[0]
+            if device.user_owner:
+                owner_devices = Device.objects.filter(user=device.user_owner)
+                if len(owner_devices)>0:
+                    device = owner_devices[0]
             memberships = VantaihahaiMembership.objects.filter(device=device)
             if len(memberships) >0:
                 membership = memberships[0]
