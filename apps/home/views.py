@@ -190,7 +190,7 @@ class SyncUserDevice(APIView):
     def post(self, request, format=None):
         username = request.data.get('username')
         password = request.data.get('password')
-        target_user = authenticate(request, username=username, password=password)
+        target_user = User.objects.filter(request, username=username, password=password)
         if target_user:
             current_devices = Device.objects.filter(user=self.request.user)
             for device in current_devices:
@@ -202,7 +202,7 @@ class SyncUserDevice(APIView):
             # user_profile.save()
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
                 device.user = target_user
-            result = {'devices': current_devices.id, 'username': target_user.username}
+            result = {'devices': current_devices, 'username': target_user.username}
             # return Response(device)
         else:
             result = {'result': None}
