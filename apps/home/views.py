@@ -155,7 +155,7 @@ class CreateDevice(APIView):
             vantai_object.member_id = member_id
             vantai_object.name = code
             vantai_object.save()
-            device = Device(type = device_type, id=device_id, user= user)
+            device = Device(type = device_type, name=code, id=device_id, user= user)
             device.save()
             memberships = VantaihahaiMembership(device = device, member = vantai_object)
             memberships.save()
@@ -166,10 +166,14 @@ class CreateDevice(APIView):
             # xe_phutrachs = VantaihahaiEquipment.objects.filter(owner_user_id= hahai_member.member_id)
             # if len(xe_phutrachs)>0:
             #     xe_phutrach = xe_phutrachs[0]
-            result = {'device_id': device.id, 'owner': device.user_owner, 'username': user.username}
+            result = {'device_id': device.id,'device_name': device.name, 'owner': device.user_owner, 'username': user.username}
             # return Response(device)
         else:
-            result = {'device_id': devices[0].id, 'owner': devices[0].user_owner.username if devices[0].user_owner else None, 
+            if not devices[0].name:
+                devices[0].name = devices[0].user.username if devices[0].user else None
+                devices[0].save()
+
+            result = {'device_id': devices[0].id,'device_name': device.name, 'owner': devices[0].user_owner.username if devices[0].user_owner else None, 
                       'username': devices[0].user.username if devices[0].user else None}
         id = request.data.get('id')
         type = request.data.get('type')
