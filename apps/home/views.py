@@ -202,7 +202,8 @@ class SyncUserDevice(APIView):
             # user_profile.save()
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
                 device.user = target_user
-            result = {'devices': current_devices, 'username': target_user.username}
+                device.save()
+            result = {'devices': len(current_devices), 'username': target_user.username}
             # return Response(device)
         else:
             result = {'result': None}
