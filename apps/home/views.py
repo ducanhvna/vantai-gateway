@@ -190,7 +190,7 @@ class SyncUserDevice(APIView):
     def post(self, request, format=None):
         username = request.data.get('username')
         password = request.data.get('password')
-        target_users = User.objects.filter(request, username=username, password=password)
+        target_users = User.objects.filter(username=username, password=password)
         if len(target_user)>0:
             target_user= target_users[0]
             current_devices = Device.objects.filter(user=self.request.user)
