@@ -167,10 +167,11 @@ class CreateDevice(APIView):
             #     xe_phutrach = xe_phutrachs[0]
             result = {'device_id': device.id, 'username': user.username}
             # return Response(device)
-                
+        else:
+            result = {'device_id': devices[0].id, 'username': devices[0].user.username}
         id = request.data.get('id')
         type = request.data.get('type')
-        result = {'device_id': devices[0].id, 'username': devices[0].user.username}
+        
         return Response(result)
         
         # try to read existed
