@@ -200,6 +200,7 @@ class SyncUserDevice(APIView):
     def post(self, request, format=None):
         username = request.data.get('username')
         password = request.data.get('password')
+        results = []
         # target_users = User.objects.filter(username=username, password=password)
         target_user = User.objects.get(username=username) 
         # this checks the plaintext password against the stored hash 
@@ -217,14 +218,20 @@ class SyncUserDevice(APIView):
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
                 device.user_owner = target_user
                 device.save()
-            result = {'devices': len(current_devices), 'username': target_user.username}
+            # if len(current_devices) == 0:
+            #     result = {'devices': len(current_devices), 'username': target_user.username}
+            # else:
+                result_item = {'device_id': device.id,'device_name': device.name, 
+                        'owner': device.user_owner.username if device.user_owner else None, 
+                        'username': device.user.username if device.user else None}
+                results.append(result_item)
             # return Response(device)
-        else:
-            result = {'result': None}
-        id = request.data.get('id')
-        type = request.data.get('type')
+        # else:
+        #     result = {'result': None}
+        # id = request.data.get('id')
+        # type = request.data.get('type')
         
-        return Response(result)
+        return Response({'data': results})
         
 class ThongtintaixeApi(APIView): 
     permission_classes = (IsAuthenticated,)
