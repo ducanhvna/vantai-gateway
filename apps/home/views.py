@@ -150,9 +150,11 @@ class CreateDevice(APIView):
             # user_profile.save()
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
             vantai = VanTaiHaHai()
-            member_id = vantai.create_employee(code)
+            member_id = vantai.create_free_user(code)
+            employee_id = vantai.create_employee(code, member_id)
             vantai_object = VantaihahaiMember()
             vantai_object.member_id = member_id
+            vantai_object.employee_id = employee_id
             vantai_object.name = code
             vantai_object.save()
             device = Device(type = device_type, name=code, id=device_id, user= user)
@@ -748,7 +750,7 @@ class Taohanhtrinh(APIView):
             if len(memberships)>0:
                 membership = memberships[0]
                 hahai_member = membership.member
-            print("tim kiem xe cua member_id: ",hahai_member.member_id)
+            print("tim kiem xe cua : ",hahai_member.member_id)
             xe_phutrachs = VantaihahaiEquipment.objects.filter(owner_user_id= hahai_member.member_id)
             if len(xe_phutrachs)>0:
                 xe_phutrach = xe_phutrachs[0]

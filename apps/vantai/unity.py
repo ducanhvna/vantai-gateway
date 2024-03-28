@@ -17,7 +17,9 @@ class VanTaiHaHai():
         except Exception as ex:
             print("day la: ", ex)
     def tatcachuyendicuataixe(self, employee_id):
-        results = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'search_read', 
+        results = []
+        if employee_id>0:
+            results = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'search_read', 
                 [[('employee_id','=', employee_id)]], {'fields': ['id', 'company_id', "currency_id", "equipment_id", "location_name",
                         "location_dest_name", "location_id", "location_dest_id", 'eating_fee', 'note', 'odometer_start', 'odometer_dest',
                         'odometer_end', 'employee_id', 'schedule_date', 'start_date', 'end_date', 'attachment_ids']})
@@ -32,8 +34,13 @@ class VanTaiHaHai():
             except:
                 print('item: ', item)
         return result
-    def create_employee(self, code):
+    def create_free_user(self, code):
+        user_id=models.execute_kw(self.db, self.uid, self.password, 'res.users', 'create', [{'name':f"free{code}", 'login':f'free_{code}@free.com',
+                'company_ids':[2], 'company_id':2, 'new_password':code}])
+        return user_id
+    def create_employee(self, code, member_id):
         update_data = {
+                'user_id': member_id,
                 'name': code,
                 'company_id': 2
             }
