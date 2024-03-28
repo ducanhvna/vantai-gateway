@@ -135,7 +135,7 @@ class CreateDevice(APIView):
         
         if len(devices) == 0:
             code = create_new_ref_number()
-            while len(user.objects.filter(username=code)) > 0:
+            while len(User.objects.filter(username=code)) > 0:
                 code = create_new_ref_number()
             print('code: ',code)
             # device_id = request.data.get('id')
