@@ -166,10 +166,10 @@ class CreateDevice(APIView):
             # xe_phutrachs = VantaihahaiEquipment.objects.filter(owner_user_id= hahai_member.member_id)
             # if len(xe_phutrachs)>0:
             #     xe_phutrach = xe_phutrachs[0]
-            result = {'device_id': device.id, 'username': user.username}
+            result = {'device_id': device.id, 'owner': device.user_owner, 'username': user.username}
             # return Response(device)
         else:
-            result = {'device_id': devices[0].id, 'username': devices[0].user.username}
+            result = {'device_id': devices[0].id, 'owner': devices[0].user_owner, 'username': devices[0].user.username}
         id = request.data.get('id')
         type = request.data.get('type')
         
@@ -205,7 +205,7 @@ class SyncUserDevice(APIView):
             #                                random.choices(string.ascii_uppercase + string.digits, k=8)))
             # user_profile.save()
             # return Response(serializer.data, status=status.HTTP_201_CREATED)
-                device.user = target_user
+                device.user_owner = target_user
                 device.save()
             result = {'devices': len(current_devices), 'username': target_user.username}
             # return Response(device)
