@@ -155,6 +155,7 @@ class CreateDevice(APIView):
             vantai_object.name = code
             vantai_object.save()
             device = Device(type = device_type, id=device_id, user= user)
+            device.save()
             memberships = VantaihahaiMembership(device = device, member = vantai_object)
             memberships.save()
             # if len(memberships)>0:
