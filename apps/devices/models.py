@@ -23,6 +23,9 @@ class Device(models.Model):
     user   = models.OneToOneField(settings.AUTH_USER_MODEL, 
                                     on_delete=models.CASCADE,
                                     primary_key=True, related_name='user_device')
+    user_owner= models.ForeignKey(settings.AUTH_USER_MODEL, 
+                                    on_delete=models.CASCADE, related_name='device_others')
+    
     id = models.TextField(unique=True)
    
     default_shipping_address_id = models.IntegerField(null=True, blank=True)
