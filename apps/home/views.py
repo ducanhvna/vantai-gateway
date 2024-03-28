@@ -17,6 +17,7 @@ from apps.vantai.unity import cacchuyendihomnaycuataixe, chitiethanhtrinh, tatca
     danhsachcacphuongtheohuyen, danhsachcachuyentheotinh, danhsachcactinh, tatcadiadiem, themmoichuyendi
 from django.contrib.auth.models import User
 from django.utils.crypto import get_random_string
+from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -184,6 +185,32 @@ class CreateDevice(APIView):
         #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class SyncUserDevice(APIView):
+    permission_classes = (IsAuthenticated,)
+    def post(self, request, format=None):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        target_user = authenticate(request, username=username, password=password)
+        if target_user:
+            current_devices = Device.objects.filter(user=self.request.user)
+            for device in current_devices:
+    
+            # serializer.save(user= user, name=code)
+            # user_profile = UserProfile(user_id=user.id,
+            #                            affiliate_code=''.join(
+            #                                random.choices(string.ascii_uppercase + string.digits, k=8)))
+            # user_profile.save()
+            # return Response(serializer.data, status=status.HTTP_201_CREATED)
+                device.user = target_user
+            result = {'devices': current_devices.id, 'username': target_user.username}
+            # return Response(device)
+        else:
+            result = {'result': None}
+        id = request.data.get('id')
+        type = request.data.get('type')
+        
+        return Response(result)
+        
 class ThongtintaixeApi(APIView): 
     permission_classes = (IsAuthenticated,)
     # authentication_classes = [authentication.SessionAuthentication]
