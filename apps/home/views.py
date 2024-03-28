@@ -10,6 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 from django.db.models import Q
+import json
 from apps.devices.models import Device
 from apps.vantai.models import AttackmentHanhTrinh, Hanhtrinh, VantaihahaiEquipment, VantaihahaiMember, VantaihahaiMembership
 from apps.vantai.unity import cacchuyendihomnaycuataixe, chitiethanhtrinh, tatcachuyendicuataixe, \
@@ -165,11 +166,13 @@ class CreateDevice(APIView):
             # xe_phutrachs = VantaihahaiEquipment.objects.filter(owner_user_id= hahai_member.member_id)
             # if len(xe_phutrachs)>0:
             #     xe_phutrach = xe_phutrachs[0]
-            return Response(device)
+            # return Response(device)
+            return HttpResponse(json.simplejson.dumps(device), mimetype="application/json")
                 
         id = request.data.get('id')
         type = request.data.get('type')
-        return Response(devices)
+        # return Response(devices)
+        return HttpResponse(json.simplejson.dumps(devices), mimetype="application/json")
         # try to read existed
         # try:
         #     device = Device.objects.get(id=id, type=type)
