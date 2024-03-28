@@ -190,9 +190,12 @@ class SyncUserDevice(APIView):
     def post(self, request, format=None):
         username = request.data.get('username')
         password = request.data.get('password')
-        target_users = User.objects.filter(username=username, password=password)
-        if len(target_users)>0:
-            target_user= target_users[0]
+        # target_users = User.objects.filter(username=username, password=password)
+        target_user = User.objects.get(username=username) 
+        # this checks the plaintext password against the stored hash 
+        correct = target_user.check_password(password) 
+        if correct:
+            # target_user= target_users[0]
             current_devices = Device.objects.filter(user=self.request.user)
             for device in current_devices:
     
