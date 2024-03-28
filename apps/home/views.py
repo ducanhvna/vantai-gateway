@@ -169,7 +169,7 @@ class CreateDevice(APIView):
             result = {'device_id': device.id, 'owner': device.user_owner, 'username': user.username}
             # return Response(device)
         else:
-            result = {'device_id': devices[0].id, 'owner': devices[0].user_owner, 'username': devices[0].user.username}
+            result = {'device_id': devices[0].id, 'owner': devices[0].user_owner.username, 'username': devices[0].user.username}
         id = request.data.get('id')
         type = request.data.get('type')
         
