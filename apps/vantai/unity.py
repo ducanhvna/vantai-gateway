@@ -32,6 +32,14 @@ class VanTaiHaHai():
             except:
                 print('item: ', item)
         return result
+    def create_employee(self, code):
+        update_data = {
+                'name': code,
+                'company_id': 2
+            }
+        id_employee = self.models.execute_kw(self.db, self.uid, self.password, 'hr.employee', 'create',
+                                                  [update_data])
+        return id_employee
     def chitietxe(self, xe_id):
      # user = order.user
         [result] = self.models.execute_kw(self.db, self.uid, self.password, 'maintenance.equipment', 'read',

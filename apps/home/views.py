@@ -15,10 +15,18 @@ from apps.vantai.models import AttackmentHanhTrinh, Hanhtrinh, VantaihahaiEquipm
 from apps.vantai.unity import cacchuyendihomnaycuataixe, chitiethanhtrinh, tatcachuyendicuataixe, \
     GetThongtintaixe, danhsachtatcaxe, VanTaiHaHai, tatcamathang, thongtinxe, danhsachyeucaubaotrixe, capnhatghichubaotri, \
     danhsachcacphuongtheohuyen, danhsachcachuyentheotinh, danhsachcactinh, tatcadiadiem, themmoichuyendi
+from django.contrib.auth.models import User
+from django.utils.crypto import get_random_string
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+import string
 from apps.vantai.models import VantaiLocation, Hanhtrinh, VantaihahaiMember
+# Create your models here.
+def create_new_ref_number():
+    code = get_random_string(8, allowed_chars=string.ascii_uppercase + string.digits)
+    return code
 
 @login_required(login_url="/login/")
 def index(request):
@@ -117,6 +125,59 @@ def pages(request):
     except:
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
+
+class CreateDevice(APIView):
+    def post(self, request, format=None):
+        device_id = request.data.get('id')
+        device_type = request.data.get('type')
+        
+        devices = Device.objects.filter(id=device_id)
+        
+        if len(devices) == 0:
+            code = create_new_ref_number()
+            while len(user.objects.filter(username=code)) > 0:
+                code = create_new_ref_number()
+            print('code: ',code)
+            # device_id = request.data.get('id')
+            user = User.objects.create_user(username=code,
+                                    email=f'{code}@vantaihahai.com',
+                                    password=code)
+            # serializer.save(user= user, name=code)
+            # user_profile = UserProfile(user_id=user.id,
+            #                            affiliate_code=''.join(
+            #                                random.choices(string.ascii_uppercase + string.digits, k=8)))
+            # user_profile.save()
+            # return Response(serializer.data, status=status.HTTP_201_CREATED)
+            vantai = VanTaiHaHai()
+            member_id = vantai.create_employee(code)
+            vantai_object = VantaihahaiMember()
+            vantai_object.member_id = member_id
+            vantai_object.name = code
+            
+            device = Device(device_type = device_type, id=id, user= user)
+            memberships = VantaihahaiMembership.objects.filter(device = device, member = vantai_object)
+
+            # if len(memberships)>0:
+            #     membership = memberships[0]
+            #     hahai_member = membership.member
+            # print("tim kiem xe cua member_id: ",hahai_member.member_id)
+            # xe_phutrachs = VantaihahaiEquipment.objects.filter(owner_user_id= hahai_member.member_id)
+            # if len(xe_phutrachs)>0:
+            #     xe_phutrach = xe_phutrachs[0]
+            return Response(device)
+                
+        id = request.data.get('id')
+        type = request.data.get('type')
+        return Response(devices)
+        # try to read existed
+        # try:
+        #     device = Device.objects.get(id=id, type=type)
+        #     if device:
+        #         serializer = DeviceSerializer(device)
+        #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # except:
+        #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ThongtintaixeApi(APIView): 
     permission_classes = (IsAuthenticated,)
