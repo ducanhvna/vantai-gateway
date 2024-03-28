@@ -35,7 +35,7 @@ class VanTaiHaHai():
                 print('item: ', item)
         return result
     def create_free_user(self, code):
-        user_id=models.execute_kw(self.db, self.uid, self.password, 'res.users', 'create', [{'name':f"free{code}", 'login':f'free_{code}@free.com',
+        user_id= self.models.execute_kw(self.db, self.uid, self.password, 'res.users', 'create', [{'name':f"free{code}", 'login':f'free_{code}@free.com',
                 'company_ids':[2], 'company_id':2, 'new_password':code}])
         return user_id
     def create_employee(self, code, member_id):
