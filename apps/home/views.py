@@ -176,10 +176,10 @@ class CreateDevice(APIView):
                 devices[0].save()
             try:
                 result = {'device_id': devices[0].id,'device_name': devices[0].name, 'owner': devices[0].user_owner.username if devices[0].user_owner else None, 
-                      'username': devices[0].user.username if devices[0].user else None, 'employee_id': devices[0].device_membership.member.employee_id}
+                      'username': devices[0].user.username if devices[0].user else None, 'employee_id': devices[0].device_membership.member.employee_id if devices[0].device_membership.member else None}
             except:
                 result = {'device_id': devices[0].id,'device_name': devices[0].name, 'owner': devices[0].user_owner.username if devices[0].user_owner else None, 
-                      'username': devices[0].user.username if devices[0].user else None, 'employee_id': 0}
+                      'username': devices[0].user.username if devices[0].user else None, 'employee_id': None}
         id = request.data.get('id')
         type = request.data.get('type')
         
