@@ -3,6 +3,7 @@ from django.conf import  settings
 import requests, json
 from .models import VantaihahaiMember, VantaihahaiMembership
 import xmlrpc.client
+import datetime
 class VanTaiHaHai():
     def __init__(self):
         print('init hahai')
@@ -24,6 +25,15 @@ class VanTaiHaHai():
                         "location_dest_name", "location_id", "location_dest_id", 'eating_fee', 'note', 'odometer_start', 'odometer_dest',
                         'odometer_end', 'employee_id', 'schedule_date', 'start_date', 'end_date', 'attachment_ids']})
         return {'data':{'results': results}}
+    
+    def tatcachuyendihomnay(self):
+        today_str = datetime.datetime.now().strftime('%Y-%m-%d') 
+        results = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'search_read', 
+                [[('schedule_date','=', today_str)]], {'fields': ['id', 'company_id', "currency_id", "equipment_id", "location_name",
+                        "location_dest_name", "location_id", "location_dest_id", 'eating_fee', 'note', 'odometer_start', 'odometer_dest',
+                        'odometer_end', 'employee_id', 'schedule_date', 'start_date', 'end_date', 'attachment_ids']})
+        return {'data':{'results': results,'today':today_str}}
+        
     def danhsachtatcaxe(self):
         result = self.models.execute_kw(self.db, self.uid, self.password, 'maintenance.equipment', 'search_read', 
                 [[]], {'fields': ['id', 'name', "owner_user_id", "last_request", "license_plate",
