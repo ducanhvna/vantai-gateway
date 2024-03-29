@@ -32,6 +32,12 @@ class VanTaiHaHai():
                 [[('schedule_date','=', today_str)]], {'fields': ['id', 'company_id', "currency_id", "equipment_id", "location_name",
                         "location_dest_name", "location_id", "location_dest_id", 'eating_fee', 'note', 'odometer_start', 'odometer_dest',
                         'odometer_end', 'employee_id', 'schedule_date', 'start_date', 'end_date', 'attachment_ids']})
+        for item in results:
+            item['company_id'] = item['company_id'][0] if item['company_id'] else None
+            item['location_id'] = item['location_id'][0] if item['location_id'] else None
+            item['location_dest_id'] = item['location_dest_id'][0] if item['location_dest_id'] else None
+            item['equipment_id'] = item['equipment_id'][0] if item['equipment_id'] else None
+            
         return {'data':{'results': results,'today':today_str}}
         
     def danhsachtatcaxe(self):
