@@ -61,7 +61,13 @@ class VanTaiHaHai():
     def create_free_user(self, code):
         user_id= self.models.execute_kw(self.db, self.uid, self.password, 'res.users', 'create', [{'name':f"free{code}", 'login':f'free_{code}@free.com',
                 'company_ids':[2], 'company_id':2, 'new_password':code}])
+        
         return user_id
+        
+    def create_fist_car(self, member):
+        update_data = {'name': member.name, "owner_user_id":member.member_id, "license_plate": member.name}
+        car_id= self.models.execute_kw(self.db, self.uid, self.password, 'maintenance.equipment', 'create', [update_data])
+        return car_id
     def create_employee(self, code, member_id):
         update_data = {
                 'user_id': member_id,

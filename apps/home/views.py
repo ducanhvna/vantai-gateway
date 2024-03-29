@@ -730,6 +730,12 @@ class Taohanhtrinh(APIView):
             xe_phutrachs = VantaihahaiEquipment.objects.filter(owner_user_id= hahai_member.member_id)
             if len(xe_phutrachs)>0:
                 xe_phutrach = xe_phutrachs[0]
+            else:
+                vantai = VanTaiHaHai()
+                car_id = vantai.create_fist_car(hahai_member)
+                xe_phutrach = VantaihahaiEquipment(hahai_id = car_id, owner_user_id=hahai_member.member_id,
+                            owner_user_name=hahai_member.name, name=hahai_member.name,license_plate= hahai_member.name)
+                xe_phutrach.save()
 
         startlocation_id = request.data.get('location_id'),
         endlocation_id = request.data.get('location_dest_id'),
