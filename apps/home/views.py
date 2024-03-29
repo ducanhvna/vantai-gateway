@@ -168,7 +168,7 @@ class CreateDevice(APIView):
             # xe_phutrachs = VantaihahaiEquipment.objects.filter(owner_user_id= hahai_member.member_id)
             # if len(xe_phutrachs)>0:
             #     xe_phutrach = xe_phutrachs[0]
-            result = {'device_id': device.id,'device_name': device.name, 'owner': device.user_owner, 'username': user.username}
+            result = {'device_id': device.id,'device_name': device.name, 'owner': device.user_owner, 'username': user.username, 'employee_id': employee_id}
             # return Response(device)
         else:
             if not devices[0].name:
@@ -179,7 +179,7 @@ class CreateDevice(APIView):
                       'username': devices[0].user.username if devices[0].user else None, 'employee_id': devices[0].device_membership.member.employee_id}
             except:
                 result = {'device_id': devices[0].id,'device_name': devices[0].name, 'owner': devices[0].user_owner.username if devices[0].user_owner else None, 
-                      'username': devices[0].user.username if devices[0].user else None}
+                      'username': devices[0].user.username if devices[0].user else None, 'employee_id': 0}
         id = request.data.get('id')
         type = request.data.get('type')
         
