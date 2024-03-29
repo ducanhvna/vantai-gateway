@@ -28,8 +28,9 @@ class VanTaiHaHai():
     
     def tatcachuyendihomnay(self):
         today_str = datetime.datetime.now().strftime('%Y-%m-%d') 
+        last_week_str = (datetime.datetime.now() - datetime.timedelta(days=7)).strftime('%Y-%m-%d') 
         results = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'search_read', 
-                [[('schedule_date','=', today_str)]], {'fields': ['id', 'company_id', "currency_id", "equipment_id", "location_name",
+                [[('schedule_date','<=', today_str), ('schedule_date','>=', last_week_str)]], {'fields': ['id', 'company_id', "currency_id", "equipment_id", "location_name",
                         "location_dest_name", "location_id", "location_dest_id", 'eating_fee', 'note', 'odometer_start', 'odometer_dest',
                         'odometer_end', 'employee_id', 'schedule_date', 'start_date', 'end_date', 'attachment_ids']})
         for item in results:
@@ -63,7 +64,7 @@ class VanTaiHaHai():
                 'company_ids':[2], 'company_id':2, 'new_password':code}])
         
         return user_id
-        
+
     def create_fist_car(self, member):
         update_data = {'name': member.name, "owner_user_id":member.member_id, "license_plate": member.name}
         car_id= self.models.execute_kw(self.db, self.uid, self.password, 'maintenance.equipment', 'create', [update_data])
