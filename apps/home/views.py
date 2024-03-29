@@ -721,6 +721,11 @@ class Taohanhtrinh(APIView):
         if  len(user_devices)>0:
             print('ha hai member: ', hahai_member)
             user_device = user_devices[0]
+            # device = devices[0]
+            if user_device.user_owner:
+                owner_devices = Device.objects.filter(user=device.user_owner)
+                if len(owner_devices)>0:
+                    user_device = owner_devices[0]
             memberships = VantaihahaiMembership.objects.filter(device = user_device)
 
             if len(memberships)>0:
