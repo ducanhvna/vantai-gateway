@@ -37,6 +37,10 @@ class VanTaiHaHai():
             item['location_id'] = item['location_id'][0] if item['location_id'] else None
             item['location_dest_id'] = item['location_dest_id'][0] if item['location_dest_id'] else None
             item['equipment_id'] = item['equipment_id'][0] if item['equipment_id'] else None
+            item['location_name'] = item['location_name'] if item['location_name'] else None
+            item['schedule_date'] = item['schedule_date'] if item['schedule_date'] else None
+            item['location_dest_name'] = item['location_dest_name'] if item['location_dest_name'] else None
+            
             
         return {'data':{'results': results,'today':today_str}}
         
