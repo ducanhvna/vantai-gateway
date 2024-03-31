@@ -25,7 +25,7 @@ urlpatterns = [
     # Leave `Home.Urls` as last the last line
     path("", include("apps.home.urls")),
     path("", include("apps.members.urls")),
-    path("", include("apps.apec.urls"))
+    path("", include("apps.api_apec.urls"))
 ]
 
 if settings.DEBUG:

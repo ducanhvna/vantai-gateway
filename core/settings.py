@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'apps.vantai',
     'apps.devices',
     'apps.members',
-    'apps.apec',
+    'apps.api_apec',
     'rest_framework',
     'rest_framework_simplejwt',
 
