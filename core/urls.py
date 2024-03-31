@@ -23,9 +23,11 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # ADD NEW Routes HERE
     # Leave `Home.Urls` as last the last line
+    path("common/", include("apps.members.urls")),
+    path("apec/", include("apps.api_apec.urls")),
     path("", include("apps.home.urls")),
-    path("", include("apps.members.urls")),
-    path("", include("apps.api_apec.urls"))
+    
+    
 ]
 
 if settings.DEBUG:

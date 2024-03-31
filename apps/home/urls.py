@@ -10,10 +10,12 @@ from .views import ThongtintaixeApi, Tatcachuyendi, Cacchuyenhomnay, CapnhatkmKe
                     TaoghichuBaotri, Danhsachcactinh, ListHuyentheotinh, TatcaDiadiem, \
                     Taohanhtrinh, DanhsachMathang, CapnhatDiadiemBatdau, CapnhatDiadiemKetthuc, \
                     CreateDevice, SyncUserDevice
+from apps.members.views import CompanyViewSet
 urlpatterns = [
 
     # The home page
     path('', views.index, name='home'),
+    path("api/versions/", CompanyViewSet.as_view(), name='versions'),
     path("api/core/khoitaodevice/", CreateDevice.as_view(), name='hahai_khoitaodevice'),
     path("api/core/syncuser/", SyncUserDevice.as_view(), name='hahai_syncuser'),
     path("api/core/thongtintaixe/", ThongtintaixeApi.as_view(), name='hahai_thongtintaixe'),
