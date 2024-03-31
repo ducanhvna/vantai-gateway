@@ -31,7 +31,11 @@ class SyncUserDevice(APIView):
                 target_user = User.objects.create_user(username=f'{company_info.code}_{username}',
                                     email=f'{company_info.code}_{username}@{company_info.code}.com',
                                     password=f'{company_info.code}_{username}')
-            if not target_user.user_device:
+            try:
+                target_device = target_user.user_device
+            except:
+                target_device= None
+            if not target_device:
                 target_device = Device(type = 4, name=f'{company_info.code}_{username}', id=f'{company_info.code}_{username}', 
                         user= target_user)
                 target_device.save()
