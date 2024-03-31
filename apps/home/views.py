@@ -184,9 +184,9 @@ class CreateDevice(APIView):
                       'username': device.user.username if device.user else None, 'employee_id': None}
         if device.user_owner:
             device_company = null if not device.user_owner.device else device.user_owner.device.company
-            result['api'] = 'core' if not device_company else 'core' if not device_company.api_version else device_company.api_version
+            result['api'] = 'api/core' if not device_company else 'api/core' if not device_company.api_version else device_company.api_version
         else:    
-            result['api'] = 'core' if not device.company else 'core' if not device.company.api_version else device.company.api_version
+            result['api'] = 'api/core' if not device.company else 'api/core' if not device.company.api_version else device.company.api_version
         return Response(result)
         
         # try to read existed
