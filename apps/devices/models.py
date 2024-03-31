@@ -41,5 +41,5 @@ class Device(models.Model):
                 unique=True)
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.name} - {self.user}"
    
