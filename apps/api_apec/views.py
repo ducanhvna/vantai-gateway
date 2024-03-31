@@ -45,7 +45,7 @@ class SyncUserDevice(APIView):
             target_device.company = company_info
             target_device.username = username
             target_device.password = password
-
+            target_device.save()
             # target_user= target_users[0]
             current_devices = Device.objects.filter(user=self.request.user)
             for device in current_devices:
