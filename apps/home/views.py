@@ -182,7 +182,11 @@ class CreateDevice(APIView):
             except:
                 result = {'device_id': device.id,'device_name': device.name, 'owner': device.user_owner.username if device.user_owner else None, 
                       'username': device.user.username if device.user else None, 'employee_id': None}
-        result['api'] = 'core' if not device.company else 'core' if not device.company.api_version else device.company.api_version
+        if device.user_owner:
+            device_company = null if not device.user_owner.device else device.user_owner.device.company
+            result['api'] = 'core' if not device_company else 'core' if not device_company.api_version else device_company.api_version
+        else:    
+            result['api'] = 'core' if not device.company else 'core' if not device.company.api_version else device.company.api_version
         return Response(result)
         
         # try to read existed
