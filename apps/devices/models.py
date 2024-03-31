@@ -28,6 +28,8 @@ class Device(models.Model):
     user_owner= models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True,
                                     on_delete=models.SET_NULL, related_name='device_others')
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True)
+    username = models.CharField(max_length=200, null=True, blank=True)
+    password = models.CharField(max_length=200, null=True, blank=True)
     id = models.TextField(unique=True)
    
     default_shipping_address_id = models.IntegerField(null=True, blank=True)

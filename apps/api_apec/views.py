@@ -2,19 +2,27 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-
+from apps.members.models import Company
+from .unity import Apec
 # Create your views here.
 class SyncUserDevice(APIView):
     permission_classes = (IsAuthenticated,)
     def post(self, request, format=None):
+        company_id = request.data.get('company_id')
         username = request.data.get('username')
         password = request.data.get('password')
         results = []
         # target_users = User.objects.filter(username=username, password=password)
-        target_user = User.objects.get(username=username) 
+        # target_user = User.objects.get(username=username) 
         # this checks the plaintext password against the stored hash 
-        correct = target_user.check_password(password) 
-        if correct:
+        
+        # if user.user_owner :
+        #     company_info = user.user_owner.company
+        # else:
+        company_info = Company.objects.get(pk = company_id)
+        apec = Apec(company_info.url, company_info.db, company_info.username, company_info.password)
+        correct = Apec.authenticate(username, password) 
+        if correct > 0:
             # target_user= target_users[0]
             current_devices = Device.objects.filter(user=self.request.user)
             for device in current_devices:
