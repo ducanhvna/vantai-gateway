@@ -8,6 +8,8 @@ class Company(models.Model):
     username = models.CharField(max_length=200)
     password = models.CharField(max_length=200)
     dbname = models.CharField(max_length=200)
+    api_version = models.CharField(max_length=200, blank=True, null=True)
+
     # users = models.ManyToManyField(
     #     settings.AUTH_USER_MODEL,
     #     related_name='groups',
