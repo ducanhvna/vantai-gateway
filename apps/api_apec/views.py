@@ -21,7 +21,7 @@ class SyncUserDevice(APIView):
         #     company_info = user.user_owner.company
         # else:
         company_info = Company.objects.get(pk = company_id)
-        apec = Apec(company_info.url, company_info.db, company_info.username, company_info.password)
+        apec = Apec(company_info.url, company_info.dbname, company_info.username, company_info.password)
         correct = apec.authenticate(username, password) 
         
         if correct > 0:
@@ -40,7 +40,7 @@ class SyncUserDevice(APIView):
             target_device.company = company_info
             target_device.username = username
             target_device.password = password
-            
+
             # target_user= target_users[0]
             current_devices = Device.objects.filter(user=self.request.user)
             for device in current_devices:
