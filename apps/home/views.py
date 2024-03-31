@@ -168,21 +168,21 @@ class CreateDevice(APIView):
             # xe_phutrachs = VantaihahaiEquipment.objects.filter(owner_user_id= hahai_member.member_id)
             # if len(xe_phutrachs)>0:
             #     xe_phutrach = xe_phutrachs[0]
-            result = {'device_id': device.id,'device_name': device.name, 'owner': device.user_owner, 'username': user.username, 'employee_id': employee_id}
+            result = {'device_id': device.id,'device_name': device.name, 'owner': device.user_owner, 
+                'username': user.username, 'employee_id': employee_id}
             # return Response(device)
         else:
-            if not devices[0].name:
-                devices[0].name = devices[0].user.username if devices[0].user else None
-                devices[0].save()
+            device = devices[0]
+            if not device.name:
+                device.name = device.user.username if device.user else None
+                device.save()
             try:
-                result = {'device_id': devices[0].id,'device_name': devices[0].name, 'owner': devices[0].user_owner.username if devices[0].user_owner else None, 
-                      'username': devices[0].user.username if devices[0].user else None, 'employee_id': devices[0].device_membership.member.employee_id if devices[0].device_membership.member else None}
+                result = {'device_id': device.id,'device_name': device.name, 'owner': device.user_owner.username if device.user_owner else None, 
+                      'username': device.user.username if device.user else None, 'employee_id': device.device_membership.member.employee_id if device.device_membership.member else None}
             except:
-                result = {'device_id': devices[0].id,'device_name': devices[0].name, 'owner': devices[0].user_owner.username if devices[0].user_owner else None, 
-                      'username': devices[0].user.username if devices[0].user else None, 'employee_id': None}
-        id = request.data.get('id')
-        type = request.data.get('type')
-        
+                result = {'device_id': device.id,'device_name': device.name, 'owner': device.user_owner.username if device.user_owner else None, 
+                      'username': device.user.username if device.user else None, 'employee_id': None}
+        result['api'] = 'core' if not device.company else 'core' if not device.company.api_version else device.company.api_version
         return Response(result)
         
         # try to read existed
