@@ -6,6 +6,8 @@ from django.conf import settings
 from django.db.models.aggregates import Count
 from django.core.validators import RegexValidator
 from django.utils.crypto import get_random_string
+from apps.members.models import Company
+
 import string
 
 # Create your models here.
@@ -25,10 +27,11 @@ class Device(models.Model):
                                     primary_key=True, related_name='user_device')
     user_owner= models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True,
                                     on_delete=models.SET_NULL, related_name='device_others')
-    
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True)
     id = models.TextField(unique=True)
    
     default_shipping_address_id = models.IntegerField(null=True, blank=True)
+
     name   = models.CharField(max_length=8,
                 null=False, blank=False, 
                 unique=True,
