@@ -16,6 +16,7 @@ class Apec():
         except Exception as ex:
             print("day la: ", ex)
     def authenticate(self, username, password):
+        common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(self.url))
         uid = common.authenticate(self.db, username, password, {})
         return uid
     def tatcachuyendicuataixe(self, employee_id):
