@@ -32,3 +32,4 @@ apps/static/assets/.temp
 apps/vantai/migrations/
 images/
 apps/devices/migrations/
+apps/members/migrations/
