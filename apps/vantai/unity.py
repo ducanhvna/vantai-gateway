@@ -51,9 +51,10 @@ class VanTaiHaHai():
         
     def danhsachtatcaxe(self):
         result = self.models.execute_kw(self.db, self.uid, self.password, 'maintenance.equipment', 'search_read', 
-                [[]], {'fields': ['id', 'name', "owner_user_id", "last_request", "license_plate",
+                [[]], {'fields': ['id', 'name', "owner_user_id", "last_request", "license_plate", 'fleet_product_id',
                         "trip_count", "note", "message_ids"]})
         for item in result:
+            item['fleet_product_id'] = item['fleet_product_id'] if item['fleet_product_id'] else None
             try:
                 item['owner_user_id'] = {'name':item['owner_user_id'][1], 'id':item['owner_user_id'][0]}
             except:
