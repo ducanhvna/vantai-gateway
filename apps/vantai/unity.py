@@ -32,8 +32,11 @@ class VanTaiHaHai():
         results = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'search_read', 
                 [[('schedule_date','<=', today_str), ('schedule_date','>=', last_week_str)]], {'fields': ['id', 'company_id', "currency_id", "equipment_id", "location_name",
                         "location_dest_name", "location_id", "location_dest_id", 'eating_fee', 'note', 'odometer_start', 'odometer_dest',
+                        'fleet_product_id',
                         'odometer_end', 'employee_id', 'schedule_date', 'start_date', 'end_date', 'attachment_ids']})
         for item in results:
+            item['fleet_product_id'] = {'id': item['fleet_product_id'][0], 'name': item['fleet_product_id'][1]} \
+                        if item['fleet_product_id'] else None
             item['company_id'] ={'id':  item['company_id'][0] , 'name':item['company_id'][1]} \
                                     if item['company_id'] else None
             item['location_id'] ={'id':  item['location_id'][0], 'name':item['location_id'][1]} \
@@ -51,11 +54,9 @@ class VanTaiHaHai():
         
     def danhsachtatcaxe(self):
         result = self.models.execute_kw(self.db, self.uid, self.password, 'maintenance.equipment', 'search_read', 
-                [[]], {'fields': ['id', 'name', "owner_user_id", "last_request", "license_plate", 'fleet_product_id',
+                [[]], {'fields': ['id', 'name', "owner_user_id", "last_request", "license_plate", 
                         "trip_count", "note", "message_ids"]})
         for item in result:
-            item['fleet_product_id'] = {'id': item['fleet_product_id'][0], 'name': item['fleet_product_id'][1]} \
-                        if item['fleet_product_id'] else None
             try:
                 item['owner_user_id'] = {'name':item['owner_user_id'][1], 'id':item['owner_user_id'][0]}
             except:
