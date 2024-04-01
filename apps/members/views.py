@@ -11,7 +11,6 @@ class CompanyViewSet(APIView):
         queryset = Company.objects.all() 
         for item in queryset:
             result.append({'id': item.id, 'name': item.name, 'api_version': item.api_version, 'code': item.code})
-        
         # print('aaaaaa')
         return Response({'count': len(result),'data':result})
         
