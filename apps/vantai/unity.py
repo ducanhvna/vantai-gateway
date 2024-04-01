@@ -54,7 +54,8 @@ class VanTaiHaHai():
                 [[]], {'fields': ['id', 'name', "owner_user_id", "last_request", "license_plate", 'fleet_product_id',
                         "trip_count", "note", "message_ids"]})
         for item in result:
-            item['fleet_product_id'] = item['fleet_product_id'] if item['fleet_product_id'] else None
+            item['fleet_product_id'] = {'id': item['fleet_product_id'][0], 'name': item['fleet_product_id'][1]} \
+                        if item['fleet_product_id'] else None
             try:
                 item['owner_user_id'] = {'name':item['owner_user_id'][1], 'id':item['owner_user_id'][0]}
             except:
