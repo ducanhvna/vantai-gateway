@@ -407,7 +407,7 @@ class CapnhatkmKetthuc(APIView):
         # ht_object.odo_end= km_end
         # ht_object.save()
         vantai = VanTaiHaHai()
-        vantai.capnhatsokmketthuchanhtrinh(hanhtrinh, km_end, None, attackements)
+        result = vantai.capnhatsokmketthuchanhtrinh(hanhtrinh, km_end, None, attackements)
             # attachments = body['attachments']
             # for item in attachments:
             #     atts= AttackmentHanhTrinh.objects.filter(hanhtrinh = ht_object, url=item)
@@ -415,7 +415,7 @@ class CapnhatkmKetthuc(APIView):
             #         att = AttackmentHanhTrinh(hanhtrinh = ht_object, url= item)
             #         att.save()
 
-        result = chitiethanhtrinh(hanhtrinh)
+        # result = chitiethanhtrinh(hanhtrinh)
         # result['data']['sid'] = result['data']['id']
         # result['data']['id'] = ht_object.pk
         return Response(result)
