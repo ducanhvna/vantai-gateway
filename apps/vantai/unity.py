@@ -145,14 +145,14 @@ class VanTaiHaHai():
             print('cap nhat file dinh kem')
             if attackements:
                 # url = url + '&attachments={}'.format(attackements)
-                for attachment in attackements:
-                    id_trip = self.models.execute_kw(self.db, self.uid, self.password, 'ir.attachment', 'create', [{
+                for attachment in attackements :
+                    if attachment:
+                        id_trip = self.models.execute_kw(self.db, self.uid, self.password, 'ir.attachment', 'create', [{
                             'name': fleet_trip_object[0]['equipment_id'][1],
                             'type': 'url',
                             'url': attachment,
                             'res_model': 'fleet.trip',
-                            'res_id': hanhtrinh,
-                        }])
+                            'res_id': hanhtrinh, }])
         
             print("Cap nhat so km ket thuc ")
             km_start =  fleet_trip_object['odometer_start'] if fleet_trip_object['odometer_start'] else 0
