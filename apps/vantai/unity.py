@@ -181,7 +181,7 @@ class VanTaiHaHai():
             fleet_trip_object = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'read',
                     [[hanhtrinh]],{'fields':['id','equipment_id', 'odometer_start','odometer_dest']})
             print('cap nhat file dinh kem')
-            if attackements:
+            try:
                 # url = url + '&attachments={}'.format(attackements)
                 for attachment in attackements:
                     id_trip = self.models.execute_kw(self.db, self.uid, self.password, 'ir.attachment', 'create', [{
@@ -191,6 +191,8 @@ class VanTaiHaHai():
                             'res_model': 'fleet.trip',
                             'res_id': hanhtrinh,
                         }])
+            except Exception as ex:
+                print(ex)
         
             print("Cap nhat so km ket thuc ")
         
