@@ -159,9 +159,11 @@ class VanTaiHaHai():
                         print(ex)
             except Exception as ex:
                 print(ex)
-        
+        except Exception as ex:
+                print(ex)
+        try:
             print("Cap nhat so km ket thuc ")
-            km_start =  fleet_trip_object['odometer_start'] if fleet_trip_object['odometer_start'] else 0
+            # km_start =  fleet_trip_object['odometer_start'] if fleet_trip_object['odometer_start'] else 0
             self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'write', [[hanhtrinh], {"odometer_dest": sokm}])
             # get record name after having changed it
             result =  self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'name_get', [[hanhtrinh]])
@@ -193,7 +195,10 @@ class VanTaiHaHai():
                         }])
             except Exception as ex:
                 print(ex)
-        
+        except Exception as ex:
+            print(ex)
+            
+        try:
             print("Cap nhat so km ket thuc ")
         
             self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'write', [[hanhtrinh], {'odometer_start': sokm}])
