@@ -225,9 +225,13 @@ class VanTaiHaHai():
             result =  self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'name_get', [[hanhtrinh]])
             print('result: ', result)
         except Exception as ex:
-            print(ex)
+            if hasattr(ex, 'message'):
+                message  = ex.message
+            else:
+                message = f'{ex}'
+            result = {'data': None, 'error': message, 'product': fleet_product_id, 'id': hanhtrinh}
         return result
-        
+
     def capnhatlocationbatdauhanhtrinh(self, hanhtrinh, location_id):
         result = None
         try:
