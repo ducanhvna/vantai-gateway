@@ -160,9 +160,11 @@ class VanTaiHaHai():
             # get record name after having changed it
             result =  self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'name_get', [[int(hanhtrinh)]])
             result['hanhtrinh'] = hanhtrinh
+            result = {'data': result}
             # print('result: ', result)
         except Exception as ex:
             print(ex)
+            result = {'data': None, 'error': ex}
         return result
     def capnhatsokmbatdauhanhtrinh(self, hanhtrinh, sokm, body, attackements=None):
         result = None
