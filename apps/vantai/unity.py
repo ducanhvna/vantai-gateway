@@ -167,8 +167,8 @@ class VanTaiHaHai():
             self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'write', [[hanhtrinh], {"odometer_dest": sokm}])
             # get record name after having changed it
             result =  self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'name_get', [[hanhtrinh]])
-            result['hanhtrinh'] = hanhtrinh
-            result = {'data': result}
+            # result['hanhtrinh'] = hanhtrinh
+            result = {'data': result[0]}
             # print('result: ', result)
         except Exception as ex:
             if hasattr(ex, 'message'):
