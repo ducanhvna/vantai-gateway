@@ -143,7 +143,8 @@ class VanTaiHaHai():
             fleet_trip_object = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'read',
                     [[hanhtrinh]],{'fields':['id','equipment_id', 'odometer_start','odometer_dest', 'odometer_end']})
             print('cap nhat file dinh kem')
-            if attackements:
+            
+            try:
                 # url = url + '&attachments={}'.format(attackements)
                 for attachment in attackements :
                     try:
@@ -156,6 +157,8 @@ class VanTaiHaHai():
                                 'res_id': hanhtrinh, }])
                     except Exception as ex:
                         print(ex)
+            except Exception as ex:
+                print(ex)
         
             print("Cap nhat so km ket thuc ")
             km_start =  fleet_trip_object['odometer_start'] if fleet_trip_object['odometer_start'] else 0
