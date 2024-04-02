@@ -167,7 +167,7 @@ class VanTaiHaHai():
                 message  = ex.message
             else:
                 message = f'{ex}'
-            result = {'data': None, 'error': message}
+            result = {'data': None, 'error': message, 'km': sokm, 'id': hanhtrinh}
         return result
     def capnhatsokmbatdauhanhtrinh(self, hanhtrinh, sokm, body, attackements=None):
         result = None
