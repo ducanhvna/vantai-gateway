@@ -9,7 +9,7 @@ from .views import ThongtintaixeApi, Tatcachuyendi, Cacchuyenhomnay, CapnhatkmKe
                     CapnhatkmBatdau, Danhsachtatcaxe, Thongtinxe, ListYeucaubaotrixe, \
                     TaoghichuBaotri, Danhsachcactinh, ListHuyentheotinh, TatcaDiadiem, \
                     Taohanhtrinh, DanhsachMathang, CapnhatDiadiemBatdau, CapnhatDiadiemKetthuc, \
-                    CreateDevice, SyncUserDevice
+                    CreateDevice, SyncUserDevice, CapnhatHanghoa
 from apps.api_apec.views import SyncUserDevice as ApecSync
 from apps.members.views import CompanyViewSet
 urlpatterns = [
@@ -24,6 +24,7 @@ urlpatterns = [
     path("api/core/tatcachuyendicuataixe/", Tatcachuyendi.as_view(), name='hahai_tatcachuyendicuataixe'),
     path("api/core/tatcachuyendihomnay/", Cacchuyenhomnay.as_view(), name='hahai_tatcachuyendihomnay'),
     path("api/core/<int:hanhtrinh>/capnhatkmketthuc/", CapnhatkmKetthuc.as_view(), name='hahai_capnhatkmketthuc'),
+    path("api/core/<int:hanhtrinh>/capnhathanghoa/", CapnhatHanghoa.as_view(), name='hahai_capnhathanghoa'),
     path("api/core/<int:hanhtrinh>/capnhatkmbatdau/", CapnhatkmBatdau.as_view(), name='hahai_capnhatkmbatdau'),
     path("api/core/<int:hanhtrinh>/capnhatlocbatdau/", CapnhatDiadiemBatdau.as_view(), name='hahai_capnhatlocbatdau'),
     path("api/core/<int:hanhtrinh>/capnhatlocketthuc/", CapnhatDiadiemKetthuc.as_view(), name='hahai_capnhatlocketthuc'),

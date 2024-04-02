@@ -208,6 +208,26 @@ class VanTaiHaHai():
         except Exception as ex:
             print(ex)
         return result
+
+    def capnhathanghoa(self, hanhtrinh, fleet_product_id):
+        result = None
+        try:
+            fleet_trip_object = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'read',
+                    [[hanhtrinh]],{'fields':['id','equipment_id', 'fleet_product_id']})
+        except Exception as ex:
+            print(ex)
+            
+        try:
+            print("Cap nhat so km ket thuc ")
+        
+            self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'write', [[hanhtrinh], {'fleet_product_id': fleet_product_id}])
+            # get record name after having changed it
+            result =  self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'name_get', [[hanhtrinh]])
+            print('result: ', result)
+        except Exception as ex:
+            print(ex)
+        return result
+        
     def capnhatlocationbatdauhanhtrinh(self, hanhtrinh, location_id):
         result = None
         try:

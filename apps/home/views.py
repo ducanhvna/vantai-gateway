@@ -392,7 +392,19 @@ class Cacchuyenhomnay(APIView):
             #                     'error' : "You does not own any device, please create a new one"
             #                 })
         return Response(result)
+
+
+class CapnhatHanghoa(APIView): 
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = [authentication.SessionAuthentication]
+    def put(self, request, *args, **kwargs): 
+        hanhtrinh = kwargs.get('hanhtrinh')
+        product_id = request.data.get('product_id')
     
+        vantai = VanTaiHaHai()
+        result = vantai.capnhathanghoa(hanhtrinh, product_id)
+    
+        return Response(result)    
 
 class CapnhatkmKetthuc(APIView): 
     permission_classes = (IsAuthenticated,)
