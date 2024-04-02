@@ -163,8 +163,11 @@ class VanTaiHaHai():
             result = {'data': result}
             # print('result: ', result)
         except Exception as ex:
-            print(ex)
-            result = {'data': None, 'error': ex}
+            if hasattr(ex, 'message'):
+                message  = ex.message
+            else:
+                message = f'{ex}'
+            result = {'data': None, 'error': message}
         return result
     def capnhatsokmbatdauhanhtrinh(self, hanhtrinh, sokm, body, attackements=None):
         result = None
