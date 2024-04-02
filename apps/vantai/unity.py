@@ -159,9 +159,9 @@ class VanTaiHaHai():
         
             print("Cap nhat so km ket thuc ")
             km_start =  fleet_trip_object['odometer_start'] if fleet_trip_object['odometer_start'] else 0
-            self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'write', [[int(hanhtrinh)], {"odometer_dest": int(sokm)}])
+            self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'write', [[hanhtrinh], {"odometer_dest": sokm}])
             # get record name after having changed it
-            result =  self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'name_get', [[int(hanhtrinh)]])
+            result =  self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'name_get', [[hanhtrinh]])
             result['hanhtrinh'] = hanhtrinh
             result = {'data': result}
             # print('result: ', result)
