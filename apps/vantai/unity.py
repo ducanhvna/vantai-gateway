@@ -141,7 +141,7 @@ class VanTaiHaHai():
         result = None
         try:
             fleet_trip_object = self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'read',
-                    [[hanhtrinh]],{'fields':['id','equipment_id', 'odometer_start','odometer_dest']})
+                    [[hanhtrinh]],{'fields':['id','equipment_id', 'odometer_start','odometer_dest', 'odometer_end']})
             print('cap nhat file dinh kem')
             if attackements:
                 # url = url + '&attachments={}'.format(attackements)
@@ -155,11 +155,11 @@ class VanTaiHaHai():
                         }])
         
             print("Cap nhat so km ket thuc ")
-        
-            self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'write', [[hanhtrinh], {'odometer_dest': sokm}])
+            km_start =  fleet_trip_object['odometer_start'] if fleet_trip_object['odometer_start'] else 0
+            self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'write', [[hanhtrinh], {'odometer_dest': sokm, 'odometer_end': sokm + km_start}])
             # get record name after having changed it
             result =  self.models.execute_kw(self.db, self.uid, self.password, 'fleet.trip', 'name_get', [[hanhtrinh]])
-            print('result: ', result)
+            # print('result: ', result)
         except Exception as ex:
             print(ex)
         return result
