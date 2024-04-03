@@ -468,14 +468,14 @@ class CapnhatDiadiemBatdau(APIView):
         # ht_object.odo_start= km_end
         # ht_object.save()
         vantai = VanTaiHaHai()
-        vantai.capnhatlocationbatdauhanhtrinh(hanhtrinh, location_id)
+        result = vantai.capnhatlocationbatdauhanhtrinh(hanhtrinh, location_id)
             # attachments = body['attachments']
             # for item in attachments:
             #     atts= AttackmentHanhTrinh.objects.filter(hanhtrinh = ht_object, url=item)
             #     if len(atts) == 0:
             #         att = AttackmentHanhTrinh(hanhtrinh = ht_object, url= item)
             #         att.save()
-        result = chitiethanhtrinh(hanhtrinh)
+        # result = chitiethanhtrinh(hanhtrinh)
         # result['data']['sid'] = result['data']['id']
         # result['data']['id'] = ht_object.pk
         return Response(result)
@@ -489,14 +489,14 @@ class CapnhatDiadiemKetthuc(APIView):
         # ht_object.odo_start= km_end
         # ht_object.save()
         vantai = VanTaiHaHai()
-        vantai.capnhatlocationketthuchanhtrinh(hanhtrinh, location_id)
+        result = vantai.capnhatlocationketthuchanhtrinh(hanhtrinh, location_id)
             # attachments = body['attachments']
             # for item in attachments:
             #     atts= AttackmentHanhTrinh.objects.filter(hanhtrinh = ht_object, url=item)
             #     if len(atts) == 0:
             #         att = AttackmentHanhTrinh(hanhtrinh = ht_object, url= item)
             #         att.save()
-        result = chitiethanhtrinh(hanhtrinh)
+        # result = chitiethanhtrinh(hanhtrinh)
         # result['data']['sid'] = result['data']['id']
         # result['data']['id'] = ht_object.pk
         return Response(result)
