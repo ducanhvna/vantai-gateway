@@ -601,7 +601,7 @@ class Thongtinxe(APIView):
                         })
 
 class ListYeucaubaotrixe(APIView): 
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     # authentication_classes = [authentication.SessionAuthentication]
     def get(self, request, *args, **kwargs): 
         # equitment_id = request.data.get('equitment')
@@ -611,7 +611,7 @@ class ListYeucaubaotrixe(APIView):
             # device = user.user_device
         # if device:
             
-        result = danhsachyeucaubaotrixe(equitment_id)
+        result = Vantaihahai().danhsachyeucaubaotrixe(equitment_id)
         return Response(result)
         # except Exception as ex:
         #     print(ex)
