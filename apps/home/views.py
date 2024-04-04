@@ -611,7 +611,7 @@ class ListYeucaubaotrixe(APIView):
             # device = user.user_device
         # if device:
             
-        result = Vantaihahai().danhsachyeucaubaotrixe(equitment_id)
+        result = VanTaiHaHai().danhsachyeucaubaotrixe(equitment_id)
         return Response(result)
         # except Exception as ex:
         #     print(ex)
