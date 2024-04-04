@@ -263,10 +263,10 @@ class VanTaiHaHai():
     
     def danhsachyeucaubaotrixe(self, equimentid):
     # user = order.user
+
         result = self.models.execute_kw(self.db, self.uid, self.password, 'maintenance.request', 'search_read', 
-                [['equipment_id', '=', equimentid]], {'fields': ['id', 'equipment_id', "category_id", "request_date", "maintenance_type", 
+                [[('equipment_id','=', equimentid)]], {'fields': ['id', 'equipment_id', "category_id", "request_date", "maintenance_type", 
                         "odometer_maintenance", "note"]})
-        
         return {'data': {'results': result}}
 
         
