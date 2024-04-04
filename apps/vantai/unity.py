@@ -268,8 +268,6 @@ class VanTaiHaHai():
                 [[('equipment_id','=', equimentid)]], {'fields': ['id', 'equipment_id', "category_id", "request_date", "maintenance_type", 
                         "odometer_maintenance", "note"]})
         return {'data': {'results': result}}
-
-        
         
     
 def checkishasmembership(device):
