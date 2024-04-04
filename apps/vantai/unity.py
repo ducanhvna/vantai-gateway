@@ -266,7 +266,7 @@ class VanTaiHaHai():
 
         result = self.models.execute_kw(self.db, self.uid, self.password, 'maintenance.request', 'search_read', 
                 [[('equipment_id','=', equimentid)]], {'fields': ['id', 'equipment_id', "category_id", "request_date", "maintenance_type", 
-                        "description"]})
+                        "description", "odometer_maintenance"]})
         for item in result:
             item['equipment_id'] = None if item['equipment_id'] == False else item['equipment_id']
             item['category_id'] = None if item['category_id'] == False else item['category_id']
