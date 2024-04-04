@@ -268,12 +268,12 @@ class VanTaiHaHai():
                 [[('equipment_id','=', equimentid)]], {'fields': ['id', 'equipment_id', "category_id", "request_date", "maintenance_type", 
                         "description"]})
         for item in result:
-            result['equipment_id'] == None if result['equipment_id'] == False else result['equipment_id']
-            result['category_id'] == None if result['category_id'] == False else result['category_id']
-            result['request_date'] == None if result['request_date'] == False else result['request_date']
-            result['maintenance_type'] == None if result['maintenance_type'] == False else result['maintenance_type']
-            result['odometer_maintenance'] == None if result['odometer_maintenance'] == False else result['odometer_maintenance']
-            result['description'] == None if result['description'] == False else result['description']
+            item['equipment_id'] == None if item['equipment_id'] == False else item['equipment_id']
+            item['category_id'] == None if item['category_id'] == False else item['category_id']
+            item['request_date'] == None if item['request_date'] == False else item['request_date']
+            item['maintenance_type'] == None if item['maintenance_type'] == False else item['maintenance_type']
+            item['odometer_maintenance'] == None if item['odometer_maintenance'] == False else item['odometer_maintenance']
+            item['description'] == None if item['description'] == False else item['description']
         return {'data': {'results': result}}
         
     
