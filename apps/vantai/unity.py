@@ -268,8 +268,8 @@ class VanTaiHaHai():
                 [[('equipment_id','=', equimentid)]], {'fields': ['id', 'equipment_id', "category_id", "request_date", "maintenance_type", 
                         "description", "odometer_maintenance"]})
         for item in result:
-            item['equipment_id'] = None if item['equipment_id'] == False else item['equipment_id']
-            item['category_id'] = None if item['category_id'] == False else item['category_id']
+            item['equipment_id'] = None if item['equipment_id'] == False else {'id': item['equipment_id'][0], 'name':  item['equipment_id'][1]}
+            item['category_id'] = None if item['category_id'] == False else {'id': item['category_id'][0], 'name': item['category_id'][1]}
             item['request_date'] = None if item['request_date'] == False else item['request_date']
             item['maintenance_type'] = None if item['maintenance_type'] == False else item['maintenance_type']
             item['odometer_maintenance'] = None if item['odometer_maintenance'] == False else item['odometer_maintenance']
