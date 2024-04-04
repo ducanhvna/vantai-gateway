@@ -604,7 +604,7 @@ class ListYeucaubaotrixe(APIView):
     # permission_classes = (IsAuthenticated,)
     # authentication_classes = [authentication.SessionAuthentication]
     def get(self, request, *args, **kwargs): 
-        # equitment_id = request.data.get('equitment')
+        equitment_id = request.data.get('equitment')
         equitment_id = kwargs.get('equitment')
         # user = request.user 
         # try:
