@@ -99,7 +99,9 @@ class GetListCompany(APIView):
         
         results = []
         if apec.uid > 0:
-            results = apec.GetListCompany()
+            for item in apec.GetListCompany()[0]:
+                if item:
+                    results.append({'id': item[0] if item[0] else None, 'name': item[1] if item[1] else None})
             
         return Response({'data': results})
         
