@@ -21,9 +21,11 @@ class Apec():
         uid = common.authenticate(self.db, username, password, {})
         return uid
     def GetListCompany(self):
-        results = self.models.execute_kw(self.db, self.uid, self.password, 'res.users', 'search_read', 
-                [[('id','=', self.uid)]], {'fields': ['id', 'company_ids']})
-        return {'data':{'results': results}}
+        result = self.models.execute_kw(self.db, self.uid, self.password, 'res.users', 'read', 
+                [[self.uid]], {'fields': ['id', 'company_ids']})
+        company_ids = self.models.execute_kw(self.db, self.uid, self.password, 'res.company', 'name_get',
+                [result.company_ids])
+        return {company_ids}
        
     def tatcachuyendicuataixe(self, employee_id):
         results = []
