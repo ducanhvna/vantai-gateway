@@ -10,13 +10,14 @@ from .views import ThongtintaixeApi, Tatcachuyendi, Cacchuyenhomnay, CapnhatkmKe
                     TaoghichuBaotri, Danhsachcactinh, ListHuyentheotinh, TatcaDiadiem, \
                     Taohanhtrinh, DanhsachMathang, CapnhatDiadiemBatdau, CapnhatDiadiemKetthuc, \
                     CreateDevice, SyncUserDevice, CapnhatHanghoa
-from apps.api_apec.views import SyncUserDevice as ApecSync
+from apps.api_apec.views import SyncUserDevice as ApecSync, GetListCompany
 from apps.members.views import CompanyViewSet
 urlpatterns = [
 
     # The home page
     path('', views.index, name='home'),
     path("apiv2/core/syncuser/", ApecSync.as_view(), name='v2_syncuser'),
+    path("apiv2/core/hrms/listcompany/", GetListCompany.as_view(), name='v2_list'),
     path("api/versions/", CompanyViewSet.as_view(), name='versions'),
     path("api/core/khoitaodevice/", CreateDevice.as_view(), name='hahai_khoitaodevice'),
     path("api/core/syncuser/", SyncUserDevice.as_view(), name='hahai_syncuser'),
