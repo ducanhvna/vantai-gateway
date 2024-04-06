@@ -72,4 +72,34 @@ class SyncUserDevice(APIView):
         # type = request.data.get('type')
         
         return Response({'data': results})
+
+class GetListCompany(APIView):
+    permission_classes = (IsAuthenticated,)
+    def post(self, request, format=None):
+        user = request.user 
+        device = user.user_device
+        results = []
+
+        user_owner = device.user_owner
+        if user_owner:
+            device = user_owner.user_device
+        company_info = device.company
+        # target_users = User.objects.filter(username=username, password=password)
+        # target_user = User.objects.get(username=username) 
+        # this checks the plaintext password against the stored hash 
+        
+        # if user.user_owner :
+        #     company_info = user.user_owner.company
+        # else:
+        # company_info = Company.objects.get(pk = company_id)
+        # apec = Apec(company_info.url, company_info.dbname, company_info.username, company_info.password)
+        username = device.username
+        password = device.password
+        apec = Apec(company_info.url, company_info.dbname, username, password)
+        
+        results = []
+        if apec.uid > 0:
+            results = apec.GetListCompany()
+            
+        return Response({'data': results})
         

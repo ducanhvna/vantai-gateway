@@ -15,10 +15,16 @@ class Apec():
             self.uid = common.authenticate(self.db, self.username, self.password, {})
         except Exception as ex:
             print("day la: ", ex)
+
     def authenticate(self, username, password):
         common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(self.url))
         uid = common.authenticate(self.db, username, password, {})
         return uid
+    def GetListCompany(self):
+        results = self.models.execute_kw(self.db, self.uid, self.password, 'res.user', 'search_read', 
+                [[('id','=', self.uid)]], {'fields': ['id', 'company_ids']})
+        return {'data':{'results': results}}
+       
     def tatcachuyendicuataixe(self, employee_id):
         results = []
         if employee_id>0:
@@ -61,6 +67,7 @@ class Apec():
             except:
                 print('item: ', item)
         return result
+
     def create_free_user(self, code):
         user_id= self.models.execute_kw(self.db, self.uid, self.password, 'res.users', 'create', [{'name':f"free{code}", 'login':f'free_{code}@free.com',
                 'company_ids':[2], 'company_id':2, 'new_password':code}])
