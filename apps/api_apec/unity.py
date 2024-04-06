@@ -25,7 +25,7 @@ class Apec():
                 [[self.uid]], {'fields': ['id', 'company_ids']})
         company_ids = self.models.execute_kw(self.db, self.uid, self.password, 'res.company', 'name_get',
                 [result[0]['company_ids']])
-        return {company_ids}
+        return company_ids
        
     def tatcachuyendicuataixe(self, employee_id):
         results = []
