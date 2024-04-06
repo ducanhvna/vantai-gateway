@@ -75,7 +75,7 @@ class SyncUserDevice(APIView):
 
 class GetListCompany(APIView):
     permission_classes = (IsAuthenticated,)
-    def post(self, request, format=None):
+    def get(self, request, *args, **kwargs): 
         user = request.user 
         device = user.user_device
         results = []
