@@ -24,7 +24,7 @@ class Apec():
         result = self.models.execute_kw(self.db, self.uid, self.password, 'res.users', 'read', 
                 [[self.uid]], {'fields': ['id', 'company_ids']})
         company_ids = self.models.execute_kw(self.db, self.uid, self.password, 'res.company', 'name_get',
-                [result['company_ids']])
+                [result[0]['company_ids']])
         return {company_ids}
        
     def tatcachuyendicuataixe(self, employee_id):
