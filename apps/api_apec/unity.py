@@ -15,6 +15,16 @@ class Apec():
             self.uid = common.authenticate(self.db, self.username, self.password, {})
         except Exception as ex:
             print("day la: ", ex)
+            
+    def getlistemployee(self):
+        domain = ['&',('active', '=', True), ('user_id', '=', self.uid)]
+        employees = self.models.execute_kw(self.db, self.uid,  self.password, 'hr.employee', 'search_read', [domain], 
+        {'fields': ['id', 'name', 'user_id','employee_ho',
+                        'company_id', 'code', 'department_id', 'time_keeping_code', 'job_title',
+                        'probationary_contract_termination_date', 'severance_day', 'workingday',
+                        'contract_ids',
+                        'probationary_salary_rate', 'resource_calendar_id', 'date_sign', 'level']})
+        return employees
 
     def authenticate(self, username, password):
         common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(self.url))
