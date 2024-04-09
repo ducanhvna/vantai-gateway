@@ -80,6 +80,25 @@ class Apec():
                     'employee_company_id','multiplier_work_time', 'overtime_from', 'overtime_to']})
 
         return list_hr_leave
+
+    def getinvalidtimesheet(self, date_str=None, employee_code = None):
+        if not date_str:
+            date_str = datetime.datetime.now().strftime('%Y-%m-%d')
+        if not employee_code:
+            employees = self.getlistemployee()
+            employee_code = employees[0]['code']
+        domain = [("invalid_date", "=", date_str),
+                    ("employee_code", "=", employee_code)]
+        
+        explanation_ids = self.models.execute_kw(self.db, self.uid, self.password, 'hr.invalid.timesheet', 'search',
+                                                 [domain])
+        list_old_explanation = self.models.execute_kw(self.db, self.uid, self.password, 'hr.invalid.timesheet', 'read', [explanation_ids], 
+                {'fields': ['id', 'employee_id', 'employee_code', 'department', 'company_id',
+                'position', 'invalid_date', 'invalid_type', 'shift_from', 'shift_to',
+                'shift_break', 'real_time_attendance_data',
+                'validated', 'reason', 'reason', 'remarks', 'validation_data']})
+
+        return list_old_explanation
     
     def authenticate(self, username, password):
         common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(self.url))
