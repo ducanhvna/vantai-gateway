@@ -107,7 +107,10 @@ class GetListHrmEmployees(APIView):
 class GetListHrmAttendanceReport(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self, request, *args, **kwargs):
-        date_str = request.data.get('date') 
+        try:
+            date_str = request.data.get('date') 
+        except:
+            date_str = None
         user = request.user 
         device = user.user_device
         results = []
