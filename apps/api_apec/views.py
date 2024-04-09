@@ -129,7 +129,7 @@ class GetListHrmAttendanceReport(APIView):
         password = device.password
         apec = Apec(company_info.url, company_info.dbname, username, password)
         
-        results = apec.getattendcereport(date_str)
+        results = apec.getattendancereport(date_str)
         # if apec.uid > 0:
         #     for item in apec.getlistemployee():
         #         if item:
