@@ -33,7 +33,7 @@ class Apec():
             
         if not employee_code:
             employees = self.getlistemployee()
-            employee_code = employees[0]
+            employee_code = employees[0]['code']
             
         domain = [("employee_code", '=', employee_code)
                   ("date", "=", date_str)]
