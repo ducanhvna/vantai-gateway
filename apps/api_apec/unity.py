@@ -26,7 +26,7 @@ class Apec():
                         'probationary_salary_rate', 'resource_calendar_id', 'date_sign', 'level']})
         return employees
 
-    def getattendcereport(self, date_str == None, employee_code = None):
+    def getattendcereport(self, date_str = None, employee_code = None):
         LIMIT_SIZE = 10
         if not date_str:
             date_str = datetime.datetime.now().strftime('%Y-%m-%d')
