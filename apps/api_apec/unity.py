@@ -26,6 +26,37 @@ class Apec():
                         'probationary_salary_rate', 'resource_calendar_id', 'date_sign', 'level']})
         return employees
 
+    def getattendcereport(self, date_str, employee_code = None):
+        LIMIT_SIZE = 10
+        if not employee_code:
+            employees = self.getlistemployee()
+            employee_code = employees[0]
+            
+        domain = [("employee_code", '=', employee_code)
+                  ("date", "=", date_str)]
+        
+        ids = self.models.execute_kw(self.db, self.uid, self.password, 'hr.apec.attendance.report', 'search', [domain], {'offset': 0, 'limit': LIMIT_SIZE})
+        list_scheduling_ver = self.models.execute_kw(self.db, self.uid, self.password, 'hr.apec.attendance.report', 'read', [ids],
+                                                     {'fields': ['id', 'employee_name', 'date', 'shift_name', 'employee_code', 'company','additional_company',
+                                                                 'shift_start', 'shift_end', 'rest_start', 'rest_end', 'rest_shift', 'probation_completion_wage',
+                                                                 'total_shift_work_time', 'total_work_time', 'time_keeping_code', 'kid_time',
+                                                                 'department', 'attendance_attempt_1', 'attendance_attempt_2',
+                                                                 'attendance_attempt_3', 'attendance_attempt_4', 'attendance_attempt_5',
+                                                                 'attendance_attempt_6', 'attendance_attempt_7', 'attendance_attempt_8',
+                                                                 'attendance_attempt_9', 'attendance_attempt_10', 'attendance_attempt_11',
+                                                                 'attendance_attempt_12', 'attendance_attempt_13', 'attendance_attempt_14',
+                                                                 'attendance_inout_1','attendance_inout_2','attendance_inout_3',
+                                                                 'attendance_inout_4','attendance_inout_5','attendance_inout_6',
+                                                                 'attendance_inout_7','attendance_inout_8','attendance_inout_9',
+                                                                 'attendance_inout_10','attendance_inout_11','attendance_inout_12', 
+                                                                 'attendance_inout_13','attendance_inout_14','attendance_inout_15','actual_total_work_time', 'standard_working_day',
+                                                                 'attendance_attempt_15', 'last_attendance_attempt', 'night_hours_normal', 'night_hours_holiday', 'probation_wage_rate', 
+                                                                 'split_shift', 'missing_checkin_break', 'leave_early', 'attendance_late', 'night_shift', 'minute_worked_day_holiday', 
+                                                                 'total_attendance']})
+        return list_scheduling_ver
+    
+    
+    
     def authenticate(self, username, password):
         common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(self.url))
         uid = common.authenticate(self.db, username, password, {})

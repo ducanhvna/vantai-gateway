@@ -103,6 +103,39 @@ class GetListHrmEmployees(APIView):
         #         if item:
         #             results.append({'id': item[0] if item[0] else None, 'name': item[1] if item[1] else None})    
         return Response({'data': results})
+    
+class GetListHrmAttendanceReport(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self, request, *args, **kwargs):
+        date_str = request.data.get('date') 
+        user = request.user 
+        device = user.user_device
+        results = []
+
+        user_owner = device.user_owner
+        if user_owner:
+            device = user_owner.user_device
+        company_info = device.company
+        # target_users = User.objects.filter(username=username, password=password)
+        # target_user = User.objects.get(username=username) 
+        # this checks the plaintext password against the stored hash 
+        
+        # if user.user_owner :
+        #     company_info = user.user_owner.company
+        # else:
+        # company_info = Company.objects.get(pk = company_id)
+        # apec = Apec(company_info.url, company_info.dbname, company_info.username, company_info.password)
+        username = device.username
+        password = device.password
+        apec = Apec(company_info.url, company_info.dbname, username, password)
+        
+        results = apec.getattendcereport(date_str)
+        # if apec.uid > 0:
+        #     for item in apec.getlistemployee():
+        #         if item:
+        #             results.append({'id': item[0] if item[0] else None, 'name': item[1] if item[1] else None})    
+        return Response({'data': results})
+       
         
 class GetListCompany(APIView):
     permission_classes = (IsAuthenticated,)

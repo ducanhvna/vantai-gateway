@@ -10,7 +10,8 @@ from .views import ThongtintaixeApi, Tatcachuyendi, Cacchuyenhomnay, CapnhatkmKe
                     TaoghichuBaotri, Danhsachcactinh, ListHuyentheotinh, TatcaDiadiem, \
                     Taohanhtrinh, DanhsachMathang, CapnhatDiadiemBatdau, CapnhatDiadiemKetthuc, \
                     CreateDevice, SyncUserDevice, CapnhatHanghoa
-from apps.api_apec.views import SyncUserDevice as ApecSync, GetListCompany, GetListHrmEmployees
+from apps.api_apec.views import SyncUserDevice as ApecSync, GetListCompany, GetListHrmEmployees, \
+                    GetListHrmAttendanceReport
 from apps.members.views import CompanyViewSet
 urlpatterns = [
 
@@ -19,6 +20,7 @@ urlpatterns = [
     path("apiv2/core/syncuser/", ApecSync.as_view(), name='v2_syncuser'),
     path("apiv2/core/hrms/listcompany/", GetListCompany.as_view(), name='v2_list'),
     path("apiv2/core/hrms/hrmemployees/", GetListHrmEmployees.as_view(), name='v2_list_employee'),
+    path("apiv2/core/hrms/hrmattendances/", GetListHrmAttendanceReport.as_view(), name='v2_list_attendance'),
     path("api/versions/", CompanyViewSet.as_view(), name='versions'),
     path("api/core/khoitaodevice/", CreateDevice.as_view(), name='hahai_khoitaodevice'),
     path("api/core/syncuser/", SyncUserDevice.as_view(), name='hahai_syncuser'),
