@@ -35,7 +35,7 @@ class Apec():
             employees = self.getlistemployee()
             employee_code = employees[0]['code']
             
-        domain = [("employee_code", '=', employee_code)
+        domain = [("employee_code", '=', employee_code),
                   ("date", "=", date_str)]
         
         ids = self.models.execute_kw(self.db, self.uid, self.password, 'hr.apec.attendance.report', 'search', [domain], {'offset': 0, 'limit': LIMIT_SIZE})
