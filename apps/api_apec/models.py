@@ -18,4 +18,17 @@ class CalendarHoliday(models.Model):
 # Create your models here.
 class HrmShift(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
-    
+    start_work_time = models.TimeField(null=False, blank=False)
+    end_work_time = models.TimeField(null=False, blank=False)
+    total_work_time = models.IntegerField(null=False, blank=False)
+    start_rest_time = models.TimeField(null=False, blank=False)
+    end_rest_time = models.TimeField(null=False, blank=False)
+    company = models.ForeignKey(HrmCompany, on_delete=models.CASCADE)
+    rest_shifts = models.BooleanField(default=False)
+    fix_rest_time = models.BooleanField(default=False)
+    night = models.BooleanField(default=False)
+    night_eat = models.BooleanField(default=False)
+    dinner = models.BooleanField(default=False)
+    lunch = models.BooleanField(default=False)
+    breakfast = models.BooleanField(default=False)
+    efficiency_factor = models.DecimalField(decimal_places=2, max_digits=5)
