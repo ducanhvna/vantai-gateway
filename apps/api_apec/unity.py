@@ -80,7 +80,38 @@ class Apec():
                     'employee_company_id','multiplier_work_time', 'overtime_from', 'overtime_to']})
 
         return list_hr_leave
-
+    
+    def Getlistcompany(self):
+        ids = self.models.execute_kw(self.db, self.uid, self.password, 'res.company', 'search', [[]], {})
+        list_company = self.models.execute_kw(self.db, self.uid, self.password, 'res.company', 'read', [ids], {'fields': ['id',
+                                            'name', 'is_ho',
+                                            'mis_id']})
+    def loadcalendarholiday(self):
+        resource_calendar_leaves_ids = self.models.execute_kw(
+            self.db, self.uid, self.password, 'resource.calendar.leaves', 'search', [[('calendar_id','=',False)]])
+        resource_calendar_leaves_list = self.models.execute_kw(self.db, self.uid, self.password, 'resource.calendar.leaves', 'read', [resource_calendar_leaves_ids],
+                                                               {'fields': ['id', 'name', 'company_id', 'calendar_id', 'date_from', 'date_to', 'resource_id', 'time_type']})
+    
+    def loadlistshift(self):
+        results = []
+        local_index = 0
+        LIMIT_SIZE = 50
+        ids = []
+        while (len(ids) == LIMIT_SIZE) or (local_index == 0):
+            offset = local_index * LIMIT_SIZE
+            domain =[]
+            ids = self.models.execute_kw(self.db, self.uid, self.password, 'shifts', 'search', [domain], {'offset': offset, 'limit': LIMIT_SIZE})
+            
+            list_shifts  = self.models.execute_kw(self.db, self.uid, self.password, 'shifts', 'read', [ids], {'fields': ['id', 'name', 'start_work_time',
+                                                'end_work_time','total_work_time','start_rest_time','end_rest_time', 'company_id',
+                                                'rest_shifts', 'fix_rest_time', 'night', 'night_eat','dinner','lunch','breakfast','efficiency_factor']}
+                                                )
+            for item in list_shifts:
+                results.append(item)
+                
+        return results
+                
+    
     def getinvalidtimesheet(self, date_str=None, employee_code = None):
         if not date_str:
             date_str = datetime.datetime.now().strftime('%Y-%m-%d')
