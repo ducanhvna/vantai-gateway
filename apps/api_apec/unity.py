@@ -73,7 +73,7 @@ class Apec():
                 #   ('employee_company_id', '=', self.company_id) 
                 ]
 
-        list_hr_leave = self.models.execute_kw(self.db, self.uid, self.password, 'hr.leave', 'read', [hr_leave_ids], 
+        list_hr_leave = self.models.execute_kw(self.db, self.uid, self.password, 'hr.leave', 'search_read', [domain], 
             {'fields': ['id', 'employee_id', 'employee_code', 'employee_company_id', 'active',
                     'holiday_status_id', 'minutes', 'time', 'state', 'request_date_from', 'request_date_to',
                     'attendance_missing_from', 'attendance_missing_to', 'reasons', 'for_reasons',
