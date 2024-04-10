@@ -10,7 +10,7 @@ class CalendarHoliday(models.Model):
     company = models.ForeignKey(HrmCompany, on_delete=models.CASCADE)
     date_from = models.DateTimeField(null=True, blank=True)
     date_to = models.DateTimeField(null=True, blank=True)
-    resource_id = models.CharField(null=True, blank=True)
+    resource_id = models.CharField(max_length=200, null=True, blank=True)
     time_type = models.CharField(max_length=200, null=True, blank=True)
     
     # 'company_id', 'calendar_id', 'date_from', 'date_to', 'resource_id', 'time_type']
@@ -32,3 +32,4 @@ class HrmShift(models.Model):
     lunch = models.BooleanField(default=False)
     breakfast = models.BooleanField(default=False)
     efficiency_factor = models.DecimalField(decimal_places=2, max_digits=5)
+
