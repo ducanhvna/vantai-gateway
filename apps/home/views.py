@@ -759,36 +759,7 @@ class Taohanhtrinh(APIView):
                             owner_user_name=hahai_member.name, name=hahai_member.name,license_plate= hahai_member.name)
                 xe_phutrach.save()
 
-        startlocation_id = request.data.get('location_id'),
-        endlocation_id = request.data.get('location_dest_id'),
-        print(f'start , end: {startlocation_id[0]} - {endlocation_id[0]}' )
-        try:
-            startlocation_object = VantaiLocation.objects.get(location_id=startlocation_id[0])
-            endlocation_object = VantaiLocation.objects.get(location_id=endlocation_id[0])
-        except VantaiLocation.DoesNotExist:
-            startlocation_object = None
-            endlocation_object = None
-        
-        schedule_date = request.data.get('schedule_date')
-        print('schedule_date: ',schedule_date)
-        # schedule_date = request.POST['start_date']
-        # schedule_time = request.data.get('start_time')
-        # schedule_time = request.POST['start_time']
-        # product = request.data.get('product')
-        # print('product: ', product)
-
-        # start_date_str = schedule_date.strftime('%Y-%m-%d')
-        # start_time_string = schedule_time.strftime('%H:%M:%S')
-        
-        # end_date_str = schedule_date.strftime('%Y-%m-%d')
-        # end_time_string = schedule_time.strftime('%H:%M:%S')
-        # try:
-            # device = user.user_device
-
-            # xe_phutrachs = VantaihahaiEquipment.objects.filter(owner_user_id= hahai_member.member_id)
-            # if device:
         body = {
-
                 # "equipment_id": request.data.get('equipment_id'),
                 "schedule_date": request.data.get('schedule_date'),
                 "location_id": request.data.get('location_id'),
@@ -797,8 +768,8 @@ class Taohanhtrinh(APIView):
                 "fleet_product_id": request.data.get('fleet_product_id'),
                 "employee_id":hahai_member.employee_id,
             }
-        print('body: ',body)
-        result = themmoichuyendi(body)
+        vantai = VanTaiHaHai()
+        result = vantai.themmoichuyendi(body)
         return Response(result)
         # except Exception as ex:
         #     print(ex)
