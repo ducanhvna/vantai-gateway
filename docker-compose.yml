@@ -19,7 +19,7 @@ services:
       - dbsoan
     ports:
       - "5085:8069"
-      - "20014:8072" # live chat
+      - "20114:8072" # live chat
     tty: true
     command: --
 #    command: odoo scaffold /mnt/extra-addons/custom_module
