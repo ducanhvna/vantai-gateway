@@ -1,47 +1,37 @@
-version: '3.9'
+version: '2'
 services:
-  appseed-app:
-    container_name: appseed_app
-    restart: always
-    env_file: .env
-    build: .
-    networks:
-      - db_network
-      - web_network
-    volumes:
-      - ./apps:/apps
-      - ./core:/core
-    links:
-      - db:db
-    depends_on:
-      - db
-  db:
-    container_name: db
+  dbsoan:
     image: postgres:13
-    volumes:
-      - pg_data:/var/lib/postgresql/data/
+    user: root
     environment:
-      - "POSTGRES_HOST_AUTH_METHOD=trust"
-    networks:
-      - db_network
-      - web_network
-  nginx:
-    container_name: nginx
-    restart: always
-    image: "nginx:latest"
-    ports:
-      - "5085:5085"
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+      - POSTGRES_DB=postgres
+    restart: always             # run as a service
     volumes:
-      - ./nginx:/etc/nginx/conf.d
-    networks:
-      - web_network
-    depends_on: 
-      - appseed-app
-networks:
-  db_network:
-    driver: bridge
-  web_network:
-    driver: bridge
- 
-volumes:
-  pg_data:
+        - ./postgresql:/var/lib/postgresql/data
+        - ./backups:/backups
+
+  odoofleet14:
+    image: odoo:14
+    user: root
+    depends_on:
+      - dbsoan
+    ports:
+      - "5085:8069"
+      - "20014:8072" # live chat
+    tty: true
+    command: --
+#    command: odoo scaffold /mnt/extra-addons/custom_module
+    environment:
+      - HOST=dbsoan
+      - USER=odoo
+      - PASSWORD=odoo
+    volumes:
+      #- /etc/timezone:/etc/timezone:ro
+      #- /etc/localtime:/etc/localtime:ro
+      # - ./entrypoint.sh:/entrypoint.sh   # if you want to install additional Python packages, uncomment this line!
+      - ./addons:/mnt/extra-addons
+      - ./etc:/etc/odoo
+    restart: always             # run as a service
+    
