@@ -46,6 +46,7 @@ class FleetTrip(models.Model):
     quota = fields.Integer('Định mức')
     number_trips = fields.Integer('Số Chuyến')
     number_people = fields.Integer('Số người')
+    number_seat = fields.Integer('Số ghế')
     odometer_start = fields.Integer('Số CTM xuất phát')
     odometer_dest = fields.Integer('Số CTM điểm đích')
     odometer_end = fields.Integer('Số KM hành trình', compute='_compute_odometer_end', store=True)
