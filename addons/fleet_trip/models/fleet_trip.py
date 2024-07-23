@@ -21,6 +21,8 @@ class FleetTrip(models.Model):
     #     return selection
 
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.company)
+    department_id = fields.Many2one('hr.department', string="phòng ban")
+    department_plan_id = fields.Many2one('hr.department', string="Đơn vị dự trù phương tiện")
     currency_id = fields.Many2one('res.currency', related='company_id.currency_id')
     equipment_id = fields.Many2one('maintenance.equipment', string='Xe')
     location_name = fields.Char()
@@ -38,9 +40,12 @@ class FleetTrip(models.Model):
     incurred_note_2 = fields.Char('Ghi chú phát sinh 2')
     note = fields.Text('Ghi chú hành trình')
     fee_total = fields.Monetary('Tổng cộng', compute='_compute_fee_total')
+    number_trips = fields.Integer('Số Chuyến')
+    number_people = fields.Integer('Số người')
     odometer_start = fields.Integer('Số CTM xuất phát')
     odometer_dest = fields.Integer('Số CTM điểm đích')
     odometer_end = fields.Integer('Số KM hành trình', compute='_compute_odometer_end', store=True)
+    employee_lead_id = fields.Many2one('hr.employee', string='Chỉ huy xe')
     employee_id = fields.Many2one('hr.employee', string='Nhân viên')
     state = fields.Selection([
         ('1_draft', 'Đang Chờ'),
