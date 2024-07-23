@@ -7,8 +7,8 @@
             <tree>
                 <field name="create_uid" />
                 <field name="department_id" />
-                <field name="department_plan_id" />
                 <field name="employee_id" />
+                <field name="department_plan_id" />
                 <field name="schedule_date" />
                 <field name="equipment_id" />
                 <field name="fleet_product_id" />
