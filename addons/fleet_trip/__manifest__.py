@@ -5,7 +5,7 @@
     'category': 'fleet',
     'version': '14.0.1.0.0',
     'depends': ['product', 'contacts', 'hr', 'maintenance', 'web_backend', 'rest_api', 'ir_attachment_url',
-                'vn_address'],
+                'vn_address', 'stock', 'fleet'],
     'data': [
         'data/location_data.xml',
         'security/fleet_security.xml',
