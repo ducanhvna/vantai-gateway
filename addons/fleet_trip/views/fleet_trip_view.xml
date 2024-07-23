@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="create_uid" />
+                <field name="license_plate" />
                 <field name="department_id" />
                 <field name="employee_id" />
                 <field name="department_plan_id" />
