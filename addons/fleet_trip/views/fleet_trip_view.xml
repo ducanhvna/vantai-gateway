@@ -10,7 +10,7 @@
                 <field name="employee_id" />
                 <field name="department_plan_id" />
                 <field name="schedule_date" />
-                <field name="equipment_id" />
+                <field name="vehicle_id"/>
                 <field name="fleet_product_id" />
                 <field name="number_trips" />
                 <field name="number_people" />
@@ -132,7 +132,7 @@
         <field name="arch" type="xml">
             <search string="Tìm kiếm">
                 <field name="delivery_id" />
-                <field name="equipment_id" />
+                <field name="vehicle_id" />
                 <!--                <field name="location_id"/>-->
                 <!--                <field name="location_dest_id"/>-->
                 <separator />
