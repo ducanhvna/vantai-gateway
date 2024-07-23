@@ -23,6 +23,7 @@ class FleetTrip(models.Model):
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.company)
     department_id = fields.Many2one('hr.department', string="phòng ban")
     department_plan_id = fields.Many2one('hr.department', string="Đơn vị dự trù phương tiện")
+    department_belong_id = fields.Many2one('hr.department', string="Thuộc đơn vị")
     currency_id = fields.Many2one('res.currency', related='company_id.currency_id')
     equipment_id = fields.Many2one('maintenance.equipment', string='Xe')
     vehicle_id = fields.Many2one('fleet.vehicle', string='Phương tiện')
@@ -99,6 +100,7 @@ class FleetTrip(models.Model):
     attachment_ids = fields.One2many('ir.attachment', 'res_id',
                                      domain=[('res_model', '=', 'fleet.trip')],
                                      string='Attachments')
+    description = fields.Text(string='Nhiệm vụ')
 
     @api.onchange("location_id")
     def onchange_location_id(self):
