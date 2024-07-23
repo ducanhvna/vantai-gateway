@@ -26,6 +26,7 @@ class FleetTrip(models.Model):
     currency_id = fields.Many2one('res.currency', related='company_id.currency_id')
     equipment_id = fields.Many2one('maintenance.equipment', string='Xe')
     vehicle_id = fields.Many2one('fleet.vehicle', string='Phương tiện')
+    license_plate = Char(related='vehicle_id.license_plate', string='Biển số')
     fuel_id = fields.Many2one('product.template', string='Nhiên liệu')
     location_name = fields.Char()
     location_dest_name = fields.Char()
