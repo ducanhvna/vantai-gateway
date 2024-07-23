@@ -95,7 +95,8 @@
                             
                         </group>
                         <group>
-                            <field name="employee_id" />
+                            <field name="employee_id" string="Tài xế" />
+                            <field name="employee_lead_id" />
                         </group>    
                         <group>
                             
