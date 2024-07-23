@@ -55,7 +55,7 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="equipment_id"  string="Phương tiện"  options="{'no_create': 1, 'no_edit': 1}" />
+                            <field name="vehicle_id"  string="Phương tiện"  options="{'no_create': 1, 'no_edit': 1}" />
                             <field name="schedule_date" />
                             <field name="fleet_product_id" />
                         </group>
