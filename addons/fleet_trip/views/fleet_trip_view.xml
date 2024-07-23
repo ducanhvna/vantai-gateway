@@ -12,6 +12,8 @@
                 <field name="schedule_date" />
                 <field name="equipment_id" />
                 <field name="fleet_product_id" />
+                <field name="number_trips" />
+                <field name="number_people" />
                 <field name="location_id" string="Tên điểm đi" />
                 <field name="location_dest_id" string="Tên điểm đến" />
                 <field name="location_start_district_state" string="Địa chỉ điểm đi" />
