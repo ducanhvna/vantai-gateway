@@ -9,11 +9,11 @@ import requests
 class MaintenanceEquipment(models.Model):
     _inherit = 'maintenance.equipment'
 
-    license_plate = fields.Char(string='Biển số', required=True)
+    license_plate = fields.Char(related='vehicle_id.license_plate', string='Biển số', required=False)
     vehicle_id = fields.Many2one('fleet.vehicle', string='Phương tiện')
     def name_get(self):
         self.browse(self.ids).read(['name', 'license_plate'])
-        return [(car.id, '%s' % car.license_plate) for car in self]
+        return [(car.id, '%s' % car.license_plate if car.license_plate else '-') for car in self]
 
     qr_code = fields.Char(string="Mã QR", copy=False, compute='_get_qr_code')
     qr_code_img = fields.Binary(string="Hình ảnh QR", copy=False, compute='_get_qr_code')
