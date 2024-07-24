@@ -10,7 +10,7 @@ class MaintenanceEquipment(models.Model):
     _inherit = 'maintenance.equipment'
 
     license_plate = fields.Char(string='Biển số', required=True)
-
+    vehicle_id = fields.Many2one('fleet.vehicle', string='Phương tiện')
     def name_get(self):
         self.browse(self.ids).read(['name', 'license_plate'])
         return [(car.id, '%s' % car.license_plate) for car in self]
