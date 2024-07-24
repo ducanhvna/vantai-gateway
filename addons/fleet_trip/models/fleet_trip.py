@@ -19,7 +19,8 @@ class FleetTrip(models.Model):
     #     for location in list_location:
     #         selection += [(location.code, location.name)]
     #     return selection
-
+    
+    fleet_preventive = fields.Integer(string='Số lượng dự phòng')
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.company)
     department_id = fields.Many2one('hr.department', string="phòng ban")
     department_plan_id = fields.Many2one('hr.department', string="Đơn vị dự trù phương tiện")
@@ -101,7 +102,20 @@ class FleetTrip(models.Model):
                                      domain=[('res_model', '=', 'fleet.trip')],
                                      string='Attachments')
     description = fields.Text(string='Nhiệm vụ')
-
+    
+    @api.model
+    def create(self, vals):
+        
+        fleet_preventive = vals.get('fleet_preventive')
+        if fleet_preventive and (fleet_preventive > 0):
+            newval = {}
+            newval['fleet_preventive'] = 0
+            self.create(newval)
+                
+       
+        result = super(FleetTrip, self).create(vals)
+        return result
+    
     @api.onchange("location_id")
     def onchange_location_id(self):
         if self.location_id:
