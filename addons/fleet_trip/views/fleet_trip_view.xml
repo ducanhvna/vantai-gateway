@@ -11,7 +11,7 @@
                 <field name="employee_id" />
                 <field name="department_plan_id" />
                 <field name="schedule_date" />
-                <field name="vehicle_id"/>
+                <!-- <field name="vehicle_id"/> -->
                 <field name="fuel_id"/>
                 <field name="fleet_product_id" />
                 <field name="number_trips" />
@@ -22,12 +22,12 @@
                 <field name="location_dest_district_state" string="Địa chỉ điểm đến" />
                 <!-- <button name="do_approve" type="object" attrs="{'invisible': [('is_approved','=',True)]}" class="fa fa-check-square" groups="fleet_trip.group_fleet_manager" />
                 <button name="do_reject" type="object" attrs="{'invisible': [('is_approved','=',True)]}" class="fa fa-window-close" groups="fleet_trip.group_fleet_manager" /> -->
-                <field name="eating_fee" />
-                <field name="company_name" string="Xác nhận" />
+                <!-- <field name="eating_fee" />
+                <field name="company_name" string="Xác nhận" /> -->
                 <field name="fee_total" sum="Tổng" />
-                <field name="note" string="Ghi chú chuyến đi" />
-                <field name="odometer_start" string="CMT đi" />
-                <field name="odometer_dest" string="CMT đến" />
+                <field name="description" string="Nhiệm vụ"/>
+                <field name="odometer_start" string="CMT đi"/>
+                <field name="odometer_dest" string="CMT đến"/>
                 <field name="odometer_end" string="Chiều dài hành trình" />
                 <field name="start_hour" />
                 <field name="end_hour" />
