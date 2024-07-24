@@ -56,7 +56,8 @@
                             <field name="quota"/>
                             <field name="fuel_id"/>
                             <field name="fleet_product_id" />
-
+                            
+                            <field name="fleet_preventive" />
                         </group>
 
                         <group>

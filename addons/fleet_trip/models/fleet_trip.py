@@ -108,9 +108,10 @@ class FleetTrip(models.Model):
         
         fleet_preventive = vals.get('fleet_preventive')
         if fleet_preventive and (fleet_preventive > 0):
-            newval = {}
-            newval['fleet_preventive'] = 0
-            self.create(newval)
+            for i in range(0, fleet_preventive):
+                newval = {}
+                newval['fleet_preventive'] = 0
+                self.create(newval)
                 
        
         result = super(FleetTrip, self).create(vals)
