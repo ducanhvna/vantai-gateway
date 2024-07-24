@@ -20,15 +20,9 @@
                 <field name="location_dest_id" string="Tên điểm đến" />
                 <field name="location_start_district_state" string="Địa chỉ điểm đi" />
                 <field name="location_dest_district_state" string="Địa chỉ điểm đến" />
-                <button name="do_approve" type="object" attrs="{'invisible': [('is_approved','=',True)]}" class="fa fa-check-square" groups="fleet_trip.group_fleet_manager" />
-                <button name="do_reject" type="object" attrs="{'invisible': [('is_approved','=',True)]}" class="fa fa-window-close" groups="fleet_trip.group_fleet_manager" />
+                <!-- <button name="do_approve" type="object" attrs="{'invisible': [('is_approved','=',True)]}" class="fa fa-check-square" groups="fleet_trip.group_fleet_manager" />
+                <button name="do_reject" type="object" attrs="{'invisible': [('is_approved','=',True)]}" class="fa fa-window-close" groups="fleet_trip.group_fleet_manager" /> -->
                 <field name="eating_fee" />
-                <field name="law_money" />
-                <field name="road_tiket_fee" />
-                <field name="incurred_fee" />
-                <field name="incurred_note" />
-                <field name="incurred_fee_2" />
-                <field name="incurred_note_2" />
                 <field name="company_name" string="Xác nhận" />
                 <field name="fee_total" sum="Tổng" />
                 <field name="note" string="Ghi chú chuyến đi" />
