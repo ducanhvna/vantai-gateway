@@ -88,6 +88,9 @@
             </xpath>
             <xpath expr="//field[@name='parent_id']" position="after">
                 <!--                 <field name="equipment_id"/>-->
+                <field name="coefficients_salary"/>
+                <field name="level"/>
+                <field name="position"/>
                 <field name="other_info"/>
             </xpath>
         </field>
