@@ -12,6 +12,9 @@
             <xpath expr="//field[@name='category_id']" position="before">
                 <field name="license_plate"/>
                 <field name="vehicle_id"/>
+                <field name="department_belong_id"/>
+                <field name="fuel_id"/>
+                <field name="number_seat"/>
             </xpath>
         </field>
     </record>
@@ -24,6 +27,9 @@
             <xpath expr="//field[@name='name']" position="before">
                 <field name="license_plate"/>
                 <field name="vehicle_id"/>
+                <field name="department_belong_id"/>
+                <field name="fuel_id"/>
+                <field name="number_seat"/>
             </xpath>
         </field>
     </record>

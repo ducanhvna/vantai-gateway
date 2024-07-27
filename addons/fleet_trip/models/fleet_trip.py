@@ -57,7 +57,7 @@ class FleetTrip(models.Model):
     employee_lead_id = fields.Many2one('hr.employee', string='Chỉ huy xe')
     employee_id = fields.Many2one('hr.employee', string='Nhân viên')
     state = fields.Selection([
-        ('1_draft', 'Đang Chờ'),
+        ('1_draft', 'Dự trù'),
         ('2_confirm', 'Đã Xuất Phát'),
         ('3_done', 'Hoàn Thành')
     ], string='Trạng thái', default='1_draft')
