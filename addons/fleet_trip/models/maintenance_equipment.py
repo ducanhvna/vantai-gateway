@@ -11,6 +11,8 @@ class MaintenanceEquipment(models.Model):
 
     license_plate = fields.Char(related='vehicle_id.license_plate', string='Biển số', required=False)
     vehicle_id = fields.Many2one('fleet.vehicle', string='Phương tiện')
+    department_belong_id = fields.Many2one('hr.department', string="Thuộc đơn vị")
+    
     def name_get(self):
         self.browse(self.ids).read(['name', 'license_plate'])
         return [(car.id, '%s' % car.license_plate if car.license_plate else '-') for car in self]
