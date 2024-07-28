@@ -319,7 +319,7 @@ class FleetTrip(models.Model):
         
         # Save the workbook to a BytesIO object
         # file_data = BytesIO()
-        file_path2 = get_module_resource('fleet_trip', 'static/src/template', 'result.xlsx')
+        file_path2 = 'file_path2result.xlsx'
         workbook.save('file_path2result.xlsx')
 
         with open(file_path2,"rb") as excel_file:
