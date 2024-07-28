@@ -318,19 +318,23 @@ class FleetTrip(models.Model):
         #     row += 1
         
         # Save the workbook to a BytesIO object
-        file_data = BytesIO()
-        workbook.save(file_data)
-        file_data.seek(0)
+        # file_data = BytesIO()
+        file_path2 = get_module_resource('fleet_trip', 'static/src/template', 'MY_TEMPLATE.xlsx')
+        workbook.save(file_path2)
+
+        with open(file_path2,"rb") as excel_file:
+            base64.b64encode( excel_file.read())
+        # file_data.seek(0)
         
-        # Create an attachment
-        attachment = self.env['ir.attachment'].create({
-            'name': 'MY_TEMPLATE.xlsx',
-            'type': 'binary',
-            'datas': file_data.getvalue().encode('base64'),
-            'res_model': 'fleet.trip',
-            'res_id': self.id,
-            'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        })
+            # Create an attachment
+            attachment = self.env['ir.attachment'].create({
+                'name': 'MY_TEMPLATE.xlsx',
+                'type': 'binary',
+                'datas': file_data.getvalue().encode('base64'),
+                'res_model': 'fleet.trip',
+                'res_id': self.id,
+                'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            })
         
         return {
             'type': 'ir.actions.act_url',
