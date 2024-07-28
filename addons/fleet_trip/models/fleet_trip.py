@@ -289,7 +289,7 @@ class FleetTrip(models.Model):
             'context': {'default_fleet_trip_id': self.id}}
         return act_window
 
-    @api.multi
+    # @api.multi
     def action_download_template(self):
         # Load the template
         file_path = get_module_resource('fleet_trip', 'static/src/template', 'MY_TEMPLATE.xlsx')
