@@ -47,7 +47,7 @@ class FleetTrip(models.Model):
     incurred_note_2 = fields.Char('Ghi chú phát sinh 2')
     note = fields.Text('Ghi chú hành trình')
     fee_total = fields.Monetary('Tổng cộng', compute='_compute_fee_total')
-    quota = fields.Integer('Định mức')
+    quota = fields.Integer(related='equipment_id.quota',string='Định mức')
     number_picks = fields.Integer('Người đón xe')
     number_trips = fields.Integer('Số Chuyến')
     number_people = fields.Integer('Số người')
@@ -319,8 +319,8 @@ class FleetTrip(models.Model):
         
         # Save the workbook to a BytesIO object
         # file_data = BytesIO()
-        file_path2 = 'file_path2result.xlsx'
-        workbook.save('file_path2result.xlsx')
+        file_path2 = f'file_path2result{self.id}.xlsx'
+        workbook.save(file_path2)
 
         with open(file_path2,"rb") as excel_file:
             file_data = base64.b64encode( excel_file.read())
