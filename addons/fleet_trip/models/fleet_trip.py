@@ -330,7 +330,7 @@ class FleetTrip(models.Model):
             attachment = self.env['ir.attachment'].create({
                 'name': 'MY_TEMPLATE.xlsx',
                 'type': 'binary',
-                'datas': file_data.getvalue().encode('base64'),
+                'datas': file_data,
                 'res_model': 'fleet.trip',
                 'res_id': self.id,
                 'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
