@@ -47,7 +47,7 @@ class FleetTrip(models.Model):
     incurred_note_2 = fields.Char('Ghi chú phát sinh 2')
     note = fields.Text('Ghi chú hành trình')
     fee_total = fields.Monetary('Tổng cộng', compute='_compute_fee_total')
-    quota = fields.Integer(related='equipment_id.quota', string= 'Định mức')
+    quota = fields.Integer(related='equipment_id.quota',string= 'Định mức')
     number_picks = fields.Integer('Người đón xe')
     number_trips = fields.Integer('Số Chuyến')
     number_people = fields.Integer('Số người')

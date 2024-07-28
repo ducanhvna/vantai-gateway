@@ -54,7 +54,7 @@
                         <group>
                             <field name="equipment_id"  string="Phương tiện"  options="{'no_create': 1, 'no_edit': 1}" />
                             <field name="schedule_date"/>
-                            <!-- <field name="quota"/> -->
+                            <field name="quota"/>
                             <field name="fuel_id"/>
                             <field name="fleet_product_id" />
                             
