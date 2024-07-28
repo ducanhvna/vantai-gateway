@@ -290,6 +290,7 @@ class FleetTrip(models.Model):
         return act_window
 
     # @api.multi
+    @http.route('/fleet_trip/download_template', type='http', auth='user')
     def action_download_template(self):
         # Load the template
         file_path = get_module_resource('fleet_trip', 'static/src/template', 'MY_TEMPLATE.xlsx')
