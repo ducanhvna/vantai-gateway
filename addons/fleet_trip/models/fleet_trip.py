@@ -297,7 +297,8 @@ class FleetTrip(models.Model):
         workbook = openpyxl.load_workbook(file_path)
         
         # Access the worksheets
-        # ws1 = workbook['Sheet1']
+        ws1 = workbook['Sheet1']
+        ws1.cell(row=1, column=1).value = self.license_plate
         # ws2 = workbook['Sheet2']
         
         # # Example data fetching
