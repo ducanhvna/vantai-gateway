@@ -296,11 +296,11 @@ class FleetTrip(models.Model):
         workbook = openpyxl.load_workbook(file_path)
         
         # Access the worksheets
-        ws1 = workbook['Sheet1']
-        ws2 = workbook['Sheet2']
+        # ws1 = workbook['Sheet1']
+        # ws2 = workbook['Sheet2']
         
-        # Example data fetching
-        records = self.env['fleet.trip'].search([])
+        # # Example data fetching
+        # records = self.env['fleet.trip'].search([])
         
         # # Populate the first worksheet
         # row = 2  # Assuming the first row is for headers
@@ -331,11 +331,11 @@ class FleetTrip(models.Model):
             'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         })
         
-        return {
-            'type': 'ir.actions.act_url',
-            'url': '/web/content/%s?download=true' % attachment.id,
-            'target': 'new',
-        }
+        # return {
+        #     'type': 'ir.actions.act_url',
+        #     'url': '/web/content/%s?download=true' % attachment.id,
+        #     'target': 'new',
+        # }
 
 
 class StockDelvery(models.Model):
