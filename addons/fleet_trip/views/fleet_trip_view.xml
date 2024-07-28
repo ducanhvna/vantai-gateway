@@ -47,7 +47,7 @@
                     <button type="object" name="do_start_trip" string="Bắt đầu" class="oe_highlight" attrs="{'invisible': [('state','!=','1_draft')]}" />
                     <button type="object" name="do_end_trip" string="Kết thúc" class="oe_highlight" attrs="{'invisible': [('state','!=','2_confirm')]}" />
                     <field name="state" widget="statusbar" statusbar_visible="1_draft,2_confirm,3_done" />
-                    <!-- <button name="action_download_template" type="object" string="Download Template" class="btn-primary"/> -->
+                    <button name="action_download_template" type="object" string="Download Template" class="btn-primary"/>
                 </header>
                 <sheet>
                     <group>
