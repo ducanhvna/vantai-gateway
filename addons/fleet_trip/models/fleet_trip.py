@@ -323,7 +323,7 @@ class FleetTrip(models.Model):
         workbook.save('file_path2result.xlsx')
 
         with open(file_path2,"rb") as excel_file:
-            base64.b64encode( excel_file.read())
+            file_data = base64.b64encode( excel_file.read())
         # file_data.seek(0)
         
             # Create an attachment
