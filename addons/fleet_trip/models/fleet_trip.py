@@ -289,53 +289,53 @@ class FleetTrip(models.Model):
             'context': {'default_fleet_trip_id': self.id}}
         return act_window
 
-    # @api.multi
-    # def action_download_template(self):
-    #     # Load the template
-    #     file_path = get_module_resource('fleet_trip', 'static/src/template', 'MY_TEMPLATE.xlsx')
-    #     workbook = openpyxl.load_workbook(file_path)
+    @api.multi
+    def action_download_template(self):
+        # Load the template
+        file_path = get_module_resource('fleet_trip', 'static/src/template', 'MY_TEMPLATE.xlsx')
+        workbook = openpyxl.load_workbook(file_path)
         
-    #     # Access the worksheets
-    #     # ws1 = workbook['Sheet1']
-    #     # ws2 = workbook['Sheet2']
+        # Access the worksheets
+        # ws1 = workbook['Sheet1']
+        # ws2 = workbook['Sheet2']
         
-    #     # # Example data fetching
-    #     # records = self.env['fleet.trip'].search([])
+        # # Example data fetching
+        # records = self.env['fleet.trip'].search([])
         
-    #     # # Populate the first worksheet
-    #     # row = 2  # Assuming the first row is for headers
-    #     # for record in records:
-    #     #     ws1.cell(row=row, column=1).value = record.field1
-    #     #     ws1.cell(row=row, column=2).value = record.field2
-    #     #     row += 1
+        # # Populate the first worksheet
+        # row = 2  # Assuming the first row is for headers
+        # for record in records:
+        #     ws1.cell(row=row, column=1).value = record.field1
+        #     ws1.cell(row=row, column=2).value = record.field2
+        #     row += 1
         
-    #     # # Populate the second worksheet
-    #     # row = 2
-    #     # for record in records:
-    #     #     ws2.cell(row=row, column=1).value = record.field3
-    #     #     ws2.cell(row=row, column=2).value = record.field4
-    #     #     row += 1
+        # # Populate the second worksheet
+        # row = 2
+        # for record in records:
+        #     ws2.cell(row=row, column=1).value = record.field3
+        #     ws2.cell(row=row, column=2).value = record.field4
+        #     row += 1
         
-    #     # Save the workbook to a BytesIO object
-    #     file_data = BytesIO()
-    #     workbook.save(file_data)
-    #     file_data.seek(0)
+        # Save the workbook to a BytesIO object
+        file_data = BytesIO()
+        workbook.save(file_data)
+        file_data.seek(0)
         
-    #     # Create an attachment
-    #     attachment = self.env['ir.attachment'].create({
-    #         'name': 'MY_TEMPLATE.xlsx',
-    #         'type': 'binary',
-    #         'datas': file_data.getvalue().encode('base64'),
-    #         'res_model': 'fleet.trip',
-    #         'res_id': self.id,
-    #         'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    #     })
+        # Create an attachment
+        attachment = self.env['ir.attachment'].create({
+            'name': 'MY_TEMPLATE.xlsx',
+            'type': 'binary',
+            'datas': file_data.getvalue().encode('base64'),
+            'res_model': 'fleet.trip',
+            'res_id': self.id,
+            'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        })
         
-    #     # return {
-    #     #     'type': 'ir.actions.act_url',
-    #     #     'url': '/web/content/%s?download=true' % attachment.id,
-    #     #     'target': 'new',
-    #     # }
+        # return {
+        #     'type': 'ir.actions.act_url',
+        #     'url': '/web/content/%s?download=true' % attachment.id,
+        #     'target': 'new',
+        # }
 
 
 class StockDelvery(models.Model):
