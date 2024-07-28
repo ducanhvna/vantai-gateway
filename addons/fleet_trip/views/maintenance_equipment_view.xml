@@ -15,6 +15,7 @@
                 <field name="department_belong_id"/>
                 <field name="fuel_id"/>
                 <field name="number_seat"/>
+                <field name="quota"/>
             </xpath>
         </field>
     </record>
