@@ -59,6 +59,7 @@ class FleetTrip(models.Model):
     employee_lead_id = fields.Many2one('hr.employee', string='Chỉ huy xe')
     employee_id = fields.Many2one('hr.employee', string='Nhân viên')
     state = fields.Selection([
+        ('0_plan', 'Khởi tạo'),
         ('1_draft', 'Dự trù'),
         ('2_confirm', 'Đã Xuất Phát'),
         ('3_done', 'Hoàn Thành')
@@ -105,19 +106,34 @@ class FleetTrip(models.Model):
                                      string='Attachments')
     description = fields.Text(string='Nhiệm vụ')
     
-    @api.model
-    def create(self, vals):
+    # @api.model
+    # def create(self, vals):
         
-        fleet_preventive = vals.get('fleet_preventive')
-        if fleet_preventive and (fleet_preventive > 0):
-            for i in range(0, fleet_preventive):
-                newval = {}
-                newval['fleet_preventive'] = 0
-                self.create(newval)
+        # fleet_preventive = vals.get('fleet_preventive')
+        # if fleet_preventive and (fleet_preventive > 0):
+        #     for i in range(0, fleet_preventive):
+        #         newval = {}
+        #         newval['fleet_preventive'] = 0
+        #         self.create(newval)
                 
        
-        result = super(FleetTrip, self).create(vals)
-        return result
+        # result = super(FleetTrip, self).create(vals)
+        # return result
+
+    @api.model
+    def write(self, vals):
+        old_state = self.state
+        new_state = vals.get('state')
+        if (new_state == '1_draft') and (old_state != new_state):
+            fleet_preventive = vals.get('fleet_preventive')
+            if fleet_preventive and (fleet_preventive > 0):
+                for i in range(0, fleet_preventive):
+                    newval = {}
+                    newval['fleet_preventive'] = 0
+                    self.create(newval)
+                    
+        res = super(FleetTrip, self).write(vals)
+        return res
     
     @api.onchange("location_id")
     def onchange_location_id(self):
