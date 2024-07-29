@@ -122,7 +122,7 @@ class FleetTrip(models.Model):
         # result = super(FleetTrip, self).create(vals)
         # return result
 
-    @api.model
+    # @api.model
     def write(self, vals):
         old_state = self.state
         new_state = vals.get('state')
