@@ -21,7 +21,7 @@ class FleetTrip(models.Model):
     #     for location in list_location:
     #         selection += [(location.code, location.name)]
     #     return selection
-    
+
     fleet_preventive = fields.Integer(string='Số lượng dự phòng')
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.company)
     department_id = fields.Many2one('hr.department', string="phòng ban")
@@ -107,20 +107,19 @@ class FleetTrip(models.Model):
                                      domain=[('res_model', '=', 'fleet.trip')],
                                      string='Attachments')
     description = fields.Text(string='Nhiệm vụ')
-    
+
     # @api.model
     # def create(self, vals):
-        
-        # fleet_preventive = vals.get('fleet_preventive')
-        # if fleet_preventive and (fleet_preventive > 0):
-        #     for i in range(0, fleet_preventive):
-        #         newval = {}
-        #         newval['fleet_preventive'] = 0
-        #         self.create(newval)
-                
-       
-        # result = super(FleetTrip, self).create(vals)
-        # return result
+
+    # fleet_preventive = vals.get('fleet_preventive')
+    # if fleet_preventive and (fleet_preventive > 0):
+    #     for i in range(0, fleet_preventive):
+    #         newval = {}
+    #         newval['fleet_preventive'] = 0
+    #         self.create(newval)
+
+    # result = super(FleetTrip, self).create(vals)
+    # return result
 
     # @api.model
     def write(self, vals):
@@ -133,10 +132,10 @@ class FleetTrip(models.Model):
                     newval = {}
                     newval['fleet_preventive'] = 0
                     self.create(newval)
-                    
+
         res = super(FleetTrip, self).write(vals)
         return res
-    
+
     @api.onchange("location_id")
     def onchange_location_id(self):
         if self.location_id:
@@ -233,7 +232,7 @@ class FleetTrip(models.Model):
                 'res_model': 'fleet.trip',
                 'res_id': self.id,
             })
-    
+
     def do_odometer_dest(self, odometer_dest, attachments=[]):
         self.odometer_dest = odometer_dest
         if not attachments:
@@ -316,32 +315,36 @@ class FleetTrip(models.Model):
         # Load the template
         file_path = get_module_resource('fleet_trip', 'static/src/template', 'MY_TEMPLATE.xlsx')
         workbook = openpyxl.load_workbook(file_path)
-        
+
         # Access the worksheets
         ws1 = workbook['Sheet1']
         # ws1.cell(row=1, column=1).value = self.license_plate
-        ws1.cell(row=10, column=7).value = self.category_plan_name if self.category_plan_name else 'Tên phương tiện: ……...………….' 
+        ws1.cell(row=10, column=7).value = (
+            f"Tên phương tiện: {self.category_plan_name}"
+            if self.category_plan_name
+            else "Tên phương tiện: ……...…………."
+        )
         ws1.merge_cells(start_row=10, start_column=7, end_row=10, end_column=13) 
-        
+
         # ws2 = workbook['Sheet2']
-        
+
         # # Example data fetching
         # records = self.env['fleet.trip'].search([])
-        
+
         # # Populate the first worksheet
         # row = 2  # Assuming the first row is for headers
         # for record in records:
         #     ws1.cell(row=row, column=1).value = record.field1
         #     ws1.cell(row=row, column=2).value = record.field2
         #     row += 1
-        
+
         # # Populate the second worksheet
         # row = 2
         # for record in records:
         #     ws2.cell(row=row, column=1).value = record.field3
         #     ws2.cell(row=row, column=2).value = record.field4
         #     row += 1
-        
+
         # Save the workbook to a BytesIO object
         # file_data = BytesIO()
         file_path2 = f'file_path2result{self.id}.xlsx'
@@ -350,20 +353,21 @@ class FleetTrip(models.Model):
         with open(file_path2,"rb") as excel_file:
             file_data = base64.b64encode( excel_file.read())
         # file_data.seek(0)
-        
-            # Create an attachment
-            attachment = self.env['ir.attachment'].create({
-                'name': 'MY_TEMPLATE.xlsx',
-                'type': 'binary',
-                'datas': file_data,
-                'res_model': 'fleet.trip',
-                'res_id': self.id,
-                'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-            })
-        
+
+        # # Create an attachment
+        # attachment = self.env['ir.attachment'].create({
+        #     'name': 'MY_TEMPLATE.xlsx',
+        #     'type': 'binary',
+        #     'datas': file_data,
+        #     'res_model': 'fleet.trip',
+        #     'res_id': self.id,
+        #     'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        # })
+
         return {
             'type': 'ir.actions.act_url',
-            'url': '/web/content/%s?download=true' % attachment.id,
+            'url': '/web/content/%s?download=true',
+            # % attachment.id,
             'target': 'new',
         }
 
