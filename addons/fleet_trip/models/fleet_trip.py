@@ -319,7 +319,10 @@ class FleetTrip(models.Model):
         
         # Access the worksheets
         ws1 = workbook['Sheet1']
-        ws1.cell(row=1, column=1).value = self.license_plate
+        # ws1.cell(row=1, column=1).value = self.license_plate
+        ws1.cell(row=10, column=7).value = self.category_plan_name if self.category_plan_name else 'Tên phương tiện: ……...………….' 
+        ws1.merge_cells(start_row=10, start_column=7, end_row=10, end_column=13) 
+        
         # ws2 = workbook['Sheet2']
         
         # # Example data fetching
