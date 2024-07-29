@@ -194,7 +194,7 @@ class FleetTrip(models.Model):
     def _compute_fee_total(self):
         for rec in self:
             rec.fee_total = rec.eating_fee + rec.law_money + rec.road_tiket_fee + rec.incurred_fee + rec.incurred_fee_2
-    def do_start_trip(self):
+    def do_plan_trip(self):
         # self.start_date = fields.Datetime.now()
         self.state = '1_draft'
 
