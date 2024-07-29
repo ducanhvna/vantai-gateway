@@ -9,6 +9,7 @@
                 <field name="license_plate" />
                 <field name="department_id" />
                 <field name="employee_id" />
+                <field name="category_plan_name" />
                 <field name="department_plan_id" />
                 <field name="schedule_date" />
                 <!-- <field name="vehicle_id"/> -->
@@ -58,7 +59,7 @@
                             <field name="quota"/>
                             <field name="fuel_id"/>
                             <field name="fleet_product_id" />
-                            
+                            <field name="category_plan" />
                             <field name="fleet_preventive" />
                         </group>
 
