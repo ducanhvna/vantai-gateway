@@ -325,7 +325,7 @@ class FleetTrip(models.Model):
             else "Tên phương tiện: ……...…………."
         )
         ws1.merge_cells(start_row=10, start_column=7, end_row=10, end_column=13) 
-        (
+        ws1.cell(row=9, column=6).value = (
             f"{self.department_plan_id.name}."
             if self.department_plan_id
             else '-'
