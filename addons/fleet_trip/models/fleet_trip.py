@@ -63,7 +63,7 @@ class FleetTrip(models.Model):
         ('1_draft', 'Dự trù'),
         ('2_confirm', 'Đã Xuất Phát'),
         ('3_done', 'Hoàn Thành')
-    ], string='Trạng thái', default='1_draft')
+    ], string='Trạng thái', default='0_plan')
     schedule_date = fields.Date(string='Ngày thực hiện')
     start_date = fields.Datetime(string='Bắt đầu', readonly=True)
     end_date = fields.Datetime(string='Kết thúc', readonly=True)
