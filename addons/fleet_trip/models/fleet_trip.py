@@ -325,6 +325,12 @@ class FleetTrip(models.Model):
             else "Tên phương tiện: ……...…………."
         )
         ws1.merge_cells(start_row=10, start_column=7, end_row=10, end_column=13) 
+        (
+            f"{self.department_plan_id.name}."
+            if self.department_plan_id
+            else '-'
+        )
+        ws1.merge_cells(start_row=9, start_column=6, end_row=9, end_column=10) 
 
         # ws2 = workbook['Sheet2']
 
