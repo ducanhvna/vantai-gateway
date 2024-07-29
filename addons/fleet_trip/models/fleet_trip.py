@@ -354,19 +354,19 @@ class FleetTrip(models.Model):
             file_data = base64.b64encode( excel_file.read())
         # file_data.seek(0)
 
-        # # Create an attachment
-        # attachment = self.env['ir.attachment'].create({
-        #     'name': 'MY_TEMPLATE.xlsx',
-        #     'type': 'binary',
-        #     'datas': file_data,
-        #     'res_model': 'fleet.trip',
-        #     'res_id': self.id,
-        #     'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        # })
+        # Create an attachment
+        attachment = self.env['ir.attachment'].create({
+            'name': 'MY_TEMPLATE.xlsx',
+            'type': 'binary',
+            'datas': file_data,
+            'res_model': 'fleet.trip',
+            'res_id': self.id,
+            'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        })
 
         return {
             'type': 'ir.actions.act_url',
-            'url': '/web/content/%s?download=true',
+            'url': '/web/content/%s?download=true' % attachment.id,
             # % attachment.id,
             'target': 'new',
         }
