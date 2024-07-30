@@ -14,6 +14,13 @@
                 <field name="vehicle_id"/>
                 <field name="department_belong_id"/>
                 <field name="location_id"/>
+                <!-- <div class="o_address_format" attrs="{'invisible': [('location_id','!=',False)]}"> -->
+                <div class="o_address_format" >
+                    <field name="state_id" class="o_address_state" placeholder="Tỉnh/TP" readonly="True" force_save="1" />
+                    <field name="district_id" placeholder="Quận/Huyện" class="o_address_zip" readonly="True" force_save="1" />
+                    <field name="ward_id" placeholder="Xã/Phường" class="o_address_city" readonly="True" force_save="1" />
+                    <field name="address_start" placeholder="Địa chỉ" readonly="True" force_save="1" />
+                </div>
                 <field name="fuel_id"/>
                 <field name="number_seat"/>
                 <field name="quota"/>

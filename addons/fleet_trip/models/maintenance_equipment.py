@@ -16,6 +16,20 @@ class MaintenanceEquipment(models.Model):
     number_seat = fields.Integer('Số ghế')
     quota = fields.Integer('Định mức')
     location_id = fields.Many2one('fleet.location', string="Vị Trí cất xe")
+    district_id = fields.Many2one('res.country.district', string='Huyện', domain="[('state_id', '=', state_id)]")
+    ward_id = fields.Many2one('res.country.ward', string='Xã', domain="[('district_id', '=', district_id)]")
+    state_id = fields.Many2one("res.country.state", string='Tỉnh', ondelete='restrict',
+                               domain="[('country_id', '=', country_id)]")
+    address_start = fields.Char(string="Địa chỉ xuất phát")
+    @api.onchange("location_id")
+    def onchange_location_id(self):
+        if self.location_id:
+            # self.location_name = self.location_id.name
+            self.district_id = self.location_id.district_id.id
+            self.ward_id = self.location_id.ward_id.id
+            self.state_id = self.location_id.state_id.id
+            self.address_start = self.location_id.note
+            
     def name_get(self):
         self.browse(self.ids).read(['name', 'license_plate'])
         return [(car.id, '%s' % car.license_plate if car.license_plate else '-') for car in self]
