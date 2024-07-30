@@ -66,9 +66,9 @@ class FleetTrip(models.Model):
         ('2_confirm', 'Đã Xuất Phát'),
         ('3_done', 'Hoàn Thành')
     ], string='Trạng thái', default='0_plan')
-    schedule_date = fields.Date(string='Ngày thực hiện')
-    start_date = fields.Datetime(string='Bắt đầu', readonly=True)
-    end_date = fields.Datetime(string='Kết thúc', readonly=True)
+    schedule_date = fields.Datetime(string='Ngày Giờ Dự kiến')
+    start_date = fields.Datetime(string='Giờ Bắt đầu', readonly=False)
+    end_date = fields.Datetime(string='Giờ Kết thúc', readonly=False)
 
     delivery_id = fields.Many2one('stock.delivery', string='Phiếu xuất kho')
     code = fields.Char(related='delivery_id.code', store=True)
