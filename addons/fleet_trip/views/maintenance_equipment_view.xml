@@ -13,6 +13,7 @@
                 <field name="license_plate"/>
                 <field name="vehicle_id"/>
                 <field name="department_belong_id"/>
+                <field name="location_id"/>
                 <field name="fuel_id"/>
                 <field name="number_seat"/>
                 <field name="quota"/>
