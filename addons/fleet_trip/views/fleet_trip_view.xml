@@ -59,40 +59,40 @@
                             <!-- <field name="quota"/> -->
                             <field name="department_plan_id" />
                             <field name="fuel_id"/>
-                            <field name="fleet_product_id" />
+                            <!-- <field name="fleet_product_id" /> -->
                             <field name="category_plan" />
                             <field name="fleet_preventive" />
                         </group>
 
                         <group>
-                            <field name="location_id" string="Chọn điểm đầu" />
-                            <label for="ward_id" string="Nơi xuất phát" />
+                            <!-- <field name="location_id" string="Chọn điểm đầu" />
+                            <label for="ward_id" string="Nơi xuất phát" /> -->
                             
                             <!-- <div class="o_address_format" attrs="{'invisible': [('location_id','!=',False)]}"> -->
-                            <div class="o_address_format" >
+                            <!-- <div class="o_address_format" >
                                 <field name="state_id" class="o_address_state" placeholder="Tỉnh/TP" readonly="True" force_save="1" />
                                 <field name="district_id" placeholder="Quận/Huyện" class="o_address_zip" readonly="True" force_save="1" />
                                 <field name="ward_id" placeholder="Xã/Phường" class="o_address_city" readonly="True" force_save="1" />
                                 <field name="address_start" placeholder="Địa chỉ" readonly="True" force_save="1" />
-                            </div>
+                            </div> -->
 
-                            <field name="location_dest_id" string="Chọn điểm cuối" />
-                            <label for="ward_dest_id" string="Nơi đến" />
+                            <!-- <field name="location_dest_id" string="Chọn điểm cuối" />
+                            <label for="ward_dest_id" string="Nơi đến" /> -->
                             <!-- <div class="o_address_format" attrs="{'invisible': [('location_dest_id','!=',False)]}"> -->
-                            <div class="o_address_format" >
+                            <!-- <div class="o_address_format" >
                                 <field name="state_dest_id" class="o_address_state" placeholder="Tỉnh/TP" readonly="True" force_save="1" />
                                 <field name="district_dest_id" placeholder="Quận/Huyện" class="o_address_zip" readonly="True" force_save="1" />
                                 <field name="ward_dest_id" placeholder="Xã/Phường" class="o_address_city" readonly="True" force_save="1" />
                                 <field name="address_end" placeholder="Địa chỉ" readonly="True" force_save="1" />
-                            </div>
+                            </div> -->
                         </group>
                         <group>
-                            <field name="odometer_start" />
+                            <!-- <field name="odometer_start" /> -->
                             <field name="start_date" />
                         </group>
                         <group>
-                            <field name="odometer_dest" />
-                            <field name="odometer_end" />
+                            <!-- <field name="odometer_dest" />
+                            <field name="odometer_end" /> -->
                             <field name="end_date" />
                             
                         </group>
