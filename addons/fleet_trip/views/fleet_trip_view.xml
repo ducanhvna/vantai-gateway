@@ -56,7 +56,8 @@
                         <group>
                             <field name="equipment_id"  string="Phương tiện"  options="{'no_create': 1, 'no_edit': 1}" />
                             <field name="schedule_date"/>
-                            <field name="quota"/>
+                            <!-- <field name="quota"/> -->
+                            <field name="department_plan_id" />
                             <field name="fuel_id"/>
                             <field name="fleet_product_id" />
                             <field name="category_plan" />
@@ -105,12 +106,12 @@
                             
                             <field name="company_name" />
                             <field name="department_id" />
-                            <field name="department_plan_id" />
+                            
                             <field name="department_belong_id" />
                         </group>
                     </group>
                     <group>
-                        <group>
+                        <!-- <group>
                             <field name="eating_fee" />
                             <field name="law_money" />
                             <field name="road_tiket_fee" />
@@ -122,9 +123,9 @@
                             <field name="incurred_note" />
                             <field name="incurred_fee_2" />
                             <field name="incurred_note_2" />
-                        </group>
+                        </group> -->
                         <field name="country_id" invisible="1" />
-                        <field name="description" placeholder="Nhiệm vụ hành trình" />
+                        <!-- <field name="description" placeholder="Nhiệm vụ hành trình" /> -->
                         <field name="note" nolabel="1" placeholder="Ghi chú hành trình" />
                     </group>
                 </sheet>
