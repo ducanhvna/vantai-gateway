@@ -52,9 +52,9 @@ class FleetTrip(models.Model):
     quota = fields.Integer(related='equipment_id.quota',string='Định mức')
     number_picks = fields.Integer('Người đón xe')
     number_trips = fields.Integer('Số Chuyến')
-    attemdances = fields.One2many('hr.employee', 'id',
-                                    #  domain=[('res_model', '=', 'fleet.trip')],
-                                     string='Người tham gia')
+    # attemdances = fields.One2many('hr.employee', 'id',
+    #                                 #  domain=[('res_model', '=', 'fleet.trip')],
+    #                                  string='Người tham gia')
     number_people = fields.Integer('Số người')
     product_weigh = fields.Float(string='Số tấn HH')
     number_seat = fields.Integer(related='equipment_id.number_seat',string='Số ghế')
