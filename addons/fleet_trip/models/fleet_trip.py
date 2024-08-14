@@ -21,7 +21,7 @@ class FleetTrip(models.Model):
     #     for location in list_location:
     #         selection += [(location.code, location.name)]
     #     return selection
-
+    fleet_code = fields.Integer(string='Số')
     fleet_preventive = fields.Integer(string='Số lượng dự phòng')
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.company)
     department_id = fields.Many2one('hr.department', string="phòng ban")
