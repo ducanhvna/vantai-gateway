@@ -97,7 +97,7 @@
                             <!-- <field name="odometer_dest" />
                             <field name="odometer_end" /> -->
                             <field name="end_date" string="Đến"/>
-                            <field name="attendances" string="Người tham gia"/>
+                            <field name="employee_ids" string="Người đi"/>
                         </group>
 
                         <group>
