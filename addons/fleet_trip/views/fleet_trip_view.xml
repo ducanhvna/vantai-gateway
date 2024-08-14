@@ -115,12 +115,11 @@
                             <!-- <field name="employee_id" string="Tài xế" /> -->
                             <field name="employee_lead_id" />
                             <!-- <field name="number_picks" /> -->
-                            
                             <field name="employee_plan_id" />
                         </group>    
                         <group>
                             
-                            <field name="company_name" />
+                            <!-- <field name="company_name" /> -->
                             <field name="department_id" />
                             
                             <field name="department_belong_id" />
