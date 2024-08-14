@@ -58,6 +58,9 @@ class FleetTrip(models.Model):
     attendances = fields.One2many('hr.employee', 'id',
                                     #  domain=[('res_model', '=', 'fleet.trip')],
                                      string='Người tham gia')
+    
+    employee_ids = fields.Many2many('hr.employee',
+                                     string='Người tham gia')
     number_people = fields.Integer('Số người')
     product_weigh = fields.Float(string='Số tấn HH')
     number_seat = fields.Integer(related='equipment_id.number_seat',string='Số ghế')
