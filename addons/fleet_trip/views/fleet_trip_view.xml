@@ -99,7 +99,13 @@
                             <field name="end_date" string="Đến"/>
                         </group>
                         <group>
-                            <field name="employee_ids" string="Người đi"/>
+                            <field name="employee_ids" string="Người đi" type="xml">
+                                <tree>
+                                    <field name="name"/>
+                                    <!-- <field name="city"/>
+                                    <field name="state"/> -->
+                                </tree>
+                            </field>
                         </group>
 
                         <group>

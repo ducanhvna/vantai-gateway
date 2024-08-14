@@ -55,9 +55,9 @@ class FleetTrip(models.Model):
     # attemdances = fields.One2many('hr.employee', 'id',
     #                                 #  domain=[('res_model', '=', 'fleet.trip')],
     #                                  string='Người tham gia')
-    attendances = fields.One2many('hr.employee', 'id',
-                                    #  domain=[('res_model', '=', 'fleet.trip')],
-                                     string='Người tham gia')
+    # attendances = fields.One2many('hr.employee', 'id',
+    #                                 #  domain=[('res_model', '=', 'fleet.trip')],
+    #                                  string='Người tham gia')
     
     employee_ids = fields.Many2many('hr.employee',
                                      string='Người tham gia')
