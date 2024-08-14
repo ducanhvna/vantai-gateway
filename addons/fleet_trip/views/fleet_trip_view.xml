@@ -100,6 +100,8 @@
                             
                         </group>
                         <group>
+                            <field name="number_people" />
+                            <field name="product_weigh" />
                             <field name="employee_id" string="Tài xế" />
                             <field name="number_picks" />
                             <field name="employee_lead_id" />
