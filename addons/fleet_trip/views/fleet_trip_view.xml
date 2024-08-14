@@ -59,10 +59,12 @@
                             <field name="schedule_date"/>
                             <!-- <field name="quota"/> -->
                             <field name="department_plan_id" />
+                            <field name="number_trips" />
                             <field name="fuel_id"/>
                             <!-- <field name="fleet_product_id" /> -->
                             <field name="category_plan" />
-                            <field name="fleet_preventive" />
+                            <field name="description" string="Nội dung nhiệm vụ" placeholder="Nhiệm vụ hành trình" />
+                            <!-- <field name="fleet_preventive" /> -->
                         </group>
 
                         <group>
@@ -89,7 +91,8 @@
                         </group>
                         <group>
                             <!-- <field name="odometer_start" /> -->
-                            <field name="start_date" />
+                            <label for="start_date" string="Thời gian" />
+                            <field name="start_date"  />
                         </group>
                         <group>
                             <!-- <field name="odometer_dest" />
