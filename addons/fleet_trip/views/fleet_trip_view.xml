@@ -67,7 +67,7 @@
                             <!-- <field name="fleet_preventive" /> -->
                         </group>
 
-                        <group>
+                        <!-- <group> -->
                             <!-- <field name="location_id" string="Chọn điểm đầu" />
                             <label for="ward_id" string="Nơi xuất phát" /> -->
                             
@@ -88,16 +88,15 @@
                                 <field name="ward_dest_id" placeholder="Xã/Phường" class="o_address_city" readonly="True" force_save="1" />
                                 <field name="address_end" placeholder="Địa chỉ" readonly="True" force_save="1" />
                             </div> -->
-                        </group>
+                        <!-- </group> -->
                         <group>
                             <!-- <field name="odometer_start" /> -->
                             <label for="start_date" string="Thời gian" />
-                            <field name="start_date"  />
-                        </group>
-                        <group>
+                            <field name="start_date" string="Từ" />
+
                             <!-- <field name="odometer_dest" />
                             <field name="odometer_end" /> -->
-                            <field name="end_date" />
+                            <field name="end_date" string="Đến"/>
                             
                         </group>
                         <group>
