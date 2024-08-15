@@ -70,7 +70,7 @@
                             <field name="description" string="Nội dung nhiệm vụ" placeholder="Nhiệm vụ hành trình" />
                             <!-- <field name="fleet_preventive" /> -->
                         </group>
-                        <label  string="Dự trù phương tiện" /> 
+
                         <!-- <group> -->
                             <!-- <field name="location_id" string="Chọn điểm đầu" />
                             <label for="ward_id" string="Nơi xuất phát" /> -->
