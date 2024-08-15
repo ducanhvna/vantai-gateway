@@ -334,18 +334,18 @@ class FleetTrip(models.Model):
         # Access the worksheets
         ws1 = workbook['Lệnh']
         # ws1.cell(row=1, column=1).value = self.license_plate
-        ws1.cell(row=10, column=7).value = (
-            f"Tên phương tiện: {self.category_plan_name}"
-            if self.category_plan_name
-            else "Tên phương tiện: ……...…………."
-        )
-        ws1.merge_cells(start_row=10, start_column=7, end_row=10, end_column=13) 
-        ws1.cell(row=9, column=6).value = (
-            f"{self.department_plan_id.name}."
-            if self.department_plan_id
-            else '-'
-        )
-        ws1.merge_cells(start_row=9, start_column=6, end_row=9, end_column=10) 
+        # ws1.cell(row=10, column=7).value = (
+        #     f"Tên phương tiện: {self.category_plan_name}"
+        #     if self.category_plan_name
+        #     else "Tên phương tiện: ……...…………."
+        # )
+        # ws1.merge_cells(start_row=10, start_column=7, end_row=10, end_column=13) 
+        # ws1.cell(row=9, column=6).value = (
+        #     f"{self.department_plan_id.name}."
+        #     if self.department_plan_id
+        #     else '-'
+        # )
+        # ws1.merge_cells(start_row=9, start_column=6, end_row=9, end_column=10) 
 
         # ws2 = workbook['Sheet2']
 
@@ -368,7 +368,7 @@ class FleetTrip(models.Model):
 
         # Save the workbook to a BytesIO object
         # file_data = BytesIO()
-        file_path2 = f'file_path2result{self.id}.xlsx'
+        file_path2 = f'file_command_path2result{self.id}.xlsx'
         workbook.save(file_path2)
 
         with open(file_path2,"rb") as excel_file:
@@ -377,7 +377,7 @@ class FleetTrip(models.Model):
 
         # Create an attachment
         attachment = self.env['ir.attachment'].create({
-            'name': 'MY_TEMPLATE.xlsx',
+            'name': 'COMMAND_TEMPLATE.xlsx',
             'type': 'binary',
             'datas': file_data,
             'res_model': 'fleet.trip',
