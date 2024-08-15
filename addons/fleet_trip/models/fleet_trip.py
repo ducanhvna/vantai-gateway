@@ -216,6 +216,10 @@ class FleetTrip(models.Model):
         self.start_date = fields.Datetime.now()
         self.state = '2_confirm'
 
+    def do_create_command_trip(self):
+        self.start_date = fields.Datetime.now()
+        self.state = '2_command'
+
     def do_end_trip(self):
         self.end_date = fields.Datetime.now()
         self.state = '3_done'
