@@ -326,8 +326,72 @@ class FleetTrip(models.Model):
             'context': {'default_fleet_trip_id': self.id}}
         return act_window
 
-    # @api.multi
-    # @http.route('/fleet_trip/download_template', type='http', auth='user')
+    def action_download_command_template(self):
+        # Load the template
+        file_path = get_module_resource('fleet_trip', 'static/src/template', 'COMMAND_TEMPLATE.xlsx')
+        workbook = openpyxl.load_workbook(file_path)
+
+        # Access the worksheets
+        ws1 = workbook['Lệnh']
+        # ws1.cell(row=1, column=1).value = self.license_plate
+        ws1.cell(row=10, column=7).value = (
+            f"Tên phương tiện: {self.category_plan_name}"
+            if self.category_plan_name
+            else "Tên phương tiện: ……...…………."
+        )
+        ws1.merge_cells(start_row=10, start_column=7, end_row=10, end_column=13) 
+        ws1.cell(row=9, column=6).value = (
+            f"{self.department_plan_id.name}."
+            if self.department_plan_id
+            else '-'
+        )
+        ws1.merge_cells(start_row=9, start_column=6, end_row=9, end_column=10) 
+
+        # ws2 = workbook['Sheet2']
+
+        # # Example data fetching
+        # records = self.env['fleet.trip'].search([])
+
+        # # Populate the first worksheet
+        # row = 2  # Assuming the first row is for headers
+        # for record in records:
+        #     ws1.cell(row=row, column=1).value = record.field1
+        #     ws1.cell(row=row, column=2).value = record.field2
+        #     row += 1
+
+        # # Populate the second worksheet
+        # row = 2
+        # for record in records:
+        #     ws2.cell(row=row, column=1).value = record.field3
+        #     ws2.cell(row=row, column=2).value = record.field4
+        #     row += 1
+
+        # Save the workbook to a BytesIO object
+        # file_data = BytesIO()
+        file_path2 = f'file_path2result{self.id}.xlsx'
+        workbook.save(file_path2)
+
+        with open(file_path2,"rb") as excel_file:
+            file_data = base64.b64encode( excel_file.read())
+        # file_data.seek(0)
+
+        # Create an attachment
+        attachment = self.env['ir.attachment'].create({
+            'name': 'MY_TEMPLATE.xlsx',
+            'type': 'binary',
+            'datas': file_data,
+            'res_model': 'fleet.trip',
+            'res_id': self.id,
+            'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        })
+
+        return {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            # % attachment.id,
+            'target': 'new',
+        }
+        
     def action_download_template(self):
         # Load the template
         file_path = get_module_resource('fleet_trip', 'static/src/template', 'MY_TEMPLATE.xlsx')
