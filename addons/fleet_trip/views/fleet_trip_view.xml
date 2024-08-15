@@ -56,7 +56,11 @@
                         <group>
                             <!-- <field name="equipment_id"  string="Phương tiện"  options="{'no_create': 1, 'no_edit': 1}" /> -->
                             <field name="fleet_code"/>
+                        </group>
+                        <group>
                             <field name="schedule_date"/>
+                        </group>
+                        <group>
                             <!-- <field name="quota"/> -->
                             <field name="department_plan_id" />
                             <field name="number_trips" />
@@ -66,7 +70,7 @@
                             <field name="description" string="Nội dung nhiệm vụ" placeholder="Nhiệm vụ hành trình" />
                             <!-- <field name="fleet_preventive" /> -->
                         </group>
-
+                        <label  string="Dự trù phương tiện" /> 
                         <!-- <group> -->
                             <!-- <field name="location_id" string="Chọn điểm đầu" />
                             <label for="ward_id" string="Nơi xuất phát" /> -->
