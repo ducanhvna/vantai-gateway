@@ -71,7 +71,7 @@ class FleetTrip(models.Model):
     distance_plan = fields.Integer('Dự kiến tổng số km đi, về')
     employee_plan_id = fields.Many2one('hr.employee', string='Người dự trù')
     employee_lead_id = fields.Many2one('hr.employee', string='Chỉ huy xe',
-                                        domain=[('id', 'in', employee_ids)])
+                                        domain="[('id', 'in', employee_ids)]")
     level = fields.Char( string='Cấp bậc')
     position = fields.Char( string='Chức vụ')
     employee_id = fields.Many2one('hr.employee', string='Nhân viên')
