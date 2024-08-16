@@ -123,13 +123,15 @@
                             
                             <field name="product_weigh" />
                             <!-- <field name="employee_id" string="Tài xế" /> -->
+                        </group>
+                        <group>
                             <field name="employee_lead_id" />
                             <field name="level" string="cấp bậc"/>
                             <field name="position" string="chức vụ"/>
                             <!-- <field name="number_picks" /> -->
+                        </group>
+                        <group>
                             <field name="employee_plan_id" />
-
-
                         </group>    
                         <group>
                             
