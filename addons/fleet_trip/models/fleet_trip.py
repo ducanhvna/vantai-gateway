@@ -210,7 +210,7 @@ class FleetTrip(models.Model):
             rec.fee_total = rec.eating_fee + rec.law_money + rec.road_tiket_fee + rec.incurred_fee + rec.incurred_fee_2
             
     def custom_round_half_day(self, start_date, end_date):
-        floor_days = 0
+        rounded_days = 0
         if (start_date != False) and (end_date!=False):
             delta = end_date - start_date
             total_days = delta.total_seconds() / (24 * 3600)
