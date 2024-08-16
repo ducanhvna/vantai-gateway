@@ -82,7 +82,7 @@ class FleetTrip(models.Model):
     schedule_date = fields.Datetime(string='Ngày Giờ Dự kiến')
     start_date = fields.Datetime(string='Giờ Bắt đầu', readonly=False)
     end_date = fields.Datetime(string='Giờ Kết thúc', readonly=False)
-    time_day_compute = fields.Monetary('Tổng cộng', compute='_compute_timeday')
+    time_day_compute = fields.Float('Tổng cộng', compute='_compute_timeday')
     delivery_id = fields.Many2one('stock.delivery', string='Phiếu xuất kho')
     code = fields.Char(related='delivery_id.code', store=True)
     project_id = fields.Many2one(related='delivery_id.project_id')
