@@ -216,7 +216,7 @@ class FleetTrip(models.Model):
             total_days = delta.total_seconds() / (24 * 3600)
             floor_days = delta.total_seconds() // (24 * 3600)
             
-            if floor_days < total_days <= 0.5:
+            if floor_days < total_days <= floor_days + 0.5:
                 rounded_days = floor_days + 0.5
             elif 0.5 < total_days < floor_days + 1:
                 rounded_days = floor_days + 1
