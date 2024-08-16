@@ -111,7 +111,7 @@
                         <group>
                             <field name="employee_ids" string="Người đi" type="xml">
                                 <tree>
-                                    <field name="name"/>
+                                    <field name="name" string="Cán bộ"/>
                                     <!-- <field name="city"/>
                                     <field name="state"/> -->
                                 </tree>
@@ -130,9 +130,9 @@
                         <group>
                             
                             <!-- <field name="company_name" /> -->
-                            <field name="department_id" />
+                            <field name="department_id" string='Phòng ban quản lý PT'/>
                             
-                            <field name="department_belong_id" />
+                            <!-- <field name="department_belong_id" /> -->
                         </group>
                     </group>
                     <group>
