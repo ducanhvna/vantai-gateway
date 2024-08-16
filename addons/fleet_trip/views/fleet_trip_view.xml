@@ -101,7 +101,7 @@
                         <!-- </group> -->
                         <group>
                             <!-- <field name="odometer_start" /> -->
-                            <label name="time_day_compute" string="Thời gian" />
+                            <field name="time_day_compute" string="Thời gian" />
                             <field name="start_date" string="Từ" />
 
                             <!-- <field name="odometer_dest" />
