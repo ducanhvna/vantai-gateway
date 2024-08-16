@@ -213,7 +213,7 @@ class FleetTrip(models.Model):
         rounded_days = 0
         if (start_date != False) and (end_date!=False):
             delta = end_date - start_date
-            total_days = delta.total_seconds() / (24 * 3600)
+            total_days = delta.total_seconds() / (24.0 * 3600)
             floor_days = delta.total_seconds() // (24 * 3600)
             
             if floor_days < total_days <= floor_days + 0.5:
