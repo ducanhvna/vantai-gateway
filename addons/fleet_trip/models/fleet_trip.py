@@ -218,7 +218,7 @@ class FleetTrip(models.Model):
             
             if floor_days < total_days <= floor_days + 0.5:
                 rounded_days = floor_days + 0.5
-            elif 0.5 < total_days < floor_days + 1:
+            elif floor_days + 0.5 < total_days < floor_days + 1:
                 rounded_days = floor_days + 1
             else:
                 # For differences of 1 day or more, round to the nearest 0.5 day
