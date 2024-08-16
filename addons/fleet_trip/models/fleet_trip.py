@@ -82,7 +82,7 @@ class FleetTrip(models.Model):
     schedule_date = fields.Datetime(string='Ngày Giờ Dự kiến')
     start_date = fields.Datetime(string='Giờ Bắt đầu', readonly=False)
     end_date = fields.Datetime(string='Giờ Kết thúc', readonly=False)
-
+    time_day_compute = fields.Monetary('Tổng cộng', compute='_compute_timeday')
     delivery_id = fields.Many2one('stock.delivery', string='Phiếu xuất kho')
     code = fields.Char(related='delivery_id.code', store=True)
     project_id = fields.Many2one(related='delivery_id.project_id')
@@ -208,6 +208,29 @@ class FleetTrip(models.Model):
     def _compute_fee_total(self):
         for rec in self:
             rec.fee_total = rec.eating_fee + rec.law_money + rec.road_tiket_fee + rec.incurred_fee + rec.incurred_fee_2
+            
+    def custom_round_half_day(self, start_date, end_date):
+        floor_days = 0
+        if (start_date != False) and (end_date!=False):
+            delta = end_date - start_date
+            total_days = delta.total_seconds() / (24 * 3600)
+            floor_days = delta.total_seconds() // (24 * 3600)
+            
+            if floor_days < total_days <= 0.5:
+                rounded_days = floor_days + 0.5
+            elif 0.5 < total_days < floor_days + 1:
+                rounded_days = floor_days + 1
+            else:
+                # For differences of 1 day or more, round to the nearest 0.5 day
+                rounded_days = floor_days
+        
+        return rounded_days
+    
+    @api.depends("start_date", "end_date")
+    def _compute_timeday(self):
+        for rec in self:
+            rec.time_day_compute = self.custom_round_half_day(self.start_date, self.end_date)
+            
     def do_plan_trip(self):
         # self.start_date = fields.Datetime.now()
         self.state = '1_draft'
