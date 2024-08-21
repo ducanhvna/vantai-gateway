@@ -60,6 +60,22 @@ class HrDepartment(models.Model):
     
     acronym = fields.Char(string='Tên viết tắt')
     
+class HrJob(models.Model):
+    _inherit = "hr.job"
+    weight = fields.Float(string='Hệ số chức vụ')
+    
+class HrRank(models.Model):
+    _name = "hr.rank"
+    _description = "Cấp bậc"
+    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _order = 'sequence'
+
+    active = fields.Boolean(default=True)
+    name = fields.Char(string='Job Position', required=True, index='trigram', translate=True)
+    sequence = fields.Integer(default=10)
+    weight = fields.Float(string='Hệ số cấp bậc')
+    
+
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
     _order = 'id desc'
