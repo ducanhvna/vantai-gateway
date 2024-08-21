@@ -58,6 +58,18 @@
               parent="fleet_config_menu"
               action="fleet_category_action"
               sequence="50"/>
+    
+    <record id="view_department_form_inherited" model="ir.ui.view">
+        <field name="name">hr.department.view.inherited</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.view_department_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="acronym"/>
+            </xpath>
+        </field>
+    </record>
+
 
     <record id="view_employee_form_inherited" model="ir.ui.view">
         <field name="name">hr.employee.view.inherited</field>
