@@ -20,7 +20,7 @@
 
         <menuitem id="fleet_rank_menu"
                   name="Danh sách cấp bậc"
-                  parent="fleet_config_menu"
+                  parent="fleet_rank_root_menu"
                   action="hr_rank_tree_act_window"
                   sequence="80"/>
     </data>
