@@ -76,6 +76,8 @@ class FleetTrip(models.Model):
                                         domain="[('id', 'in', employee_ids)]")
     level = fields.Char( string='Cấp bậc')
     position = fields.Char( string='Chức vụ')
+    job_id = fields.Many2one("hr.job", related='employee_lead_id.job_id', string='Chức vụ cán bộ')
+    rank_id = fields.Many2one("hr.rank",related='employee_lead_id.rank_id', string='Cấp bậc cán bộ')
     employee_id = fields.Many2one('hr.employee', string='Nhân viên')
     state = fields.Selection([
         ('0_plan', 'Khởi tạo'),
