@@ -79,8 +79,7 @@
             <xpath expr="//field[@name='work_email']" position="after">
                 <field name="salary_last_month"/>
                 <field name="contract_date"/>
-                <field name="job_id"/>
-                <field name="rank_id"/>
+                
             </xpath>
             <xpath expr="//page[last()]" position="after">
                 <page string="Thông tin thu nhập" name="payroll_ids">
@@ -103,8 +102,10 @@
             <xpath expr="//field[@name='parent_id']" position="after">
                 <!--                 <field name="equipment_id"/>-->
                 <field name="coefficients_salary"/>
-                <field name="level"/>
-                <field name="position"/>
+                <!-- <field name="level"/>
+                <field name="position"/> -->
+                <field name="job_id"/>
+                <field name="rank_id"/>
                 <field name="other_info"/>
             </xpath>
         </field>
