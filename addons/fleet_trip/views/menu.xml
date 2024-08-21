@@ -15,6 +15,11 @@
                           parent="fleet_root_menu"
                           sequence="50"/>
 
+                <menuitem id="fleet_rank_root_menu"
+                          name="Cấp bậc, chức vụ"
+                          parent="fleet_root_menu"
+                          sequence="60"/>
+
         <menuitem name="Contacts"
                 id="contacts.menu_contacts"
                 sequence="20"
