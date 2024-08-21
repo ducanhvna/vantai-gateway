@@ -21,7 +21,7 @@
 
         <menuitem id="fleet_rank_menu"
                   name="Danh sách cấp bậc"
-                  parent="fleet_rank_root_menu"
+                  parent=""
                   action="hr_rank_tree_act_window"
                   sequence="80"/>
 
@@ -44,8 +44,8 @@
 
         <menuitem id="fleet_job_menu"
                   name="Danh sách chức vụ"
-                  parent="fleet_job_root_menu"
+                  parent="fleet_rank_root_menu"
                   action="hr_job_tree_act_window"
-                  sequence="80"/>
+                  sequence="10"/>
     </data>
 </odoo>
