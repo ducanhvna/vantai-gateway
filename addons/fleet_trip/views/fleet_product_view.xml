@@ -24,27 +24,5 @@
                   action="fleet_product_tree_act_window"
                   sequence="70"/>
 
-        <record id="hr_rank_tree_view2" model="ir.ui.view">
-            <field name="name">hr.rank.tree.view</field>
-            <field name="model">hr.rank</field>
-            <field name="arch" type="xml">
-                <tree editable="top">
-                    <field name="name"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="hr_rank_tree_act_window2" model="ir.actions.act_window">
-            <field name="name">Danh sách cấp bậc</field>
-            <field name="res_model">hr.rank</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="view_mode">tree</field>
-        </record>
-
-        <menuitem id="fleet_rank_menu2"
-                  name="Danh sách cấp bậc"
-                  parent="fleet_config_menu"
-                  action="hr_rank_tree_act_window2"/>
-                  <!-- sequence="90" -->
     </data>
 </odoo>
