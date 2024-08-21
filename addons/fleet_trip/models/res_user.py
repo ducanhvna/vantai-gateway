@@ -53,7 +53,13 @@ class EmployeeUsers(models.Model):
                                     refresh_token=refresh_token, refresh_expires_in=refresh_expires_in)
         return access_token
 
+class HrDepartment(models.Model):
+    _inherit = 'hr.department'
+    _order = 'id desc'
 
+    
+    acronym = fields.Char(string='Tên viết tắt')
+    
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
     _order = 'id desc'

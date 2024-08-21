@@ -421,6 +421,8 @@ class FleetTrip(models.Model):
         # Access the worksheets
         ws1 = workbook['Sheet1']
         # ws1.cell(row=1, column=1).value = self.license_plate
+        ws1.cell(row=4, column=1).value = f"Số: {self.fleet_code}/DTPT-P1"
+        ws1.merge_cells(start_row=4, start_column=1, end_row=4, end_column=4) 
         ws1.cell(row=10, column=7).value = (
             f"Tên phương tiện: {self.category_plan_name}"
             if self.category_plan_name
