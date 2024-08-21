@@ -18,7 +18,7 @@
             <field name="view_mode">tree</field>
         </record>
 
-        <menuitem id="fleet_product_menu"
+        <menuitem id="fleet_rank_menu"
                   name="Danh sách cấp bậc"
                   parent="fleet_config_menu"
                   action="hr_rank_tree_act_window"
