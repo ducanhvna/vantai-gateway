@@ -423,7 +423,7 @@ class FleetTrip(models.Model):
         # Access the worksheets
         ws1 = workbook['Sheet1']
         # ws1.cell(row=1, column=1).value = self.license_plate
-        ws1.cell(row=4, column=1).value = f"Số: {self.fleet_code}/DTPT-P1"
+        ws1.cell(row=4, column=1).value = f"Số: {self.fleet_code}/{self.acronym_department_plan}"
         ws1.merge_cells(start_row=4, start_column=1, end_row=4, end_column=4) 
         ws1.cell(row=10, column=7).value = (
             f"Tên phương tiện: {self.category_plan_name}"
@@ -437,7 +437,16 @@ class FleetTrip(models.Model):
             else '-'
         )
         ws1.merge_cells(start_row=9, start_column=6, end_row=9, end_column=10) 
-
+        ws1.cell(row=10, column=1).value = f"Số chuyến (lượt): {self.number_trips}"
+        ws1.cell(row=11, column=1).value = (
+            f"Nội dung nhiệm vụ: {self.description}"
+            if self.description
+            else "Nội dung nhiệm vụ: ………………………………………...………"
+        )
+        ws1.merge_cells(start_row=11, start_column=1, end_row=11, end_column=13) 
+        ws1.cell(row=12, column=3).value = f"{self.time_day_compute}"
+        ws1.cell(row=14, column=1).value = f"Số người:{self.number_people} người."
+        ws1.cell(row=14, column=7).value = f"Số tấn HH:{self.product_weigh} tấn."
         # ws2 = workbook['Sheet2']
 
         # # Example data fetching
