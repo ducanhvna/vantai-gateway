@@ -44,7 +44,7 @@
         <menuitem id="fleet_rank_menu2"
                   name="Danh sách cấp bậc"
                   parent="fleet_config_menu"
-                  action="hr_rank_tree_act_window2"
-                  sequence="90"/>
+                  action="hr_rank_tree_act_window2"/>
+                  <!-- sequence="90" -->
     </data>
 </odoo>
