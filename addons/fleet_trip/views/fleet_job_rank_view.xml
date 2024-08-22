@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="hr_rank_tree_view" model="ir.ui.view">
+        <record id="hr_rank_form_view" model="ir.ui.view">
             <field name="name">fleet.trip.form.view</field>
             <field name="model">hr.rank</field>
             <field name="arch" type="xml">
@@ -22,7 +22,7 @@
             <field name="name">Danh sách cấp bậc</field>
             <field name="res_model">hr.rank</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="view_mode">tree</field>
+            <field name="view_mode">tree,form</field>
         </record>
 
         <menuitem id="fleet_rank_menu"
@@ -45,7 +45,7 @@
             <field name="name">Danh sách cấp bậc</field>
             <field name="res_model">hr.job</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="view_mode">tree</field>
+            <field name="view_mode">tree,form</field>
         </record>
 
         <menuitem id="fleet_job_menu"
