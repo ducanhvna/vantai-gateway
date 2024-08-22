@@ -30,8 +30,9 @@
                   parent="fleet_rank_root_menu"
                   action="hr_rank_tree_act_window"
                   sequence="80"/>
-
-         <record id="hr_job_tree_fleet_view" model="ir.ui.view">
+     </data>
+     <data>
+         <record id="hr_job_form_view" model="ir.ui.view">
             <field name="name">fleet.trip.form.view</field>
             <field name="model">hr.job</field>
             <field name="arch" type="xml">
