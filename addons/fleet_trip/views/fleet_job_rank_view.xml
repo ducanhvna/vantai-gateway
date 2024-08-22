@@ -12,7 +12,6 @@
                         <group>
                             <field name="name"/>
                             <field name="weight"/>
-                            <field name="standard_plan"/>
                         </group>
                     </sheet>
                 </form>
@@ -43,7 +42,6 @@
                         <group>
                             <field name="name"/>
                             <field name="weight"/>
-                            <field name="standard_plan"/>
                         </group>
                     </sheet>
                 </form>
