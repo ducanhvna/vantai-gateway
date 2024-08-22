@@ -12,6 +12,13 @@
                         <group>
                             <field name="name"/>
                             <field name="weight"/>
+                            <field name="standard_plan" string="Tiêu chuẩn xe" type="xml">
+                                <tree>
+                                    <field name="name"/>
+                                    <!-- <field name="city"/>
+                                    <field name="state"/> -->
+                                </tree>
+                            </field>
                         </group>
                     </sheet>
                 </form>
@@ -43,6 +50,13 @@
                         <group>
                             <field name="name"/>
                             <field name="weight"/>
+                            <field name="standard_plan" string="Tiêu chuẩn xe" type="xml">
+                                <tree>
+                                    <field name="name"/>
+                                    <!-- <field name="city"/>
+                                    <field name="state"/> -->
+                                </tree>
+                            </field>
                         </group>
                     </sheet>
                 </form>
