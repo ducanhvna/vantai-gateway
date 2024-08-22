@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="hr_rank_tree_view" model="ir.ui.view">
+        <!-- <record id="hr_rank_tree_view" model="ir.ui.view">
             <field name="name">hr.rank.tree.view</field>
             <field name="model">hr.rank</field>
             <field name="arch" type="xml">
@@ -14,7 +14,7 @@
                     </sheet>
                 </form>
             </field>
-        </record>
+        </record> -->
 
         <record id="hr_rank_tree_act_window" model="ir.actions.act_window">
             <field name="name">Danh sách cấp bậc</field>
