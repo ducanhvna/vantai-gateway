@@ -5,10 +5,14 @@
             <field name="name">hr.rank.tree.view</field>
             <field name="model">hr.rank</field>
             <field name="arch" type="xml">
-                <tree editable="top">
-                    <field name="name"/>
-                    <field name="weight"/>
-                </tree>
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="weight"/>
+                        </group>
+                    </sheet>
+                </form>
             </field>
         </record>
 
