@@ -12,6 +12,7 @@
                         <group>
                             <field name="name"/>
                             <field name="weight"/>
+                            <field name="standard_plan"/>
                         </group>
                     </sheet>
                 </form>
@@ -32,17 +33,24 @@
                   sequence="80"/>
 
          <record id="hr_job_tree_fleet_view" model="ir.ui.view">
-            <field name="name">fleet.hr.job.tree.view</field>
+            <field name="name">fleet.trip.form.view</field>
             <field name="model">hr.job</field>
             <field name="arch" type="xml">
-                <tree editable="top">
-                    <field name="name"/>
-                    <field name="weight"/>
-                </tree>
+                <form>
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="weight"/>
+                            <field name="standard_plan"/>
+                        </group>
+                    </sheet>
+                </form>
             </field>
         </record>
         <record id="hr_job_tree_act_window" model="ir.actions.act_window">
-            <field name="name">Danh sách cấp bậc</field>
+            <field name="name">Danh sách Chức vụ</field>
             <field name="res_model">hr.job</field>
             <field name="type">ir.actions.act_window</field>
             <field name="view_mode">tree,form</field>
