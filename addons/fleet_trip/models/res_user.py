@@ -63,6 +63,7 @@ class HrDepartment(models.Model):
 class HrJob(models.Model):
     _inherit = "hr.job"
     weight = fields.Float(string='Hệ số chức vụ')
+    standard_plan = fields.Many2many('maintenance.equipment.category', string='tiêu chuẩn đi xe')
     
 class HrRank(models.Model):
     _name = "hr.rank"
@@ -74,6 +75,7 @@ class HrRank(models.Model):
     name = fields.Char(string='Job Position', required=True, index='trigram', translate=True)
     sequence = fields.Integer(default=10)
     weight = fields.Float(string='Hệ số cấp bậc')
+    standard_plan = fields.Many2many('maintenance.equipment.category', string='tiêu chuẩn đi xe')
     
 
 class HrEmployee(models.Model):
