@@ -106,6 +106,7 @@
                 <field name="position"/> -->
                 <field name="job_id"/>
                 <field name="rank_id"/>
+                <field name="sign_image"/>
                 <field name="other_info"/>
             </xpath>
         </field>
