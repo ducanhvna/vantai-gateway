@@ -468,12 +468,12 @@ class FleetTrip(models.Model):
                 # Calculate the size of the cells B21 to D25
                 cell_width = ws1.column_dimensions['B'].width
                 cell_height = ws1.row_dimensions[21].height
-                total_width = cell_width * 3  # B, C, D
-                total_height = cell_height * 4  # 21, 22, 23, 24
+                # total_width = cell_width * 3  # B, C, D
+                # total_height = cell_height * 4  # 21, 22, 23, 24
                 
                 # Convert the size to pixels
-                img.width = total_width
-                img.height = total_height
+                img.width = 125
+                img.height = 105
                 
                 ws1.add_image(img, 'B21')
                 # ws1.add_image(image_data, 'B21')  # Insert the image at cell B2
