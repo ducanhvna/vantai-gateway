@@ -96,7 +96,8 @@ class HrEmployee(models.Model):
     contract_date = fields.Date(string='Ngày kí hợp đồng')
     payroll_ids = fields.One2many('hr.employee.payroll', 'employee_id', string='Thông tin thu nhập')
     payroll_total_amount = fields.Float(string='Tổng thu nhập', compute="_compute_payroll_total_amount")
-
+    sign_image = fields.Binary(string='Ảnh Chữ ký')
+    
     @api.depends("payroll_ids")
     def _compute_payroll_total_amount(self):
         for rec in self:
