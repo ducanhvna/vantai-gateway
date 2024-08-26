@@ -472,8 +472,8 @@ class FleetTrip(models.Model):
                 total_height = cell_height * 4  # 21, 22, 23, 24
                 
                 # Convert the size to pixels
-                img.width = 100
-                img.height = 100
+                img.width = total_width
+                img.height = total_height
                 
                 ws1.add_image(img, 'B21')
                 # ws1.add_image(image_data, 'B21')  # Insert the image at cell B2
