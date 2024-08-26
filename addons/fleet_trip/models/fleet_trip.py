@@ -3,9 +3,11 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 import base64
+from openpyxl.drawing.image import Image
 import requests
 import openpyxl
 from io import BytesIO
+from openpyxl.utils import units
 from odoo.modules.module import get_module_resource
 
 class FleetTrip(models.Model):
@@ -449,6 +451,36 @@ class FleetTrip(models.Model):
         ws1.cell(row=12, column=3).value = f"{self.time_day_compute}"
         ws1.cell(row=14, column=1).value = f"Số người:{self.number_people} người."
         ws1.cell(row=14, column=7).value = f"Số tấn HH:{self.product_weigh} tấn."
+        
+       
+
+        # Assuming you have a record (template) with an image field (image_1920)
+        if self.employee_plan_id:
+            if self.employee_plan_id.sign_image:
+                image_data = base64.b64decode(self.employee_plan_id.sign_image)
+                with open(f'signature{self.employee_plan_id.id}.png', 'wb') as f:
+                    f.write(image_data)
+                    
+                img = Image(f'signature{self.employee_plan_id.id}.png')
+                # Insert the image at a specific cell (e.g., B21)
+                
+                # ws1.add_image(img, 'B21')
+                # Calculate the size of the cells B21 to D25
+                cell_width = ws1.column_dimensions['B'].width
+                cell_height = ws1.row_dimensions[21].height
+                total_width = cell_width * 3  # B, C, D
+                total_height = cell_height * 4  # 21, 22, 23, 24
+                
+                # Convert the size to pixels
+                img.width = 100
+                img.height = 100
+                
+                ws1.add_image(img, 'B21')
+                # ws1.add_image(image_data, 'B21')  # Insert the image at cell B2
+                # ws1['B21'].value = image_data
+                # img = Image(image_data)
+                # img.anchor(ws1['B21'])  # Use the cell reference directly
+                
         # ws2 = workbook['Sheet2']
 
         # # Example data fetching
