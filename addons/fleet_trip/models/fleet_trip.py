@@ -129,7 +129,12 @@ class FleetTrip(models.Model):
                                      domain=[('res_model', '=', 'fleet.trip')],
                                      string='Attachments')
     description = fields.Text(string='Nhiệm vụ')
-
+    
+    @api.model
+    def create(self, vals):
+        max_value = self.search(['department_id','=', vals['department_id']], order='fleet_command_code desc', limit=1).your_field
+        vals['fleet_command_code'] = max_value + 1 if max_value else 1
+        return super(FleetTrip, self).create(vals)
     # @api.model
     # def create(self, vals):
 
