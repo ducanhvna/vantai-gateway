@@ -132,7 +132,7 @@ class FleetTrip(models.Model):
     
     @api.model
     def create(self, vals):
-        max_value = self.search([('department_id','=', vals['department_id'])], order='fleet_command_code desc', limit=1).your_field
+        max_value = self.search([('department_id','=', vals['department_id'])], order='fleet_command_code desc', limit=1).fleet_command_code
         vals['fleet_command_code'] = max_value + 1 if max_value else 1
         return super(FleetTrip, self).create(vals)
     # @api.model
