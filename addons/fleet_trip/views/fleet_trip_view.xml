@@ -117,6 +117,9 @@
                                 <field name="ward_id" placeholder="Xã/Phường" class="o_address_city" readonly="True" force_save="1" />
                                 <field name="address_start" placeholder="Địa chỉ" readonly="True" force_save="1" />
                             
+                            
+                            </div>
+                            </div>
                             <field name="location_dest_id" string="Nơi đến" />
                             <!-- <label for="ward_dest_id" string="Nơi đến" /> -->
                             <div attrs="{'invisible': [('location_dest_id','!=',False)]}">
@@ -126,8 +129,6 @@
                                     <field name="ward_dest_id" placeholder="Xã/Phường" class="o_address_city" readonly="True" force_save="1" />
                                     <field name="address_end" placeholder="Địa chỉ" readonly="True" force_save="1" />
                                 </div>
-                            </div>
-                            </div>
                             </div>
                         </group>
                         <group>
