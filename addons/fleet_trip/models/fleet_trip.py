@@ -477,9 +477,18 @@ class FleetTrip(models.Model):
             ws1.cell(row=13, column=10).value = f" {self.end_date.day}."
             ws1.cell(row=13, column=12).value = f" {self.end_date.month}."
             
-           
-
-        # Assuming you have a record (template) with an image field (image_1920)
+        if (self.location_id):
+            ws1.cell(row=16, column=1).value = f"Địa điểm đón xe: {self.location_id.name} \
+                - {self.location_id.ward_id} \
+                - {self.location_id.district_id} \
+                - {self.location_id.state_id}"       
+            ws1.merge_cells(start_row=16, start_column=1, end_row=16, end_column=13)     
+        if (self.location_dest_id):
+            ws1.cell(row=17, column=1).value = f"Nơi đến:  {self.location_dest_id.name} \
+                - {self.location_dest_id.ward_id} \
+                - {self.location_dest_id.district_id} \
+                - {self.location_dest_id.state_id}"       
+            ws1.merge_cells(start_row=17, start_column=1, end_row=17, end_column=13)     
         if self.employee_plan_id:
             if self.employee_plan_id.sign_image:
                 image_data = base64.b64decode(self.employee_plan_id.sign_image)
