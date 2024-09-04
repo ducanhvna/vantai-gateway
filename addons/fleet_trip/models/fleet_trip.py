@@ -472,7 +472,7 @@ class FleetTrip(models.Model):
         if (self.end_date):
             ws1.cell(row=13, column=5).value = f"Đến: {self.end_date.hour}."
             ws1.merge_cells(start_row=13, start_column=5, end_row=13, end_column=6) 
-            if self.start_date.minute > 0:
+            if self.end_date.minute > 0:
                 ws1.cell(row=13, column=7).value = f" {self.end_date.minute}."
             ws1.cell(row=13, column=10).value = f" {self.end_date.day}."
             ws1.cell(row=13, column=12).value = f" {self.end_date.month}."
