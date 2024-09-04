@@ -479,15 +479,15 @@ class FleetTrip(models.Model):
             
         if (self.location_id):
             ws1.cell(row=16, column=1).value = f"Địa điểm đón xe: {self.location_id.name} \
-                - {self.location_id.ward_id} \
-                - {self.location_id.district_id} \
-                - {self.location_id.state_id}"       
+                - {self.location_id.ward_id.name} \
+                - {self.location_id.district_id.name} \
+                - {self.location_id.state_id.name}"       
             ws1.merge_cells(start_row=16, start_column=1, end_row=16, end_column=13)     
         if (self.location_dest_id):
             ws1.cell(row=17, column=1).value = f"Nơi đến:  {self.location_dest_id.name} \
-                - {self.location_dest_id.ward_id} \
-                - {self.location_dest_id.district_id} \
-                - {self.location_dest_id.state_id}"       
+                - {self.location_dest_id.ward_id.name} \
+                - {self.location_dest_id.district_id.name} \
+                - {self.location_dest_id.state_id.name}"       
             ws1.merge_cells(start_row=17, start_column=1, end_row=17, end_column=13)     
         if self.employee_plan_id:
             if self.employee_plan_id.sign_image:
