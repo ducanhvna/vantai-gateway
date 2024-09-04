@@ -73,7 +73,7 @@ class FleetTrip(models.Model):
     odometer_dest = fields.Integer('Số CTM điểm đích')
     odometer_end = fields.Integer('Số KM hành trình', compute='_compute_odometer_end', store=True)
     distance_plan = fields.Integer('Dự kiến tổng số km đi, về')
-    employee_plan_id = fields.Many2one('hr.employee', string='Người dự trù')
+    employee_plan_id = fields.Many2one('hr.employee', string='Người dự trù', default=lambda self: self._default_employee())
     employee_lead_id = fields.Many2one('hr.employee', string='Chỉ huy xe',
                                         domain="[('id', 'in', employee_ids)]")
     level = fields.Char( string='Cấp bậc')
@@ -130,6 +130,9 @@ class FleetTrip(models.Model):
                                      string='Attachments')
     description = fields.Text(string='Nhiệm vụ')
     
+    def _default_employee(self):
+        return self.env.user.employee_id
+
     @api.model
     def create(self, vals):
         max_item = self.search([('department_plan_id','=', vals['department_plan_id'])], order='fleet_command_code desc', limit=1)
