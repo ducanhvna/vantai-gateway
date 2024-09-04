@@ -29,7 +29,7 @@ class FleetTrip(models.Model):
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.company)
     department_id = fields.Many2one('hr.department', string="phòng ban")
     acronym_department = fields.Char(related='department_id.acronym',string='Tên viết tắt phòng ban')
-    department_plan_id = fields.Many2one('hr.department', string="Đơn vị dự trù phương tiện")
+    department_plan_id = fields.Many2one('hr.department', string="Đơn vị dự trù phương tiện",  default=lambda self: self._default_department())
     acronym_department_plan = fields.Char(related='department_plan_id.acronym',string='Tên viết tắt phòng ban dự trù')
     department_belong_id = fields.Many2one(related='equipment_id.department_belong_id', string="Thuộc đơn vị")
     currency_id = fields.Many2one('res.currency', related='company_id.currency_id')
@@ -129,9 +129,13 @@ class FleetTrip(models.Model):
                                      domain=[('res_model', '=', 'fleet.trip')],
                                      string='Attachments')
     description = fields.Text(string='Nhiệm vụ')
-    
+
     def _default_employee(self):
         return self.env.user.employee_id
+
+    def _default_department(self):
+        employee = self.env.user.employee_id
+        return employee.department_id if employee else False
 
     @api.model
     def create(self, vals):
