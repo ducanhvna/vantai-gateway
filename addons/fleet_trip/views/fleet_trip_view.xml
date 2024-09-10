@@ -3,6 +3,8 @@
     <record id="fleet_trip_tree_view" model="ir.ui.view">
         <field name="name">fleet.trip.tree.view</field>
         <field name="model">fleet.trip</field>
+        <field name="domain">['|',('state', '=', '0_plan'),('state', '=', '1_draft')]</field>
+
         <field name="arch" type="xml">
             <tree>
                 <field name="create_uid" />
