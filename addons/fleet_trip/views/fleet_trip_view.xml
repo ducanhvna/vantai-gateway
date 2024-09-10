@@ -39,7 +39,7 @@
                 <field name="is_approved" invisible="1" />
             </tree>
         </field>
-        <field name="domain">['|', ('state', '=', '0_plan'), ('state', '=', '1_draft')]
+        <field name="domain">['|', ('state', '=', '0_plan'), ('state', '=', '1_draft')] </field>
     </record>
 
     <record id="fleet_trip_form_view" model="ir.ui.view">
