@@ -70,7 +70,7 @@
                             <!-- <field name="quota"/> -->
                             <field name="department_plan_id" />
                             <field name="number_trips" />
-                            <field name="fuel_id"/>
+                            <!-- <field name="fuel_id"/> -->
                             <!-- <field name="fleet_product_id" /> -->
                             <field name="category_plan" />
                             <field name="description" string="Nội dung nhiệm vụ" placeholder="Nhiệm vụ hành trình" />
