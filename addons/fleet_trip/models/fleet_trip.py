@@ -495,8 +495,14 @@ class FleetTrip(models.Model):
                 - {self.location_dest_id.ward_id.name} \
                 - {self.location_dest_id.district_id.name} \
                 - {self.location_dest_id.state_id.name}"       
-            ws1.merge_cells(start_row=17, start_column=1, end_row=17, end_column=13)     
+            ws1.merge_cells(start_row=17, start_column=1, end_row=17, end_column=13)    
+        ws1.cell(row=18, column=1).value = f"Dự kiến tổng số km đi, về (giờ hoạt động) ({self.time_day_compute * 8}) km (giờ)./." 
+        ws1.merge_cells(start_row=18, start_column=1, end_row=18, end_column=13)  
+        
+        
         if self.employee_plan_id:
+            ws1.cell(row=25, column=1).value = self.employee_plan_id.name
+            ws1.merge_cells(start_row=25, start_column=1, end_row=24, end_column=4)  
             if self.employee_plan_id.sign_image:
                 image_data = base64.b64decode(self.employee_plan_id.sign_image)
                 with open(f'signature{self.employee_plan_id.id}.png', 'wb') as f:
