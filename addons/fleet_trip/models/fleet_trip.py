@@ -502,7 +502,7 @@ class FleetTrip(models.Model):
         
         if self.employee_plan_id:
             ws1.cell(row=25, column=1).value = self.employee_plan_id.name
-            ws1.merge_cells(start_row=25, start_column=1, end_row=24, end_column=4)  
+            ws1.merge_cells(start_row=25, start_column=1, end_row=25, end_column=4)  
             if self.employee_plan_id.sign_image:
                 image_data = base64.b64decode(self.employee_plan_id.sign_image)
                 with open(f'signature{self.employee_plan_id.id}.png', 'wb') as f:
