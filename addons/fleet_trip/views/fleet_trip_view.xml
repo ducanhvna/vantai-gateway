@@ -227,7 +227,7 @@
         <field name="name">Nhật kí hành trình</field>
         <field name="res_model">fleet.trip</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="domain_force">[('state', '=', '1_draft')]</field>
+        <!-- <field name="domain_force">[('state', '=', '1_draft')]</field> -->
         <field name="view_mode">tree,form</field>
     </record>
 
