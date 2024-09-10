@@ -4,7 +4,13 @@
         <field name="name">fleet.trip.tree.view</field>
         <field name="model">fleet.trip</field>
         <field name="type">tree</field>
-        <field name="domain">[('state', 'in', ['0_plan', '1_draft'])]</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="state"/>
+                <!-- Add other fields you need to display in the tree view -->
+            </tree>
+        </field>
         <field name="arch" type="xml">
             <tree>
                 <field name="create_uid" />
