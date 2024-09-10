@@ -4,7 +4,7 @@
         <field name="name">fleet.trip.tree.view</field>
         <field name="model">fleet.trip</field>
         <field name="type">tree</field>
-        <field name="domain">['|', ('state', '=', 'state1'), ('state', '=', 'state2')]</field>
+        <field name="domain_force">[('state', 'in', ['state1', 'state2'])]</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="create_uid" />
