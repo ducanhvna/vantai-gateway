@@ -470,14 +470,14 @@ class FleetTrip(models.Model):
         
         
         if (self.start_date):
-            ws1.cell(row=12, column=5).value = f"Từ : {self.start_date.hour}."
+            ws1.cell(row=12, column=5).value = f"Từ : {self.start_date.hour} giờ "
             ws1.merge_cells(start_row=12, start_column=5, end_row=12, end_column=6) 
             if self.start_date.minute > 0:
                 ws1.cell(row=12, column=7).value = f" {self.start_date.minute}."
             ws1.cell(row=12, column=10).value = f" {self.start_date.day}."
             ws1.cell(row=12, column=12).value = f" {self.start_date.month}."
         if (self.end_date):
-            ws1.cell(row=13, column=5).value = f"Đến: {self.end_date.hour}."
+            ws1.cell(row=13, column=5).value = f"Đến: {self.end_date.hour} giờ"
             ws1.merge_cells(start_row=13, start_column=5, end_row=13, end_column=6) 
             if self.end_date.minute > 0:
                 ws1.cell(row=13, column=7).value = f" {self.end_date.minute}."
