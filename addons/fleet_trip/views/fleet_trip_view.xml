@@ -224,7 +224,7 @@
     </record>
 
     <record id="fleet_trip_action" model="ir.actions.act_window">
-        <field name="name">Nhật kí hành trình</field>
+        <field name="name">Dự trù phương tiện</field>
         <field name="res_model">fleet.trip</field>
         <field name="type">ir.actions.act_window</field>
         <!-- <field name="domain_force">[('state', '=', '1_draft')]</field> -->
@@ -232,5 +232,16 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="fleet_trip_menu" name="Nhật kí hành trình" parent="fleet_root_menu" action="fleet_trip_action" sequence="5" />
+    <menuitem id="fleet_trip_menu" name="Dự trù xe" parent="fleet_root_menu" action="fleet_trip_action" sequence="5" />
+
+    <record id="fleet_trip_command_action" model="ir.actions.act_window">
+        <field name="name">Lệnh điều phương tiện</field>
+        <field name="res_model">fleet.trip</field>
+        <field name="type">ir.actions.act_window</field>
+        <!-- <field name="domain_force">[('state', '=', '1_draft')]</field> -->
+        <field name="domain">[('state', '!=', '1_draft'), ('state', '=', '0_plan')]</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="fleet_trip_menu" name="Lệnh điều phương tiện" parent="fleet_root_menu" action="fleet_trip_command_action" sequence="5" />
 </odoo>
