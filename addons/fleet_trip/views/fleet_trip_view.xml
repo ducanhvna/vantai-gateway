@@ -228,7 +228,7 @@
         <field name="res_model">fleet.trip</field>
         <field name="type">ir.actions.act_window</field>
         <!-- <field name="domain_force">[('state', '=', '1_draft')]</field> -->
-        <field name="domain">[('state', '=', '1_draft')]</field>
+        <field name="domain">['|', ('state', '=', '1_draft'), ('state', '=', '0_plan')]</field>
         <field name="view_mode">tree,form</field>
     </record>
 
