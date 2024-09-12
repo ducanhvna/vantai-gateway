@@ -530,13 +530,13 @@ class FleetTrip(models.Model):
                 
         ws1.merge_cells(start_row=25, start_column=1, end_row=25, end_column=4) 
         try:
-            ws1.cell(row=25, column=7).value = f'{self.department_plan_id.manager_id.rank_id.name if self.department_plan_id.manager_id.rank_id else ''} {self.department_plan_id.manager_id.name}'
+            ws1.cell(row=25, column=7).value = self.department_plan_id.manager_id.name
         except:
             ws1.cell(row=25, column=7).value = ''   
         ws1.merge_cells(start_row=25, start_column=7, end_row=25, end_column=13)  
         
         try:
-            ws1.cell(row=32, column=4).value =f'{self.department_id.manager_id.rank_id.name if self.department_id.manager_id.rank_id else ''} {self.department_id.manager_id.name}'
+            ws1.cell(row=32, column=4).value = self.department_id.manager_id.name
         except:
             ws1.cell(row=32, column=4).value = ''   
         ws1.merge_cells(start_row=32, start_column=4, end_row=32, end_column=11)  
