@@ -485,7 +485,7 @@ class FleetTrip(models.Model):
             ws1.cell(row=13, column=12).value = f" {self.end_date.month}."
         # employee_lead_id
         if(self.employee_lead_id):
-            ws1.cell(row=15, column=1).value = f"Chỉ huy xe: Họ tên:{self.employee_lead_id.name}" +\
+            ws1.cell(row=15, column=1).value = f"Chỉ huy xe: Họ tên:{self.employee_lead_id.name} " +\
                 f"C.bậc: {self.rank_id.name} C.vụ: {self.job_id.name}"
             ws1.merge_cells(start_row=15, start_column=1, end_row=15, end_column=13)       
         if (self.location_id):
