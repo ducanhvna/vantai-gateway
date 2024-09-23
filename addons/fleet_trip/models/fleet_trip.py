@@ -63,7 +63,7 @@ class FleetTrip(models.Model):
     # attendances = fields.One2many('hr.employee', 'id',
     #                                 #  domain=[('res_model', '=', 'fleet.trip')],
     #                                  string='Người tham gia')
-    
+
     employee_ids = fields.Many2many('hr.employee',
                                      string='Người tham gia')
     number_people = fields.Integer('Số người')
@@ -233,24 +233,24 @@ class FleetTrip(models.Model):
     def _compute_fee_total(self):
         for rec in self:
             rec.fee_total = rec.eating_fee + rec.law_money + rec.road_tiket_fee + rec.incurred_fee + rec.incurred_fee_2
-            
+
     def custom_round_half_day(self, start_date, end_date):
         rounded_days = 0
         if (start_date != False) and (end_date!=False):
             delta = end_date - start_date
             total_days = (delta.total_seconds() / (24.0 * 3600)) % 10
             floor_days = delta.total_seconds() // (24 * 3600)
-            
+
             rounded_days = floor_days if total_days == 0 else floor_days + 0.5
             rounded_days = rounded_days + 0.5 if total_days > 0.5 else rounded_days
-        
+
         return rounded_days
-    
+
     @api.depends("start_date", "end_date")
     def _compute_timeday(self):
         for rec in self:
             rec.time_day_compute = self.custom_round_half_day(self.start_date, self.end_date)
-            
+
     def do_plan_trip(self):
         # self.start_date = fields.Datetime.now()
         self.state = '1_draft'
@@ -376,41 +376,38 @@ class FleetTrip(models.Model):
 
         # Access the worksheets
         ws1 = workbook['Lệnh']
-        # ws1.cell(row=1, column=1).value = self.license_plate
-        # ws1.cell(row=10, column=7).value = (
-        #     f"Tên phương tiện: {self.category_plan_name}"
-        #     if self.category_plan_name
-        #     else "Tên phương tiện: ……...…………."
-        # )
-        # ws1.merge_cells(start_row=10, start_column=7, end_row=10, end_column=13) 
-        # ws1.cell(row=9, column=6).value = (
-        #     f"{self.department_plan_id.name}."
-        #     if self.department_plan_id
-        #     else '-'
-        # )
-        # ws1.merge_cells(start_row=9, start_column=6, end_row=9, end_column=10) 
+        ws1.cell(row=8, column=10).value = f"{self.fleet_code}"
+        ws1.cell(row=8, column=13).value = f"{self.acronym_department_plan}"
+        ws1.merge_cells(start_row=8, start_column=13, end_row=8, end_column=16)
 
-        # ws2 = workbook['Sheet2']
+        ws1.cell(row=9, column=5).value = (f"{self.category_plan_name}") 
+        ws1.merge_cells(start_row=9, start_column=5, end_row=9, end_column=9)
 
-        # # Example data fetching
-        # records = self.env['fleet.trip'].search([])
+        # nhan xe
 
-        # # Populate the first worksheet
-        # row = 2  # Assuming the first row is for headers
-        # for record in records:
-        #     ws1.cell(row=row, column=1).value = record.field1
-        #     ws1.cell(row=row, column=2).value = record.field2
-        #     row += 1
-
-        # # Populate the second worksheet
-        # row = 2
-        # for record in records:
-        #     ws2.cell(row=row, column=1).value = record.field3
-        #     ws2.cell(row=row, column=2).value = record.field4
-        #     row += 1
-
-        # Save the workbook to a BytesIO object
-        # file_data = BytesIO()
+        ws1.cell(row=16, column=4).value = f"{self.time_day_compute}" if (self.start_date) else ''
+        ws1.cell(row=16, column=8).value = f"{self.start_date.hour}" if (self.start_date) else ''
+        if (self.start_date):
+            if self.start_date.minute > 0:
+                ws1.cell(row=16, column=10).value = f"{self.start_date.minute}"
+        ws1.cell(row=16, column=12).value = (
+            f" {self.start_date.day}." if (self.start_date) else ""
+        )
+        ws1.cell(row=16, column=14).value = (
+            f" {self.start_date.month}." if (self.start_date) else ""
+        )
+        
+        ws1.cell(row=17, column=8).value = f"{self.end_date.hour}" if (self.end_date) else ''
+        if (self.end_date):
+            if self.end_date.minute > 0:
+                ws1.cell(row=17, column=10).value = f"{self.end_date.minute}"
+        ws1.cell(row=17, column=12).value = (
+            f" {self.end_date.day}." if (self.end_date) else ""
+        )
+        ws1.cell(row=17, column=14).value = (
+            f" {self.end_date.month}." if (self.end_date) else ""
+        )
+        
         file_path2 = f'file_command_path2result{self.id}.xlsx'
         workbook.save(file_path2)
 
@@ -434,7 +431,7 @@ class FleetTrip(models.Model):
             # % attachment.id,
             'target': 'new',
         }
-        
+
     def action_download_template(self):
         # Load the template
         file_path = get_module_resource('fleet_trip', 'static/src/template', 'MY_TEMPLATE.xlsx')
@@ -467,8 +464,7 @@ class FleetTrip(models.Model):
         ws1.cell(row=12, column=3).value = f"{self.time_day_compute}"
         ws1.cell(row=14, column=1).value = f"Số người:{self.number_people} người."
         ws1.cell(row=14, column=7).value = f"Số tấn HH:{self.product_weigh} tấn."
-        
-        
+
         if (self.start_date):
             ws1.cell(row=12, column=5).value = f"Từ : {self.start_date.hour} giờ "
             ws1.merge_cells(start_row=12, start_column=5, end_row=12, end_column=6) 
@@ -502,50 +498,48 @@ class FleetTrip(models.Model):
             ws1.merge_cells(start_row=17, start_column=1, end_row=17, end_column=13)    
         ws1.cell(row=18, column=1).value = f"Dự kiến tổng số km đi, về (giờ hoạt động) ({self.time_day_compute * 8}) km (giờ)./." 
         ws1.merge_cells(start_row=18, start_column=1, end_row=18, end_column=13)  
-        
-        
-        
+
         if self.employee_plan_id:
             ws1.cell(row=25, column=1).value = self.employee_plan_id.name
-            
+
             if self.employee_plan_id.sign_image:
                 image_data = base64.b64decode(self.employee_plan_id.sign_image)
                 with open(f'signature{self.employee_plan_id.id}.png', 'wb') as f:
                     f.write(image_data)
-                    
+
                 img = Image(f'signature{self.employee_plan_id.id}.png')
                 # Insert the image at a specific cell (e.g., B21)
-                
+
                 # ws1.add_image(img, 'B21')
                 # Calculate the size of the cells B21 to D25
                 cell_width = ws1.column_dimensions['B'].width
                 cell_height = ws1.row_dimensions[21].height
                 # total_width = cell_width * 3  # B, C, D
                 # total_height = cell_height * 4  # 21, 22, 23, 24
-                
+
                 # Convert the size to pixels
                 img.width = 125
                 img.height = 105
-                
+
                 ws1.add_image(img, 'B21')
                 # ws1.add_image(image_data, 'B21')  # Insert the image at cell B2
                 # ws1['B21'].value = image_data
                 # img = Image(image_data)
                 # img.anchor(ws1['B21'])  # Use the cell reference directly
-                
+
         ws1.merge_cells(start_row=25, start_column=1, end_row=25, end_column=4) 
         try:
             ws1.cell(row=25, column=6).value = self.department_plan_id.manager_id.name
         except:
             ws1.cell(row=25, column=6).value = ''   
         ws1.merge_cells(start_row=25, start_column=6, end_row=25, end_column=13)  
-        
+
         try:
             ws1.cell(row=32, column=3).value = self.department_id.manager_id.name
         except:
             ws1.cell(row=32, column=3).value = ''   
         ws1.merge_cells(start_row=32, start_column=3, end_row=32, end_column=11)  
-        
+
         # ws2 = workbook['Sheet2']
 
         # # Example data fetching
