@@ -65,7 +65,7 @@
                         <group>
                             <field name="schedule_date"/>
                         </group>
-                        <group attrs="{'invisible': [('state','!=','0_plan'), ('state','!=', False)]}">
+                        <group attrs="{'invisible': [('state','!=','0_plan')]}">
                             <field name="fleet_code" string="Căn cứ: Dự trù phương tiện số:"/>
                             <field name="license_plate"/>
                             <field name="model_id" string="Nhãn hiệu"/>
