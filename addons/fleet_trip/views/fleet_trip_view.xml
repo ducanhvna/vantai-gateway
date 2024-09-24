@@ -58,7 +58,6 @@
                 <sheet>
                     <group>
                         <group>
-                            <!-- <field name="equipment_id"  string="Phương tiện"  options="{'no_create': 1, 'no_edit': 1}" /> -->
                             <field name="fleet_code" attrs="{'invisible': [('state','!=','0_plan')]}" />
                             <field name="fleet_command_code" attrs="{'invisible': [('state','!=','1_draft')]}" />
                         </group>
@@ -67,6 +66,7 @@
                         </group>
                         <group attrs="{'invisible': [('state','=','0_plan')]}">
                             <field name="fleet_code" string="Căn cứ: Dự trù phương tiện số:"/>
+                            <field name="equipment_id"  string="Điều phương tiện"  options="{'no_create': 1, 'no_edit': 1}" />
                             <field name="license_plate"/>
                             <field name="model_id" string="Nhãn hiệu"/>
                         </group>
