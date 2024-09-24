@@ -34,7 +34,7 @@ class FleetTrip(models.Model):
     department_belong_id = fields.Many2one(related='equipment_id.department_belong_id', string="Thuộc đơn vị")
     currency_id = fields.Many2one('res.currency', related='company_id.currency_id')
     equipment_id = fields.Many2one('maintenance.equipment', string='Xe')
-    model_id = fields.Many2one('vehicle_type',related='equipment_id.model_id', string="Nhãn xe")
+    model_id = fields.Many2one('fleet.vehicle.model',related='equipment_id.model_id', string="Nhãn xe")
     category_plan = fields.Many2one('maintenance.equipment.category', string='phương tiện dự trù')
     category_plan_name = fields.Char(related='category_plan.name', string='Tên phương tiện')
     vehicle_id = fields.Many2one(related='equipment_id.vehicle_id', string='Phương tiện')
