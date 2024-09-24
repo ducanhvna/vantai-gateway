@@ -76,6 +76,9 @@ class FleetTrip(models.Model):
     employee_plan_id = fields.Many2one('hr.employee', string='Người dự trù', default=lambda self: self._default_employee())
     employee_lead_id = fields.Many2one('hr.employee', string='Chỉ huy xe',
                                         domain="[('id', 'in', employee_ids)]")
+    employee_command_id = fields.Many2one('hr.employee', string='Người viết lệnh')
+    employee_approved_id = fields.Many2one('hr.employee', string='Người duyệt lệnh')
+    
     level = fields.Char( string='Cấp bậc')
     position = fields.Char( string='Chức vụ')
     job_id = fields.Many2one("hr.job", related='employee_lead_id.job_id', string='Chức vụ cán bộ')
@@ -390,6 +393,9 @@ class FleetTrip(models.Model):
         if (self.start_date):
             if self.start_date.minute > 0:
                 ws1.cell(row=16, column=10).value = f"{self.start_date.minute}"
+        else:
+            ws1.cell(row=16, column=10).value = ''
+            
         ws1.cell(row=16, column=12).value = (
             f" {self.start_date.day}." if (self.start_date) else ""
         )
@@ -401,6 +407,9 @@ class FleetTrip(models.Model):
         if (self.end_date):
             if self.end_date.minute > 0:
                 ws1.cell(row=17, column=10).value = f"{self.end_date.minute}"
+        else:
+            ws1.cell(row=17, column=10).value = ''
+            
         ws1.cell(row=17, column=12).value = (
             f" {self.end_date.day}." if (self.end_date) else ""
         )
