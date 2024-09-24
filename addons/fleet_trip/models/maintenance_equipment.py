@@ -11,8 +11,8 @@ class MaintenanceEquipment(models.Model):
 
     license_plate = fields.Char(related='vehicle_id.license_plate', string='Biển số', required=False)
     vehicle_id = fields.Many2one('fleet.vehicle', string='Phương tiện')
-    currency_id = fields.Many2one('res.currency', related='company_id.currency_id')
-    model_id = fields.Many2one('vehicle_id.model_id', string="Nhãn xe")
+    department_belong_id = fields.Many2one('hr.department', string="Thuộc đơn vị")
+    model_id = fields.Many2one('vihicle_type',related='vehicle_id.model_id', string="Nhãn xe")
     fuel_id = fields.Many2one('product.template', string='Nhiên liệu')
     number_seat = fields.Integer('Số ghế')
     quota = fields.Integer('Định mức')
