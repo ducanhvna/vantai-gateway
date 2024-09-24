@@ -68,7 +68,7 @@
                         <group attrs="{'invisible': [('state','!=','0_plan'), ('state','!=', False)]}">
                             <field name="fleet_code" string="Căn cứ: Dự trù phương tiện số:"/>
                             <field name="license_plate"/>
-                            <!-- <field name="model_id" string="Nhãn hiệu"/> -->
+                            <field name="model_id" string="Nhãn hiệu"/>
                         </group>
                         <group>
                             <!-- <field name="quota"/> -->
