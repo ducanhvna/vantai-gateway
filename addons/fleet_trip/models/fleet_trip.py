@@ -388,7 +388,13 @@ class FleetTrip(models.Model):
         ws1.merge_cells(start_row=9, start_column=5, end_row=9, end_column=9)
 
         # nhan xe
-
+        
+        ws1.cell(row=9, column=12).value = (f"{self.model_id.name}") if self.model_id else ''
+        ws1.merge_cells(start_row=9, start_column=12, end_row=9, end_column=16)
+        
+        ws1.cell(row=11, column=8).value = (f"{self.license_plate}") if self.license_plate else ''
+        ws1.merge_cells(start_row=11, start_column=8, end_row=11, end_column=16)
+        
         ws1.cell(row=16, column=4).value = f"{self.time_day_compute}" if (self.start_date) else ''
         ws1.cell(row=16, column=8).value = f"{self.start_date.hour}" if (self.start_date) else ''
         if (self.start_date):
