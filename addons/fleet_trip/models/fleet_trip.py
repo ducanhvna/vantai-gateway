@@ -392,6 +392,10 @@ class FleetTrip(models.Model):
         ws1.cell(row=9, column=12).value = (f"{self.model_id.name}") if self.model_id else ''
         ws1.merge_cells(start_row=9, start_column=12, end_row=9, end_column=16)
         
+        # department_belong_id
+        ws1.cell(row=10, column=6).value = (f"{self.department_belong_id.name}") if self.department_belong_id else ''
+        ws1.merge_cells(start_row=10, start_column=6, end_row=6, end_column=16)
+        
         ws1.cell(row=11, column=8).value = (f"{self.license_plate}") if self.license_plate else ''
         ws1.merge_cells(start_row=11, start_column=8, end_row=11, end_column=16)
         
