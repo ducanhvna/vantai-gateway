@@ -427,6 +427,10 @@ class FleetTrip(models.Model):
         ws1.cell(row=17, column=14).value = (
             f" {self.end_date.month}." if (self.end_date) else ""
         )
+        ws1.cell(row=29, column=1).value = (
+            f" {self.employee_command_id.name}." if (self.employee_command_id) else ""
+        )
+        ws1.merge_cells(start_row=29, start_column=1, end_row=29, end_column=7)
         
         file_path2 = f'file_command_path2result{self.id}.xlsx'
         workbook.save(file_path2)
