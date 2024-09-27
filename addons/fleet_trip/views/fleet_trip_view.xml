@@ -159,9 +159,7 @@
                         </group>
                         <group>
                             <field name="employee_plan_id" />
-                        </group> 
-                        <group  attrs="{'invisible': [('state','!=','0_plan')]}">
-                            <field name="employee_command_id" />  
+                            <field name="employee_command_id"  attrs="{'invisible': [('state','!=','0_plan')]}"/>  
                         <group>
                             
                             <!-- <field name="company_name" /> -->
