@@ -432,6 +432,12 @@ class FleetTrip(models.Model):
         )
         ws1.merge_cells(start_row=29, start_column=1, end_row=29, end_column=7)
         
+        try:
+            ws1.cell(row=29, column=10).value = self.department_belong_id.manager_id.name
+        except:
+            ws1.cell(row=29, column=10).value = ''   
+        ws1.merge_cells(start_row=29, start_column=10, end_row=29, end_column=16) 
+        
         file_path2 = f'file_command_path2result{self.id}.xlsx'
         workbook.save(file_path2)
 
