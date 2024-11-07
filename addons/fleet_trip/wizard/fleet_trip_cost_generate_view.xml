@@ -48,10 +48,10 @@
             </field>
         </record>
 
-        <menuitem id='menu_fleet_trip_cost_generate'
+        <!-- <menuitem id='menu_fleet_trip_cost_generate'
                   name="Bảng chi phí vận tải"
                   parent="fleet_trip.fleet_trip_report"
                   action="fleet_trip_cost_generate_act_window"
-                  sequence="100"/>
+                  sequence="100"/> -->
     </data>
 </odoo>

@@ -66,7 +66,7 @@
         </field>
     </record>
 
-    <record id="stock_delivery_action" model="ir.actions.act_window">
+    <!-- <record id="stock_delivery_action" model="ir.actions.act_window">
         <field name="name">Phiếu xuất kho</field>
         <field name="res_model">stock.delivery</field>
         <field name="type">ir.actions.act_window</field>
@@ -77,5 +77,5 @@
               name="Phiếu xuất kho"
               parent="fleet_root_menu"
               action="stock_delivery_action"
-              sequence="20"/>
+              sequence="20"/> -->
 </odoo>

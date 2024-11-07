@@ -80,11 +80,11 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="fleet_main_report_menu"
+    <!-- <menuitem id="fleet_main_report_menu"
               name="Chi phí phát sinh"
               parent="fleet_trip_report"
               action="fleet_main_report_action"
-              sequence="5"/>
+              sequence="5"/> -->
 
 
     <record id="fleet_grow_report_tree_view" model="ir.ui.view">
@@ -135,11 +135,11 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="fleet_grow_report_menu"
+    <!-- <menuitem id="fleet_grow_report_menu"
               name="Chi phí vận tải"
               parent="fleet_trip_report"
               action="fleet_grow_report_action"
-              sequence="10"/>
+              sequence="10"/> -->
 
 
     <record id="advance_money_report_tree_view" model="ir.ui.view">
@@ -219,12 +219,12 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="advance_money_report_menu"
+    <!-- <menuitem id="advance_money_report_menu"
               name="Ứng tiền"
               parent="fleet_trip_report"
               action="advance_money_report_action"
               sequence="15"/>
-
+ -->
 
     <record id="salary_money_report_tree_view" model="ir.ui.view">
         <field name="name">salary.money.report.tree.view</field>
