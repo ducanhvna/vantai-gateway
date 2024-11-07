@@ -118,14 +118,18 @@
                 <attribute name="invisible">1</attribute>
             </xpath>
 
+            <xpath expr="//field[@name='category_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
             <xpath expr="//field[@name='coach_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//field[@name='parent_id']" position="after">
                 <!--                 <field name="equipment_id"/>-->
                 <!-- <field name="coefficients_salary"/> -->
-                <!-- <field name="level"/>
-                <field name="position"/> -->
+                <field name="level"/>
+                <field name="position"/>
                 <field name="job_id"/>
                 <field name="rank_id"/>
                 <field name="sign_image"/>
