@@ -81,7 +81,7 @@
                 <field name="contract_date"/>
                 
             </xpath>
-            <xpath expr="//page[last()]" position="after">
+            <!-- <xpath expr="//page[last()]" position="after">
                 <page string="Thông tin thu nhập" name="payroll_ids">
                     <field name="payroll_ids" nolabel="1">
                         <tree create="0" edit="0" delete="0">
@@ -95,6 +95,19 @@
                         </tree>
                     </field>
                 </page>
+            </xpath> -->
+            <xpath expr="//page[position()=1]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+             <xpath expr="//page[position()=2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            
+            <xpath expr="//field[@name='pin']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='barcode']" position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//field[@name='coach_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
