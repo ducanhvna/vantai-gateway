@@ -77,8 +77,8 @@
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='work_email']" position="after">
-                <field name="salary_last_month"/>
-                <field name="contract_date"/>
+                <field name="user_id"/>
+                <!-- <field name="contract_date"/> -->
                 
             </xpath>
             <!-- <xpath expr="//page[last()]" position="after">
@@ -99,7 +99,12 @@
             <xpath expr="//page[position()=1]" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
-             <xpath expr="//page[position()=2]" position="attributes">
+            
+            <xpath expr="//page[position()=2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//page[position()=3]" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
             
@@ -112,15 +117,19 @@
             <xpath expr="//field[@name='coach_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+
+            <xpath expr="//field[@name='coach_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
             <xpath expr="//field[@name='parent_id']" position="after">
                 <!--                 <field name="equipment_id"/>-->
-                <field name="coefficients_salary"/>
+                <!-- <field name="coefficients_salary"/> -->
                 <!-- <field name="level"/>
                 <field name="position"/> -->
                 <field name="job_id"/>
                 <field name="rank_id"/>
                 <field name="sign_image"/>
-                <field name="other_info"/>
+                <!-- <field name="other_info"/> -->
             </xpath>
         </field>
     </record>
