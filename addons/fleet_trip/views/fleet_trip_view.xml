@@ -153,8 +153,8 @@
                         </group>
                         <group>
                             <field name="employee_lead_id" />
-                            <field name="rank_id" string="cấp bậc"/>
-                            <field name="job_id" string="chức vụ"/>
+                            <field name="rank_id" string="Cấp bậc"/>
+                            <field name="job_id" string="Chức vụ"/>
                             <!-- <field name="number_picks" /> -->
                         </group>
                         <group>
