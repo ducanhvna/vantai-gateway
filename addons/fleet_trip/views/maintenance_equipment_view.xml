@@ -68,6 +68,12 @@
                 <field name="odometer_maintenance"/>
                 <field name="date_process"/>
             </xpath>
+            
         </field>
     </record>
+    <record id="maintenance.menu_report_root" model="ir.ui.menu">
+        <field name="parent_id" ref="fleet_trip_report"/>
+        <field name="active" eval="False"/>
+    </record>
+   
 </odoo>
