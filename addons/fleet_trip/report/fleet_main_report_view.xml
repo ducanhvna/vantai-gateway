@@ -266,7 +266,7 @@
         </field>
     </record>
 
-    <record id="salary_money_report_action" model="ir.actions.act_window">
+    <!-- <record id="salary_money_report_action" model="ir.actions.act_window">
         <field name="name">Tiền lương</field>
         <field name="res_model">salary.money.report</field>
         <field name="type">ir.actions.act_window</field>
@@ -277,5 +277,5 @@
               name="Tiền lương"
               parent="fleet_trip_report"
               action="salary_money_report_action"
-              sequence="20"/>
+              sequence="20"/> -->
 </odoo>

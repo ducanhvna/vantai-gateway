@@ -24,7 +24,7 @@
         </field>
     </record>
 
-    <record id="fleet_product_template_action_product" model="ir.actions.act_window">
+    <!-- <record id="fleet_product_template_action_product" model="ir.actions.act_window">
         <field name="name">Sản phẩm</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">product.template</field>
@@ -42,5 +42,5 @@
               name="Sản phẩm"
               parent="fleet_config_menu"
               action="fleet_product_template_action_product"
-              sequence="20"/>
+              sequence="20"/> -->
 </odoo>
