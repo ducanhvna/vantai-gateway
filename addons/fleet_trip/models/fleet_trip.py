@@ -492,16 +492,16 @@ class FleetTrip(models.Model):
         )
         ws1.merge_cells(start_row=11, start_column=1, end_row=11, end_column=13) 
         ws1.cell(row=12, column=3).value = f"{self.time_day_compute}"
-        ws1.cell(row=14, column=1).value = f"Số người:{self.number_people} người."
-        ws1.cell(row=14, column=7).value = f"Số tấn HH:{self.product_weigh} tấn."
+        ws1.cell(row=14, column=1).value = f"Số người: {self.number_people} người "
+        ws1.cell(row=14, column=7).value = f"Số tấn HH: {self.product_weigh} tấn "
 
         if (self.start_date):
             ws1.cell(row=12, column=5).value = f"Từ : {self.start_date.hour} giờ "
             ws1.merge_cells(start_row=12, start_column=5, end_row=12, end_column=6) 
             if self.start_date.minute > 0:
                 ws1.cell(row=12, column=7).value = f" {self.start_date.minute}."
-            ws1.cell(row=12, column=10).value = f" {self.start_date.day}."
-            ws1.cell(row=12, column=12).value = f" {self.start_date.month}."
+            ws1.cell(row=12, column=10).value = f" {self.start_date.day} "
+            ws1.cell(row=12, column=12).value = f" {self.start_date.month} "
         if (self.end_date):
             ws1.cell(row=13, column=5).value = f"Đến: {self.end_date.hour} giờ"
             ws1.merge_cells(start_row=13, start_column=5, end_row=13, end_column=6) 
@@ -511,7 +511,7 @@ class FleetTrip(models.Model):
             ws1.cell(row=13, column=12).value = f" {self.end_date.month}."
         # employee_lead_id
         if(self.employee_lead_id):
-            ws1.cell(row=15, column=1).value = f"Chỉ huy xe: Họ tên:{self.employee_lead_id.name} " +\
+            ws1.cell(row=15, column=1).value = f"Chỉ huy xe: Họ tên: {self.employee_lead_id.name} " +\
                 f"C.bậc: {self.rank_id.name} C.vụ: {self.job_id.name}"
             ws1.merge_cells(start_row=15, start_column=1, end_row=15, end_column=13)       
         if (self.location_id):
@@ -521,7 +521,7 @@ class FleetTrip(models.Model):
                 + f" {self.location_id.state_id.name}"       
             ws1.merge_cells(start_row=16, start_column=1, end_row=16, end_column=13)     
         if (self.location_dest_id):
-            ws1.cell(row=17, column=1).value = f"Nơi đến:  {self.location_dest_id.name}" \
+            ws1.cell(row=17, column=1).value = f"Nơi đến: {self.location_dest_id.name}" \
                 + f" {self.location_dest_id.ward_id.name}" \
                 + f" {self.location_dest_id.district_id.name}" \
                 + f" {self.location_dest_id.state_id.name}"       
