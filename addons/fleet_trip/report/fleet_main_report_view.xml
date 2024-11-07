@@ -219,13 +219,6 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <!-- <menuitem id="advance_money_report_menu"
-              name="Ứng tiền"
-              parent="fleet_trip_report"
-              action="advance_money_report_action"
-              sequence="15"/>
- -->
-
     <record id="salary_money_report_tree_view" model="ir.ui.view">
         <field name="name">salary.money.report.tree.view</field>
         <field name="model">salary.money.report</field>
@@ -265,17 +258,4 @@
             </form>
         </field>
     </record>
-
-    <record id="salary_money_report_action" model="ir.actions.act_window">
-        <field name="name">Tiền lương</field>
-        <field name="res_model">salary.money.report</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-
-    <menuitem id="salary_money_report_menu"
-              name="Tiền lương"
-              parent="fleet_trip_report"
-              action="salary_money_report_action"
-              sequence="20"/>
 </odoo>
