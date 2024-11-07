@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
         <menuitem id="fleet_root_menu"
-                  name="Quản lí đội xe"
+                  name="Dự Trù Phương tiện"
                   sequence="5"
                   web_icon="fleet_trip,static/description/icon.png"/>
 

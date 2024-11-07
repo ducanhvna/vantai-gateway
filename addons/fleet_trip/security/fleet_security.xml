@@ -2,7 +2,7 @@
 <odoo>
 
     <record id="module_category_fleet_employees" model="ir.module.category">
-        <field name="name">Quản lý vận tải</field>
+        <field name="name">Dự trù phương tiện</field>
         <field name="sequence">9</field>
     </record>
 
