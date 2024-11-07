@@ -23,7 +23,7 @@
         </field>
     </record>
 
-    <!-- <record id="fleet_project_action" model="ir.actions.act_window">
+    <record id="fleet_project_action" model="ir.actions.act_window">
         <field name="name">Dự án</field>
         <field name="res_model">fleet.project</field>
         <field name="type">ir.actions.act_window</field>
@@ -34,7 +34,7 @@
               name="Dự án"
               parent="fleet_config_menu"
               action="fleet_project_action"
-              sequence="40"/> -->
+              sequence="40"/>
 
     <record id="fleet_category_tree_view" model="ir.ui.view">
         <field name="name">fleet.category.tree.view</field>
@@ -46,7 +46,7 @@
         </field>
     </record>
 
-    <!-- <record id="fleet_category_action" model="ir.actions.act_window">
+    <record id="fleet_category_action" model="ir.actions.act_window">
         <field name="name">Hạng mục</field>
         <field name="res_model">fleet.category</field>
         <field name="type">ir.actions.act_window</field>
@@ -57,7 +57,7 @@
               name="Hạng mục"
               parent="fleet_config_menu"
               action="fleet_category_action"
-              sequence="50"/> -->
+              sequence="50"/>
     
     <record id="view_department_form_inherited" model="ir.ui.view">
         <field name="name">hr.department.view.inherited</field>
