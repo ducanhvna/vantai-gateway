@@ -9,6 +9,7 @@ import openpyxl
 from io import BytesIO
 from openpyxl.utils import units
 from odoo.modules.module import get_module_resource
+from openpyxl.styles import Alignment
 
 class FleetTrip(models.Model):
     _name = 'fleet.trip'
@@ -484,7 +485,7 @@ class FleetTrip(models.Model):
             else '-'
         )
         ws1.merge_cells(start_row=9, start_column=6, end_row=9, end_column=10) 
-        ws1.cell(row=10, column=1).value = f"Số chuyến (lượt): {self.number_trips}"
+        ws1.cell(row=10, column=1).value = f"Số chuyến (lượt): {self.number_trips:02d}"
         ws1.cell(row=11, column=1).value = (
             f"Nội dung nhiệm vụ: {self.description}"
             if self.description
@@ -492,45 +493,46 @@ class FleetTrip(models.Model):
         )
         ws1.merge_cells(start_row=11, start_column=1, end_row=11, end_column=13) 
         ws1.cell(row=12, column=3).value = f"{self.time_day_compute}"
-        ws1.cell(row=14, column=1).value = f"Số người: {self.number_people} người "
+        ws1.cell(row=14, column=1).value = f"Số người: {self.number_people:02d} người "
         ws1.cell(row=14, column=7).value = f"Số tấn HH: {self.product_weigh} tấn "
 
         if (self.start_date):
-            ws1.cell(row=12, column=5).value = f"Từ : {self.start_date.hour} giờ "
+            ws1.cell(row=12, column=5).value = f"Từ: {self.start_date.hour:02d}h "
             ws1.merge_cells(start_row=12, start_column=5, end_row=12, end_column=6) 
             if self.start_date.minute > 0:
-                ws1.cell(row=12, column=7).value = f" {self.start_date.minute}."
-            ws1.cell(row=12, column=10).value = f" {self.start_date.day} "
-            ws1.cell(row=12, column=12).value = f" {self.start_date.month} "
+                ws1.cell(row=12, column=7).value = f" {self.start_date.minute:02d}"
+            ws1.cell(row=12, column=10).value = f" {self.start_date.day:02d} "
+            ws1.cell(row=12, column=12).value = f" {self.start_date.month:02d} "
         if (self.end_date):
-            ws1.cell(row=13, column=5).value = f"Đến: {self.end_date.hour} giờ"
+            ws1.cell(row=13, column=5).value = f"Đến: {self.end_date.hour:02d}h"
             ws1.merge_cells(start_row=13, start_column=5, end_row=13, end_column=6) 
             if self.end_date.minute > 0:
-                ws1.cell(row=13, column=7).value = f" {self.end_date.minute}."
-            ws1.cell(row=13, column=10).value = f" {self.end_date.day}."
-            ws1.cell(row=13, column=12).value = f" {self.end_date.month}."
+                ws1.cell(row=13, column=7).value = f" {self.end_date.minute:02d}"
+            ws1.cell(row=13, column=10).value = f" {self.end_date.day:02d}"
+            ws1.cell(row=13, column=12).value = f" {self.end_date.month:02d}"
         # employee_lead_id
         if(self.employee_lead_id):
             ws1.cell(row=15, column=1).value = f"Chỉ huy xe: Họ tên: {self.employee_lead_id.name} " +\
                 f"C.bậc: {self.rank_id.name} C.vụ: {self.job_id.name}"
             ws1.merge_cells(start_row=15, start_column=1, end_row=15, end_column=13)       
         if (self.location_id):
-            ws1.cell(row=16, column=1).value = f"Địa điểm đón xe: {self.location_id.name}" \
-                + f" {self.location_id.ward_id.name}" \
-                + f" {self.location_id.district_id.name}" \
-                + f" {self.location_id.state_id.name}"       
+            ws1.cell(row=16, column=1).value = f"Địa điểm đón xe: {self.location_id.name}," \
+                + f" {self.location_id.ward_id.name}," \
+                + f" {self.location_id.district_id.name}," \
+                + f" {self.location_id.state_id.name},"       
             ws1.merge_cells(start_row=16, start_column=1, end_row=16, end_column=13)     
         if (self.location_dest_id):
-            ws1.cell(row=17, column=1).value = f"Nơi đến: {self.location_dest_id.name}" \
-                + f" {self.location_dest_id.ward_id.name}" \
-                + f" {self.location_dest_id.district_id.name}" \
+            ws1.cell(row=17, column=1).value = f"Nơi đến: {self.location_dest_id.name}," \
+                + f" {self.location_dest_id.ward_id.name}," \
+                + f" {self.location_dest_id.district_id.name}," \
                 + f" {self.location_dest_id.state_id.name}"       
             ws1.merge_cells(start_row=17, start_column=1, end_row=17, end_column=13)    
-        ws1.cell(row=18, column=1).value = f"Dự kiến tổng số km đi, về (giờ hoạt động) ({self.time_day_compute * 8}) km (giờ)./." 
+        ws1.cell(row=18, column=1).value = f"Dự kiến tổng số km đi, về (giờ hoạt động) {self.time_day_compute * 8} km (giờ)./." 
         ws1.merge_cells(start_row=18, start_column=1, end_row=18, end_column=13)  
 
         if self.employee_plan_id:
             ws1.cell(row=25, column=1).value = self.employee_plan_id.name
+            ws1.cell(row=25, column=1).alignment = Alignment(horizontal='center')
 
             if self.employee_plan_id.sign_image:
                 image_data = base64.b64decode(self.employee_plan_id.sign_image)
