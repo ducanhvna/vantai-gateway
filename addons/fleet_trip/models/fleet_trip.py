@@ -381,60 +381,63 @@ class FleetTrip(models.Model):
 
         # Access the worksheets
         ws1 = workbook['Lệnh']
-        ws1.cell(row=8, column=10).value = f"{self.fleet_code}"
-        ws1.cell(row=8, column=13).value = f"{self.acronym_department_plan}"
+        ws1.cell(row=8, column=10).value = f"{self.fleet_code or ''}"
+        ws1.cell(row=8, column=13).value = f"{self.acronym_department_plan or ''}"
         ws1.merge_cells(start_row=8, start_column=13, end_row=8, end_column=16)
 
-        ws1.cell(row=9, column=5).value = (f"{self.category_plan_name}") 
+        ws1.cell(row=9, column=5).value = (f"{self.category_plan_name or ''}") 
         ws1.merge_cells(start_row=9, start_column=5, end_row=9, end_column=9)
 
         # nhan xe
         
-        ws1.cell(row=9, column=12).value = (f"{self.model_id.name}") if self.model_id else ''
+        ws1.cell(row=9, column=12).value = (f"{self.model_id.name or ''}") if self.model_id else ''
         ws1.merge_cells(start_row=9, start_column=12, end_row=9, end_column=16)
         
         # department_belong_id
-        ws1.cell(row=10, column=6).value = (f"{self.department_belong_id.name}") if self.department_belong_id else ''
+        ws1.cell(row=10, column=6).value = (f"{self.department_belong_id.name or ''}") if self.department_belong_id else ''
         ws1.merge_cells(start_row=10, start_column=6, end_row=10, end_column=16)
         
         ws1.cell(row=11, column=8).value = (f"{self.license_plate}") if self.license_plate else ''
         ws1.merge_cells(start_row=11, start_column=8, end_row=11, end_column=16)
         
         ws1.cell(row=16, column=4).value = f"{self.time_day_compute}" if (self.start_date) else ''
-        ws1.cell(row=16, column=8).value = f"{self.start_date.hour}" if (self.start_date) else ''
+        ws1.cell(row=16, column=8).value = f"{self.start_date.hour:02d}" if (self.start_date) else ''
         if (self.start_date):
             if self.start_date.minute > 0:
-                ws1.cell(row=16, column=10).value = f"{self.start_date.minute}"
+                ws1.cell(row=16, column=10).value = f"{self.start_date.minute:02d}"
         else:
             ws1.cell(row=16, column=10).value = ''
             
         ws1.cell(row=16, column=12).value = (
-            f" {self.start_date.day}." if (self.start_date) else ""
+            f" {self.start_date.day:02d}" if (self.start_date) else ""
         )
         ws1.cell(row=16, column=14).value = (
-            f" {self.start_date.month}." if (self.start_date) else ""
+            f" {self.start_date.month:02d}" if (self.start_date) else ""
         )
         
-        ws1.cell(row=17, column=8).value = f"{self.end_date.hour}" if (self.end_date) else ''
+        ws1.cell(row=17, column=8).value = f"{self.end_date.hour:02d}" if (self.end_date) else ''
         if (self.end_date):
             if self.end_date.minute > 0:
-                ws1.cell(row=17, column=10).value = f"{self.end_date.minute}"
+                ws1.cell(row=17, column=10).value = f"{self.end_date.minute:02d}"
         else:
             ws1.cell(row=17, column=10).value = ''
             
         ws1.cell(row=17, column=12).value = (
-            f" {self.end_date.day}." if (self.end_date) else ""
+            f" {self.end_date.day:02d}" if (self.end_date) else ""
         )
         ws1.cell(row=17, column=14).value = (
-            f" {self.end_date.month}." if (self.end_date) else ""
+            f" {self.end_date.month:02d}" if (self.end_date) else ""
         )
         ws1.cell(row=29, column=1).value = (
-            f" {self.employee_command_id.name}." if (self.employee_command_id) else ""
+            f" {self.employee_command_id.name or ''}" if (self.employee_command_id) else ""
         )
         ws1.merge_cells(start_row=29, start_column=1, end_row=29, end_column=7)
         
         try:
-            ws1.cell(row=29, column=10).value = self.department_belong_id.manager_id.name
+            if self.department_belong_id.manager_id.name:
+                ws1.cell(row=29, column=10).value = (self.department_belong_id.manager_id.name or "")
+            else:
+                ws1.cell(row=29, column=10).value = ""
         except:
             ws1.cell(row=29, column=10).value = ''   
         ws1.merge_cells(start_row=29, start_column=10, end_row=29, end_column=16) 
@@ -512,26 +515,26 @@ class FleetTrip(models.Model):
             ws1.cell(row=13, column=12).value = f" {self.end_date.month:02d}"
         # employee_lead_id
         if(self.employee_lead_id):
-            ws1.cell(row=15, column=1).value = f"Chỉ huy xe: Họ tên: {self.employee_lead_id.name} " +\
-                f"C.bậc: {self.rank_id.name} C.vụ: {self.job_id.name}"
+            ws1.cell(row=15, column=1).value = f"Chỉ huy xe: Họ tên: {self.employee_lead_id.name or ''} " +\
+                f"C.bậc: {self.rank_id.name or ''} C.vụ: {self.job_id.name or ''}"
             ws1.merge_cells(start_row=15, start_column=1, end_row=15, end_column=13)       
         if (self.location_id):
-            ws1.cell(row=16, column=1).value = f"Địa điểm đón xe: {self.location_id.name}," \
-                + f" {self.location_id.ward_id.name}," \
-                + f" {self.location_id.district_id.name}," \
-                + f" {self.location_id.state_id.name},"       
+            ws1.cell(row=16, column=1).value = f"Địa điểm đón xe: {self.location_id.name or '' }," \
+                + f" {self.location_id.ward_id.name or ''}," \
+                + f" {self.location_id.district_id.name or ''}," \
+                + f" {self.location_id.state_id.name or '' },"       
             ws1.merge_cells(start_row=16, start_column=1, end_row=16, end_column=13)     
         if (self.location_dest_id):
-            ws1.cell(row=17, column=1).value = f"Nơi đến: {self.location_dest_id.name}," \
-                + f" {self.location_dest_id.ward_id.name}," \
-                + f" {self.location_dest_id.district_id.name}," \
-                + f" {self.location_dest_id.state_id.name}"       
+            ws1.cell(row=17, column=1).value = f"Nơi đến: {self.location_dest_id.name or ''}," \
+                + f" {self.location_dest_id.ward_id.name or ''}," \
+                + f" {self.location_dest_id.district_id.name or ''}," \
+                + f" {self.location_dest_id.state_id.name or ''}"       
             ws1.merge_cells(start_row=17, start_column=1, end_row=17, end_column=13)    
         ws1.cell(row=18, column=1).value = f"Dự kiến tổng số km đi, về (giờ hoạt động) {self.time_day_compute * 8} km (giờ)./." 
         ws1.merge_cells(start_row=18, start_column=1, end_row=18, end_column=13)  
 
         if self.employee_plan_id:
-            ws1.cell(row=25, column=1).value = self.employee_plan_id.name
+            ws1.cell(row=25, column=1).value = (self.employee_plan_id.name or '')
             ws1.cell(row=25, column=1).alignment = Alignment(horizontal='center')
 
             if self.employee_plan_id.sign_image:
@@ -561,13 +564,13 @@ class FleetTrip(models.Model):
 
         ws1.merge_cells(start_row=25, start_column=1, end_row=25, end_column=4) 
         try:
-            ws1.cell(row=25, column=6).value = self.department_plan_id.manager_id.name
+            ws1.cell(row=25, column=6).value = (self.department_plan_id.manager_id.name or '')
         except:
             ws1.cell(row=25, column=6).value = ''   
         ws1.merge_cells(start_row=25, start_column=6, end_row=25, end_column=13)  
 
         try:
-            ws1.cell(row=32, column=3).value = self.department_id.manager_id.name
+            ws1.cell(row=32, column=3).value = (self.department_id.manager_id.name or '')
         except:
             ws1.cell(row=32, column=3).value = ''   
         ws1.merge_cells(start_row=32, start_column=3, end_row=32, end_column=11)  
