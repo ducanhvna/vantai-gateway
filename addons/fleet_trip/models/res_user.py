@@ -97,7 +97,16 @@ class HrEmployee(models.Model):
     payroll_ids = fields.One2many('hr.employee.payroll', 'employee_id', string='Thông tin thu nhập')
     payroll_total_amount = fields.Float(string='Tổng thu nhập', compute="_compute_payroll_total_amount")
     sign_image = fields.Binary(string='Ảnh Chữ ký')
+    job_with_name = fields.Text(string='tên kèm chức vụ', compute="get_name_with_job")
     
+    
+    
+    def get_name_with_job(self):
+        if self.job_id:
+           self.job_with_name = f'{self.job_id.name}: {self.name}'
+        else:
+           self.job_with_name = self.name
+                
     @api.depends("payroll_ids")
     def _compute_payroll_total_amount(self):
         for rec in self:

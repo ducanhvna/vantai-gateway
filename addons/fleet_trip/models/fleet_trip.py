@@ -429,13 +429,13 @@ class FleetTrip(models.Model):
             f" {self.end_date.month:02d}" if (self.end_date) else ""
         )
         ws1.cell(row=29, column=1).value = (
-            f" {self.employee_command_id.name or ''}" if (self.employee_command_id) else ""
+            f" {self.employee_command_id.job_id.name}: {self.employee_command_id.name or ''}" if (self.employee_command_id) else ""
         )
         ws1.merge_cells(start_row=29, start_column=1, end_row=29, end_column=7)
         
         try:
             if self.department_belong_id.manager_id.name:
-                ws1.cell(row=29, column=10).value = (self.department_belong_id.manager_id.name or "")
+                ws1.cell(row=29, column=10).value = f"{self.employee_approved_id.job_id.name}: {self.department_belong_id.manager_id.name or ''}"
             else:
                 ws1.cell(row=29, column=10).value = ""
         except:
@@ -474,7 +474,8 @@ class FleetTrip(models.Model):
         # Access the worksheets
         ws1 = workbook['Sheet1']
         # ws1.cell(row=1, column=1).value = self.license_plate
-        ws1.cell(row=4, column=1).value = f"Số: {self.fleet_code}/DTPT{self.acronym_department_plan}"
+        
+        ws1.cell(row=4, column=1).value = f"Số: {self.fleet_code:02d }/DTPT{self.acronym_department_plan}"
         ws1.merge_cells(start_row=4, start_column=1, end_row=4, end_column=4) 
         ws1.cell(row=10, column=7).value = (
             f"Tên phương tiện: {self.category_plan_name}"
@@ -564,13 +565,17 @@ class FleetTrip(models.Model):
 
         ws1.merge_cells(start_row=25, start_column=1, end_row=25, end_column=4) 
         try:
-            ws1.cell(row=25, column=6).value = (self.department_plan_id.manager_id.name or '')
+            ws1.cell(row=25, column=6).value =  (self.department_id.job_with_name or '') 
+            ws1.cell(row=25, column=6).alignment = Alignment(horizontal='center')
+            
         except:
             ws1.cell(row=25, column=6).value = ''   
         ws1.merge_cells(start_row=25, start_column=6, end_row=25, end_column=13)  
 
         try:
             ws1.cell(row=32, column=3).value = (self.department_id.manager_id.name or '')
+            ws1.cell(row=32, column=3).alignment = Alignment(horizontal='center')
+            
         except:
             ws1.cell(row=32, column=3).value = ''   
         ws1.merge_cells(start_row=32, start_column=3, end_row=32, end_column=11)  
