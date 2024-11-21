@@ -431,11 +431,15 @@ class FleetTrip(models.Model):
         ws1.cell(row=29, column=1).value = (
             f" {self.employee_command_id.job_id.name}: {self.employee_command_id.name or ''}" if (self.employee_command_id) else ""
         )
+        ws1.cell(row=29, column=1).alignment = Alignment(horizontal='center')
+        
         ws1.merge_cells(start_row=29, start_column=1, end_row=29, end_column=7)
         
         try:
             if self.department_belong_id.manager_id.name:
                 ws1.cell(row=29, column=10).value = f"{self.employee_approved_id.job_id.name}: {self.department_belong_id.manager_id.name or ''}"
+                ws1.cell(row=29, column=10).alignment = Alignment(horizontal='center')
+
             else:
                 ws1.cell(row=29, column=10).value = ""
         except:
@@ -475,7 +479,7 @@ class FleetTrip(models.Model):
         ws1 = workbook['Sheet1']
         # ws1.cell(row=1, column=1).value = self.license_plate
         
-        ws1.cell(row=4, column=1).value = f"Số: {self.fleet_code:02d }/DTPT{self.acronym_department_plan}"
+        ws1.cell(row=4, column=1).value = f"Số: {self.fleet_code}/DTPT{self.acronym_department_plan}"
         ws1.merge_cells(start_row=4, start_column=1, end_row=4, end_column=4) 
         ws1.cell(row=10, column=7).value = (
             f"Tên phương tiện: {self.category_plan_name}"
