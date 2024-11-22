@@ -116,7 +116,12 @@ class HrEmployee(models.Model):
            self.job_with_name = f'{self.job_id.name}: {self.name}'
         else:
            self.job_with_name = self.name
-                
+           
+    @api.depends('department_manager_ids')
+    def _compute_is_department_manager(self):
+        for employee in self:
+            employee.is_department_manager = bool(employee.department_manager_ids)
+            
     @api.depends("payroll_ids")
     def _compute_payroll_total_amount(self):
         for rec in self:
@@ -156,11 +161,6 @@ class HrEmployeePayroll(models.Model):
         if self.month and self.year and not self.name:
             self.name = f'Thu nhập {self.month}/{self.year}'
 
-    
-    @api.depends('department_manager_ids')
-    def _compute_is_department_manager(self):
-        for employee in self:
-            employee.is_department_manager = bool(employee.department_manager_ids)
 
     @api.depends("payroll_amount", "bonus_amount")
     def _compute_total_amount(self):
