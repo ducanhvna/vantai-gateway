@@ -108,7 +108,7 @@ class HrEmployee(models.Model):
     sign_image = fields.Binary(string='Ảnh Chữ ký')
     job_with_name = fields.Text(string='tên kèm chức vụ', compute="get_name_with_job")
     department_manager_ids = fields.One2many('hr.department', 'manager_id', string="phòng ban quản lý")
-    is_department_manager = fields.Boolean(string='Là một Trưởng Phòng ban', compute="_compute_is_department_manager", store=True)
+    is_department_manager = fields.Boolean(string='Là một quản lý Phòng ban', compute="_compute_is_department_manager", store=True)
     # is_department_manager = fields.Boolean(string='là Trưởng Phòng', compute="_compute_check_manage_department")
     # check_is_manager_device_department = fields.Boolean(string='Trưởng Phòng quản lý xe', compute="_compute_check_manage_device_department")
     
@@ -123,6 +123,9 @@ class HrEmployee(models.Model):
     def _compute_is_department_manager(self):
         for employee in self:
             employee.is_department_manager = bool(employee.department_manager_ids)
+            if (employee.job_id) and (not employee.is_department_manager):
+                employee.is_department_manager = employee.is_department_manager or employee.job_id.is_manage_department
+        
             
     @api.depends("payroll_ids")
     def _compute_payroll_total_amount(self):
