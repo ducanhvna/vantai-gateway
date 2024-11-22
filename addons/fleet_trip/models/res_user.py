@@ -119,7 +119,7 @@ class HrEmployee(models.Model):
         else:
            self.job_with_name = self.name
            
-    @api.depends('department_manager_ids')
+    @api.depends('department_manager_ids', 'job_id')
     def _compute_is_department_manager(self):
         for employee in self:
             employee.is_department_manager = bool(employee.department_manager_ids)
