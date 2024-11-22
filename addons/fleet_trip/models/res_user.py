@@ -59,6 +59,7 @@ class HrDepartment(models.Model):
 
     
     acronym = fields.Char(string='Tên viết tắt')
+    equipment_ids = fields.One2many('maintenance.equipment', 'department_belong_id', string="Equipment")
     
 class HrJob(models.Model):
     _inherit = "hr.job"
@@ -99,7 +100,7 @@ class HrEmployee(models.Model):
     sign_image = fields.Binary(string='Ảnh Chữ ký')
     job_with_name = fields.Text(string='tên kèm chức vụ', compute="get_name_with_job")
     # check_is_manager = fields.models.BooleanField(string='Trưởng Phòng', compute="is_department_manager")
-    is_department_manager = fields.models.BooleanField(string='là Trưởng Phòng', compute="_compute_check_manage_department")
+    # is_department_manager = fields.models.BooleanField(string='là Trưởng Phòng', compute="_compute_check_manage_department")
     # check_is_manager_device_department = fields.models.BooleanField(string='Trưởng Phòng quản lý xe', compute="_compute_check_manage_device_department")
     
     
@@ -149,13 +150,13 @@ class HrEmployeePayroll(models.Model):
             self.name = f'Thu nhập {self.month}/{self.year}'
 
     
-    @api.depends('department_id')
-    def _compute_check_manage_department(self):
-        for employee in self:
-            if employee.department_id.manager_id == employee:
-                employee.is_department_manager = True
-            else:
-                employee.is_department_manager = False
+    # @api.depends('department_id')
+    # def _compute_check_manage_department(self):
+    #     for employee in self:
+    #         if employee.department_id.manager_id == employee:
+    #             employee.is_department_manager = True
+    #         else:
+    #             employee.is_department_manager = False
 
     @api.depends("payroll_amount", "bonus_amount")
     def _compute_total_amount(self):
