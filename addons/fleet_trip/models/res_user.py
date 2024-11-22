@@ -60,6 +60,12 @@ class HrDepartment(models.Model):
     
     acronym = fields.Char(string='Tên viết tắt')
     equipment_ids = fields.One2many('maintenance.equipment', 'department_belong_id', string="Danh sách xe quản lý")
+    is_manage_vehicle = fields.Boolean(string="Là đơn vị quản lý xe", compute='_compute_is_manage_vehicle', store=True)
+    
+    @api.depends('equipment_ids')
+    def _compute_is_manage_vehicle(self):
+        for department in self:
+            department.is_manage_vehicle = bool(department.equipment_ids)
     
 class HrJob(models.Model):
     _inherit = "hr.job"
