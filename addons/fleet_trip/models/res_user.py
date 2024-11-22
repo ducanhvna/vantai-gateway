@@ -66,14 +66,14 @@ class HrDepartment(models.Model):
     def _compute_is_manage_vehicle(self):
         for department in self:
             department.is_manage_vehicle = bool(department.equipment_ids)
-    
+
 class HrJob(models.Model):
     _inherit = "hr.job"
     weight = fields.Float(string='Hệ số chức vụ')
     standard_plan = fields.Many2many('maintenance.equipment.category', string='tiêu chuẩn đi xe')
     is_manage_department = fields.Boolean(string="Quản lý phòng ban", store=True)
     is_manage_company = fields.Boolean(string="Quản lý học viện", store=True)
-    
+
 class HrRank(models.Model):
     _name = "hr.rank"
     _description = "Cấp bậc"
@@ -85,7 +85,7 @@ class HrRank(models.Model):
     sequence = fields.Integer(default=10)
     weight = fields.Float(string='Hệ số cấp bậc')
     standard_plan = fields.Many2many('maintenance.equipment.category', string='tiêu chuẩn đi xe')
-    
+
 
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
@@ -111,22 +111,23 @@ class HrEmployee(models.Model):
     is_department_manager = fields.Boolean(string='Là một quản lý Phòng ban', compute="_compute_is_department_manager", store=True)
     # is_department_manager = fields.Boolean(string='là Trưởng Phòng', compute="_compute_check_manage_department")
     # check_is_manager_device_department = fields.Boolean(string='Trưởng Phòng quản lý xe', compute="_compute_check_manage_device_department")
-    
-    
+
     def get_name_with_job(self):
         if self.job_id:
-           self.job_with_name = f'{self.job_id.name}: {self.name}'
+            self.job_with_name = f'{self.job_id.name}: {self.name}'
         else:
-           self.job_with_name = self.name
-           
+            self.job_with_name = self.name
+
     @api.depends('department_manager_ids', 'job_id')
     def _compute_is_department_manager(self):
         for employee in self:
-            employee.is_department_manager = bool(employee.department_manager_ids)
-            if (employee.job_id != False):
-                employee.is_department_manager = (employee.is_department_manager) or bool(employee.job_id.is_manage_department)
-        
-            
+            employee.is_department_manager = (
+                bool(employee.department_manager_ids)
+                if self.job_id == False
+                else bool(employee.department_manager_ids)
+                or self.job_id.is_manage_department
+            )
+
     @api.depends("payroll_ids")
     def _compute_payroll_total_amount(self):
         for rec in self:
