@@ -71,6 +71,8 @@ class HrJob(models.Model):
     _inherit = "hr.job"
     weight = fields.Float(string='Hệ số chức vụ')
     standard_plan = fields.Many2many('maintenance.equipment.category', string='tiêu chuẩn đi xe')
+    is_manage_department = fields.Boolean(string="Quản lý phòng ban", store=True)
+    is_manage_company = fields.Boolean(string="Quản lý học viện", store=True)
     
 class HrRank(models.Model):
     _name = "hr.rank"

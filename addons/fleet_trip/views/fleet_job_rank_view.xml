@@ -50,6 +50,8 @@
                         <group>
                             <field name="name"/>
                             <field name="weight"/>
+                            <field name="is_manage_department"/>
+                            <field name="is_manage_company"/>
                             <field name="standard_plan" string="Tiêu chuẩn xe" type="xml">
                                 <tree>
                                     <field name="name"/>
