@@ -106,9 +106,9 @@ class HrEmployee(models.Model):
     sign_image = fields.Binary(string='Ảnh Chữ ký')
     job_with_name = fields.Text(string='tên kèm chức vụ', compute="get_name_with_job")
     department_manager_ids = fields.One2many('hr.department', 'manager_id', string="phòng ban quản lý")
-    is_department_manager = fields.BooleanField(string='Là một Trưởng Phòng ban', compute="_compute_is_department_manager")
-    # is_department_manager = fields.models.BooleanField(string='là Trưởng Phòng', compute="_compute_check_manage_department")
-    # check_is_manager_device_department = fields.models.BooleanField(string='Trưởng Phòng quản lý xe', compute="_compute_check_manage_device_department")
+    is_department_manager = fields.Boolean(string='Là một Trưởng Phòng ban', compute="_compute_is_department_manager")
+    # is_department_manager = fields.Boolean(string='là Trưởng Phòng', compute="_compute_check_manage_department")
+    # check_is_manager_device_department = fields.Boolean(string='Trưởng Phòng quản lý xe', compute="_compute_check_manage_device_department")
     
     
     def get_name_with_job(self):
