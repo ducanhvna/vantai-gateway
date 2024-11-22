@@ -66,6 +66,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
                 <field name="acronym"/>
+                <field name="equipment_ids"/>
             </xpath>
         </field>
     </record>

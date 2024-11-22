@@ -59,7 +59,7 @@ class HrDepartment(models.Model):
 
     
     acronym = fields.Char(string='Tên viết tắt')
-    equipment_ids = fields.One2many('maintenance.equipment', 'department_belong_id', string="Equipment")
+    equipment_ids = fields.One2many('maintenance.equipment', 'department_belong_id', string="Danh sách xe quản lý")
     
 class HrJob(models.Model):
     _inherit = "hr.job"
