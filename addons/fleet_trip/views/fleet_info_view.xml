@@ -66,7 +66,14 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
                 <field name="acronym"/>
-                <field name="equipment_ids"/>
+                <field name="is_manage_vehicle"/>
+                <field name="equipment_ids" type="xml">
+                    <tree>
+                        <field name="name" string="Xe"/>
+                        <!-- <field name="city"/>
+                        <field name="state"/> -->
+                    </tree>
+                </field>
             </xpath>
         </field>
     </record>
