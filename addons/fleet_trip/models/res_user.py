@@ -124,8 +124,8 @@ class HrEmployee(models.Model):
             employee.is_department_manager = (
                 bool(employee.department_manager_ids)
                 if self.job_id == False
-                else bool(employee.department_manager_ids)
-                or self.job_id.is_manage_department
+                else (bool(employee.department_manager_ids)
+                or self.job_id.is_manage_department)
             )
 
     @api.depends("payroll_ids")
