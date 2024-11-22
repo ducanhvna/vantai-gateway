@@ -118,9 +118,10 @@ class HrEmployee(models.Model):
         else:
             self.job_with_name = self.name
 
-    @api.depends("department_manager_ids", "job_id.is_manage_department")
+    @api.depends("department_manager_ids", "job_id", "job_id.is_manage_department")
     def _compute_is_department_manager(self):
         for employee in self:
+            # Kiểm tra nếu job_id tồn tại
             if employee.job_id:
                 employee.is_department_manager = (
                     bool(employee.department_manager_ids)
