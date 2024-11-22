@@ -118,15 +118,16 @@ class HrEmployee(models.Model):
         else:
             self.job_with_name = self.name
 
-    @api.depends('department_manager_ids', 'job_id')
+    @api.depends("department_manager_ids", "job_id.is_manage_department")
     def _compute_is_department_manager(self):
         for employee in self:
-            employee.is_department_manager = (
-                bool(employee.department_manager_ids)
-                if self.job_id == False
-                else (bool(employee.department_manager_ids)
-                or self.job_id.is_manage_department)
-            )
+            if employee.job_id:
+                employee.is_department_manager = (
+                    bool(employee.department_manager_ids)
+                    or employee.job_id.is_manage_department
+                )
+            else:
+                employee.is_department_manager = bool(employee.department_manager_ids)
 
     @api.depends("payroll_ids")
     def _compute_payroll_total_amount(self):
