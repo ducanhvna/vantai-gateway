@@ -123,8 +123,8 @@ class HrEmployee(models.Model):
     def _compute_is_department_manager(self):
         for employee in self:
             employee.is_department_manager = bool(employee.department_manager_ids)
-            if (employee.job_id) and (not employee.is_department_manager):
-                employee.is_department_manager = employee.is_department_manager or employee.job_id.is_manage_department
+            if (employee.job_id != False):
+                employee.is_department_manager = (employee.is_department_manager) or bool(employee.job_id.is_manage_department)
         
             
     @api.depends("payroll_ids")
