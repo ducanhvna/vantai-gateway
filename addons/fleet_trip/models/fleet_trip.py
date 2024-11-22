@@ -11,6 +11,13 @@ from openpyxl.utils import units
 from odoo.modules.module import get_module_resource
 from openpyxl.styles import Alignment
 
+def capitalize_first_letter(s):
+    # Kiểm tra nếu chuỗi là False, None hoặc rỗng
+    if not s:
+        return s
+    # Viết hoa chữ cái đầu tiên và giữ nguyên các ký tự còn lại
+    return s[0].upper() + s[1:]
+
 class FleetTrip(models.Model):
     _name = 'fleet.trip'
     _rec_name = 'equipment_id'
@@ -516,7 +523,7 @@ class FleetTrip(models.Model):
             ws1.cell(row=13, column=12).value = f" {self.end_date.month:02d}"
         # employee_lead_id
         if(self.employee_lead_id):
-            ws1.cell(row=15, column=1).value = f"Chỉ huy xe: Họ tên: {self.employee_lead_id.name or ''} " +\
+            ws1.cell(row=15, column=1).value = f"Chỉ huy xe: Họ tên: {capitalize_first_letter(self.employee_lead_id.name) or ''} " +\
                 f"C.bậc: {self.rank_id.name or ''} C.vụ: {self.job_id.name or ''}"
             ws1.merge_cells(start_row=15, start_column=1, end_row=15, end_column=13)       
         if (self.location_id):
@@ -526,7 +533,7 @@ class FleetTrip(models.Model):
                 + f" {self.location_id.state_id.name or '' },"       
             ws1.merge_cells(start_row=16, start_column=1, end_row=16, end_column=13)     
         if (self.location_dest_id):
-            ws1.cell(row=17, column=1).value = f"Nơi đến: {self.location_dest_id.name or ''}," \
+            ws1.cell(row=17, column=1).value = f"Nơi đến: {capitalize_first_letter(self.location_dest_id.name) or ''}," \
                 + f" {self.location_dest_id.ward_id.name or ''}," \
                 + f" {self.location_dest_id.district_id.name or ''}," \
                 + f" {self.location_dest_id.state_id.name or ''}"       
