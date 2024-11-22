@@ -86,6 +86,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='work_email']" position="after">
                 <field name="user_id"/>
+                <field name="is_department_manager"/>
                 <!-- <field name="contract_date"/> -->
                 
             </xpath>
