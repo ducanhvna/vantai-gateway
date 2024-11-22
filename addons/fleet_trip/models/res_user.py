@@ -98,7 +98,9 @@ class HrEmployee(models.Model):
     payroll_total_amount = fields.Float(string='Tổng thu nhập', compute="_compute_payroll_total_amount")
     sign_image = fields.Binary(string='Ảnh Chữ ký')
     job_with_name = fields.Text(string='tên kèm chức vụ', compute="get_name_with_job")
-    
+    # check_is_manager = fields.models.BooleanField(string='Trưởng Phòng', compute="is_department_manager")
+    is_department_manager = fields.models.BooleanField(string='là Trưởng Phòng', compute="_compute_check_manage_department")
+    # check_is_manager_device_department = fields.models.BooleanField(string='Trưởng Phòng quản lý xe', compute="_compute_check_manage_device_department")
     
     
     def get_name_with_job(self):
@@ -145,6 +147,15 @@ class HrEmployeePayroll(models.Model):
     def _onchange_year(self):
         if self.month and self.year and not self.name:
             self.name = f'Thu nhập {self.month}/{self.year}'
+
+    
+    @api.depends('department_id')
+    def _compute_check_manage_department(self):
+        for employee in self:
+            if employee.department_id.manager_id == employee:
+                employee.is_department_manager = True
+            else:
+                employee.is_department_manager = False
 
     @api.depends("payroll_amount", "bonus_amount")
     def _compute_total_amount(self):
