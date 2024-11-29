@@ -18,7 +18,7 @@ class EmployeeUsers(models.Model):
     
     department_manager_ids = fields.One2many('hr.department', 'manager_id', string="phòng ban quản lý")
     
-    is_department_manager = fields.Boolean(string='Là một quản lý Phòng ban', related="employee_id.is_department_manager", store=True)
+    is_department_manager = fields.Boolean(string='Là một quản lý Phòng ban', related="employee_id.is_department_manager")
     # equipment_ids = fields.One2many("maintenance.equipment", "owner_user_id")
 
     @api.model
