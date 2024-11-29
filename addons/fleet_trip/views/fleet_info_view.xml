@@ -20,7 +20,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='login']" position="after">
                 <label for="is_department_manager" string="Là một quản lý phòng ban"/>
-                <!-- <field name="is_administrative" string="Tài khoản thuộc phòng HCNS"/> -->
+                <field name="is_department_manager" string="Là một quản lý phòng ban"/>
             </xpath>
         </field>
     </record>
