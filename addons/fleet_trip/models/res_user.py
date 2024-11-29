@@ -15,7 +15,11 @@ class EmployeeUsers(models.Model):
     employee_id = fields.Many2one('hr.employee',
                                   string='Related Employee', ondelete='restrict',
                                   help='Employee-related data of the user', auto_join=True)
-    equipment_ids = fields.One2many("maintenance.equipment", "owner_user_id")
+    
+    department_manager_ids = fields.One2many('hr.department', 'manager_id', string="phòng ban quản lý")
+    
+    is_department_manager = fields.Boolean(string='Là một quản lý Phòng ban', related="employee_id.is_department_manager", store=True)
+    # equipment_ids = fields.One2many("maintenance.equipment", "owner_user_id")
 
     @api.model
     def create(self, vals):
