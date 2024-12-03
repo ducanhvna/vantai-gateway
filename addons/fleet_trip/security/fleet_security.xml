@@ -33,27 +33,12 @@
         <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
     </record>
 
-     <record id="hr_fleet_user_rule" model="ir.rule">
-        <field name="name">Fleet Trip Rule User</field>
+    <record id="fleet_trip_rule_manager" model="ir.rule">
+        <field name="name">Fleet Trip Rule Manager</field>
         <field name="model_id" ref="model_fleet_trip"/>
-        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('fleet_trip.group_fleet_user'))]"/>
-        <field name="perm_create" eval="False"/>
-        <field name="perm_write" eval="False"/>
-        <field name="perm_unlink" eval="False"/>
-        <field name="perm_read" eval="True"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('fleet_trip.group_fleet_manager'))]"/>
     </record>
-
-    <record id="fleet_trip_manager_access" model="ir.model.access">
-        <field name="name">fleet.trip manager access</field>
-        <field name="model_id" ref="model_fleet_trip"/>
-        <field name="group_id" ref="fleet_trip.group_fleet_manager"/>
-        <field name="perm_read" eval="True"/>
-        <field name="perm_write" eval="True"/>
-        <field name="perm_create" eval="True"/>
-        <field name="perm_unlink" eval="True"/>
-    </record>
-
 
     <record id="fleet_trip_wizard_create_rule" model="ir.rule">
         <field name="name">Fleet Trip Wizard Create Rule</field>
@@ -65,7 +50,17 @@
         <field name="perm_unlink" eval="True"/>
         <field name="perm_read" eval="True"/>
     </record>
-
+    
+    <record id="fleet_trip_rule_user" model="ir.rule">
+        <field name="name">Fleet Trip Rule User</field>
+        <field name="model_id" ref="model_fleet_trip"/>
+        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('fleet_trip.group_fleet_user'))]"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="perm_read" eval="True"/>
+    </record>
 
     <record id="hr_fleet_user_rule" model="ir.rule">
         <field name="name">Fleet Trip Rule logistics</field>
