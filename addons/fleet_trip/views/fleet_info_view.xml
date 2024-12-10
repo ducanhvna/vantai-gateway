@@ -161,7 +161,54 @@
             </xpath>
         </field>
     </record>
+    
 
+    <record id="view_fleet_route_form" model="ir.ui.view">
+        <field name="name">fleet.route.form</field>
+        <field name="model">fleet.route</field>
+        <field name="arch" type="xml">
+            <form string="Fleet Route">
+                <group>
+                    <field name="name"/>
+                    <field name="start_location_id"/>
+                    <field name="end_location_id"/>
+                    <field name="description"/>
+                    <field name="note"/>
+                    <field name="estimated_km"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_fleet_route_tree" model="ir.ui.view">
+        <field name="name">fleet.route.tree</field>
+        <field name="model">fleet.route</field>
+        <field name="arch" type="xml">
+            <tree string="Fleet Routes">
+                <field name="name"/>
+                <field name="start_location_id"/>
+                <field name="end_location_id"/>
+                <field name="estimated_km"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- <menuitem id="menu_fleet_route_root" name="Fleet Routes" parent="fleet.menu_root" sequence="20"/> -->
+
+    <menuitem id="menu_fleet_route" name="Routes" parent="menu_fleet_route_root" action="action_fleet_route"/>
+    
+    <record id="fleet_route_action" model="ir.actions.act_window">
+        <field name="name">Danh sách cung đường</field>
+        <field name="res_model">fleet.route</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="fleet_route_menu"
+              name="Danh sách cung đường"
+              parent="fleet_config_menu"
+              action="fleet_route_action"
+              sequence="70"/>
 
     <record id="fleet_location_tree_view" model="ir.ui.view">
         <field name="name">fleet.location.tree.view</field>
