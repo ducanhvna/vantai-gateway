@@ -115,25 +115,25 @@
                         <group> -->
                             <field name="location_id" string="Địa điểm đón xe" />
                             <div class="o_address_format" attrs="{'invisible': [('location_id','!=',False)]}">
-                            <div class="o_address_format" >
+                            <!-- <div class="o_address_format" > -->
                                 <field name="state_id" class="o_address_state" placeholder="Tỉnh/TP" readonly="True" force_save="1" />
                                 <field name="district_id" placeholder="Quận/Huyện" class="o_address_zip" readonly="True" force_save="1" />
                                 <field name="ward_id" placeholder="Xã/Phường" class="o_address_city" readonly="True" force_save="1" />
                                 <field name="address_start" placeholder="Địa chỉ" readonly="True" force_save="1" />
                                 
                             
+                            <!-- </div> -->
                             </div>
-                            </div>
+                            <field name="distance_plan"  string="Km đi về"/>
                             <field name="location_dest_id" string="Nơi đến" />
                             <!-- <label for="ward_dest_id" string="Nơi đến" /> -->
                             <div attrs="{'invisible': [('location_dest_id','!=',False)]}">
-                                <div class="o_address_format" >
+                                <!-- <div class="o_address_format" > -->
                                     <field name="state_dest_id" class="o_address_state" placeholder="Tỉnh/TP" readonly="True" force_save="1" />
                                     <field name="district_dest_id" placeholder="Quận/Huyện" class="o_address_zip" readonly="True" force_save="1" />
                                     <field name="ward_dest_id" placeholder="Xã/Phường" class="o_address_city" readonly="True" force_save="1" />
                                     <field name="address_end" placeholder="Địa chỉ" readonly="True" force_save="1" />
-                                    <field name="distance_plan"  string="Km đi về"/>
-                                </div>
+                                <!-- </div> -->
                             </div>
                         </group>
                         <group>
