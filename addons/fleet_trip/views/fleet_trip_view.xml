@@ -53,7 +53,7 @@
                     <button type="object" name="do_end_trip" string="Kết thúc" class="oe_highlight" attrs="{'invisible': [('state','!=','2_confirm')]}" />
                     <field name="state" widget="statusbar" statusbar_visible="0_plan,1_draft,2_command,2_confirm,3_done" />
                     <button name="action_download_template" type="object" string="Tải dự trù" class="btn-primary" attrs="{'invisible': [('state','!=','1_draft')]}" />
-                    <button name="action_download_command_template" type="object" string="Tải Lệnh điều xe" class="btn-primary" attrs="{'invisible': [('state','!=','2_command')]}"/>
+                    <button name="action_download_command_template" type="object" string="Tải Lệnh điều xe" class="btn-primary" attrs="{'invisible': [('state','!=','2_command'), ('state','!=','3_done')]}"/>
                 </header>
                 <sheet>
                     <group>
