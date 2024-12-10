@@ -195,7 +195,7 @@
 
     <!-- <menuitem id="menu_fleet_route_root" name="Fleet Routes" parent="fleet.menu_root" sequence="20"/> -->
 
-    <menuitem id="menu_fleet_route" name="Routes" parent="menu_fleet_route_root" action="action_fleet_route"/>
+    <!-- <menuitem id="menu_fleet_route" name="Routes" parent="menu_fleet_route_root" action="action_fleet_route"/> -->
     
     <record id="fleet_route_action" model="ir.actions.act_window">
         <field name="name">Danh sách cung đường</field>
