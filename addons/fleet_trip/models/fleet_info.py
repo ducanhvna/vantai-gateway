@@ -83,3 +83,22 @@ class FleetProduct(models.Model):
     _order = 'name'
 
     name = fields.Char(string='Tên mặt hàng', required=True)
+    
+
+class FleetRoute(models.Model):
+    _name = 'fleet.route'
+    _description = 'Cung Đường'
+    _order = 'name'
+
+    name = fields.Char(string='Tên cung đường', required=True)
+    start_location_id = fields.Many2one('fleet.location', string='Điểm bắt đầu', required=True)
+    end_location_id = fields.Many2one('fleet.location', string='Điểm kết thúc', required=True)
+    description = fields.Text(string='Mô tả cung đường')
+    note = fields.Text(string='Ghi chú')
+    estimated_km = fields.Float(string='Số km dự kiến')
+
+    @api.model
+    def create(self, vals_list):
+        # Custom logic for route creation if needed
+        return super(FleetRoute, self).create(vals_list)
+

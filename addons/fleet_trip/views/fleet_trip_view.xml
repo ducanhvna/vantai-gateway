@@ -120,7 +120,7 @@
                                 <field name="district_id" placeholder="Quận/Huyện" class="o_address_zip" readonly="True" force_save="1" />
                                 <field name="ward_id" placeholder="Xã/Phường" class="o_address_city" readonly="True" force_save="1" />
                                 <field name="address_start" placeholder="Địa chỉ" readonly="True" force_save="1" />
-                            
+                                
                             
                             </div>
                             </div>
@@ -132,6 +132,7 @@
                                     <field name="district_dest_id" placeholder="Quận/Huyện" class="o_address_zip" readonly="True" force_save="1" />
                                     <field name="ward_dest_id" placeholder="Xã/Phường" class="o_address_city" readonly="True" force_save="1" />
                                     <field name="address_end" placeholder="Địa chỉ" readonly="True" force_save="1" />
+                                    <field name="distance_plan" />
                                 </div>
                             </div>
                         </group>
