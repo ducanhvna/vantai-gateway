@@ -184,7 +184,7 @@
                             <field name="incurred_note_2" />
                         </group> -->
                         <field name="country_id" invisible="1" />
-                        <!-- <field name="description" placeholder="Nhiệm vụ hành trình" /> -->
+                        <field name="employee_approved_id"/>
                         <field name="note" nolabel="1" placeholder="Ghi chú hành trình" />
                     </group>
                 </sheet>
