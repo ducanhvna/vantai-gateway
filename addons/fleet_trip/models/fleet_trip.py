@@ -86,7 +86,7 @@ class FleetTrip(models.Model):
     employee_lead_id = fields.Many2one('hr.employee', string='Chỉ huy xe',
                                         domain="[('id', 'in', employee_ids)]")
     employee_command_id = fields.Many2one('hr.employee', string='Người viết lệnh')
-    employee_approved_id = fields.Many2one('hr.employee', string='Người duyệt lệnh')
+    employee_approved_id = fields.Many2one('hr.employee', string='Người duyệt lệnh', domain="[('job_id.is_manage_company', '=', True)]", default=lambda self: self._default_employee_approved())
     
     level = fields.Char( string='Cấp bậc')
     position = fields.Char( string='Chức vụ')
@@ -148,6 +148,12 @@ class FleetTrip(models.Model):
     def _default_department(self):
         employee = self.env.user.employee_id
         return employee.department_id if employee else False
+    
+    @api.model 
+    def _default_employee_approved(self):
+        # Get the first employee who is a company manager 
+        employee = self.env['hr.employee'].search([('job_id.is_manage_company', '=', True)], limit=1) 
+        return employee.id if employee else False
 
     @api.model
     def create(self, vals):
