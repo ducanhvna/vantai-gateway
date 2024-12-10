@@ -82,6 +82,7 @@ class FleetTrip(models.Model):
     odometer_dest = fields.Integer('Số CTM điểm đích')
     odometer_end = fields.Integer('Số KM hành trình', compute='_compute_odometer_end', store=True)
     distance_plan = fields.Integer('Dự kiến tổng số km đi, về')
+    route = fields.Many2one('fleet.route', string='Cung đường')
     employee_plan_id = fields.Many2one('hr.employee', string='Người dự trù', default=lambda self: self._default_employee())
     employee_lead_id = fields.Many2one('hr.employee', string='Chỉ huy xe',
                                         domain="[('id', 'in', employee_ids)]")
