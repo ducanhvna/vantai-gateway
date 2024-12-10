@@ -158,7 +158,7 @@
                             <!-- <field name="number_picks" /> -->
                         </group>
                         <group>
-                            <field name="employee_plan_id" />
+                            <field name="employee_plan_id"  attrs="{'invisible': [('state','=','0_plan')]}"/>
                             <field name="employee_command_id"  attrs="{'invisible': [('state','=','0_plan')]}" />
                         </group>
                         <group>
