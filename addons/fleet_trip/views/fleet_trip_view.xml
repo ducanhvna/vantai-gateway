@@ -132,11 +132,12 @@
                                     <field name="district_dest_id" placeholder="Quận/Huyện" class="o_address_zip" readonly="True" force_save="1" />
                                     <field name="ward_dest_id" placeholder="Xã/Phường" class="o_address_city" readonly="True" force_save="1" />
                                     <field name="address_end" placeholder="Địa chỉ" readonly="True" force_save="1" />
-                                    <field name="distance_plan" />
+                                    <field name="distance_plan"  string="Km đi về"/>
                                 </div>
                             </div>
                         </group>
                         <group>
+                            <field name="route"  string="Cung đường"/>
                             <field name="employee_ids" string="Người đi" type="xml">
                                 <tree>
                                     <field name="name" string="Cán bộ"/>
