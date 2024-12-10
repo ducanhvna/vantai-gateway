@@ -49,7 +49,7 @@
                 <header>
                     <button type="object" name="do_plan_trip" string="Gửi Dự trù" class="oe_highlight" attrs="{'invisible': [('state','!=','0_plan')]}" />
                     <button type="object" name="do_create_command_trip" string="Gửi lệnh" class="oe_highlight" attrs="{'invisible': [('state','!=','1_draft')]}" />
-                    <button type="object" name="do_start_trip" string="Xuất phát" class="oe_highlight" attrs="{'invisible': [('state','!=','2_command')]}" />
+                    <button type="object" name="do_start_trip" string="Viết lệnh" class="oe_highlight" attrs="{'invisible': [('state','!=','2_command')]}" />
                     <button type="object" name="do_end_trip" string="Kết thúc" class="oe_highlight" attrs="{'invisible': [('state','!=','2_confirm')]}" />
                     <field name="state" widget="statusbar" statusbar_visible="0_plan,1_draft,2_command,2_confirm,3_done" />
                     <button name="action_download_template" type="object" string="Tải dự trù" class="btn-primary" attrs="{'invisible': [('state','!=','1_draft')]}" />
