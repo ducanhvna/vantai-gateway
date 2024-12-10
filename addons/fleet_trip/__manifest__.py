@@ -25,6 +25,11 @@
         'report/fleet_main_report_view.xml',
         'data/product_data.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'fleet_trip/static/src/css/custom_styles.css'
+        ]
+    },
     'application': True,
     'installable': True,
 }
