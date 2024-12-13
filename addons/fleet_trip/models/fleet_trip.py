@@ -10,6 +10,7 @@ from io import BytesIO
 from openpyxl.utils import units
 from odoo.modules.module import get_module_resource
 from openpyxl.styles import Alignment
+from datetime import datetime
 
 def capitalize_first_letter(s):
     # Kiểm tra nếu chuỗi là False, None hoặc rỗng
@@ -389,13 +390,18 @@ class FleetTrip(models.Model):
         return act_window
 
     def action_download_command_template(self):
+        # current time
+        now = datetime.now()
         # Load the template
         file_path = get_module_resource('fleet_trip', 'static/src/template', 'COMMAND_TEMPLATE.xlsx')
         workbook = openpyxl.load_workbook(file_path)
 
         # Access the worksheets
         ws1 = workbook['Lệnh']
-        ws1.cell(row=8, column=10).value = f"{self.fleet_code or ''}"
+        #update ma lệnh
+        ws1.cell(row=4, column=3).value = f"{self.fleet_command_code:02 or ''}"
+        ws1.cell(row=4, column=8).value = f"Hà Nội, ngày {now.day:02} tháng {now.month:02} Năm {now.year}"
+        ws1.cell(row=8, column=10).value = f"{self.fleet_code:02 or ''}"
         ws1.cell(row=8, column=13).value = f"{self.acronym_department_plan or ''}"
         ws1.merge_cells(start_row=8, start_column=13, end_row=8, end_column=16)
 
@@ -442,6 +448,10 @@ class FleetTrip(models.Model):
         ws1.cell(row=17, column=14).value = (
             f" {self.end_date.month:02d}" if (self.end_date) else ""
         )
+        # employee_lead_id
+        if(self.employee_lead_id):
+            ws1.cell(row=19, column=6).value = (self.employee_lead_id.name.title()) or ''
+            ws1.cell(row=19, column=6).value =  f"{self.job_id.name or ''}"
         ws1.cell(row=29, column=1).value = (
             f" {self.employee_command_id.job_id.name}: {self.employee_command_id.name or ''}" if (self.employee_command_id) else ""
         )
@@ -469,7 +479,7 @@ class FleetTrip(models.Model):
 
         # Create an attachment
         attachment = self.env['ir.attachment'].create({
-            'name': 'COMMAND_TEMPLATE.xlsx',
+            'name': f'Lenh_Dieu_Phuong_Tien{self.fleet_command_code:02}.xlsx',
             'type': 'binary',
             'datas': file_data,
             'res_model': 'fleet.trip',
@@ -485,6 +495,8 @@ class FleetTrip(models.Model):
         }
 
     def action_download_template(self):
+        # current time
+        now = datetime.now()
         # Load the template
         file_path = get_module_resource('fleet_trip', 'static/src/template', 'MY_TEMPLATE.xlsx')
         workbook = openpyxl.load_workbook(file_path)
@@ -492,11 +504,14 @@ class FleetTrip(models.Model):
         # Access the worksheets
         ws1 = workbook['Sheet1']
         # ws1.cell(row=1, column=1).value = self.license_plate
-        
-        ws1.cell(row=4, column=1).value = f"Số: {self.fleet_code}/DTPT{self.acronym_department_plan}"
+        # start phong dao tao
+        ws1.cell(row=3, column=1).value = self.department_plan_id.name.upper()
+        # end phong dao tao
+        ws1.cell(row=4, column=1).value = f"Số: {self.fleet_code:02}/DTPT-{self.acronym_department_plan}"
         ws1.merge_cells(start_row=4, start_column=1, end_row=4, end_column=4) 
+        ws1.cell(row=4, column=5).value = f"Hà Nội, ngày{now.day:02}tháng{now.month:02}Năm {now.year}"
         ws1.cell(row=10, column=7).value = (
-            f"Tên phương tiện: {self.category_plan_name}"
+            f"Tên phương tiện: {capitalize_first_letter(self.category_plan_name)}"
             if self.category_plan_name
             else "Tên phương tiện: ……...…………."
         )
@@ -525,6 +540,7 @@ class FleetTrip(models.Model):
                 ws1.cell(row=12, column=7).value = f" {self.start_date.minute:02d}"
             ws1.cell(row=12, column=10).value = f" {self.start_date.day:02d} "
             ws1.cell(row=12, column=12).value = f" {self.start_date.month:02d} "
+            ws1.cell(row=12, column=13).value = f"năm {self.start_date.year}"
         if (self.end_date):
             ws1.cell(row=13, column=5).value = f"Đến: {self.end_date.hour:02d}h"
             ws1.merge_cells(start_row=13, start_column=5, end_row=13, end_column=6) 
@@ -532,6 +548,7 @@ class FleetTrip(models.Model):
                 ws1.cell(row=13, column=7).value = f" {self.end_date.minute:02d}"
             ws1.cell(row=13, column=10).value = f" {self.end_date.day:02d}"
             ws1.cell(row=13, column=12).value = f" {self.end_date.month:02d}"
+            ws1.cell(row=13, column=13).value = f"năm {self.end_date.year}"
         # employee_lead_id
         if(self.employee_lead_id):
             ws1.cell(row=15, column=1).value = f"Chỉ huy xe: Họ tên: {capitalize_first_letter(self.employee_lead_id.name) or ''} " +\
@@ -580,10 +597,24 @@ class FleetTrip(models.Model):
                 # ws1['B21'].value = image_data
                 # img = Image(image_data)
                 # img.anchor(ws1['B21'])  # Use the cell reference directly
-
+        # command id 
         ws1.merge_cells(start_row=25, start_column=1, end_row=25, end_column=4) 
         try:
-            ws1.cell(row=25, column=6).value =  (self.department_id.job_with_name or '') 
+            # start nguoi duyet du tru
+            ws1.cell(row=20, column=6).value =  (f"{self.employee_id.job_id.name} {' '.join(self.department_plan_id.name.split()[1:])}".upper() or '') 
+            #chu ky
+            if self.employee_id.sign_image:
+                image_data = base64.b64decode(self.employee_id.sign_image)
+                with open(f'signature{self.employee_id.id}.png', 'wb') as f:
+                    f.write(image_data)
+                img = Image(f'signature{self.employee_id.id}.png')
+                # Convert the size to pixels
+                img.width = 125
+                img.height = 105
+                # Insert the image at a specific cell (e.g., B21)
+                ws1.add_image(img, 'H21')
+            # end nguoi duyet du tru
+            ws1.cell(row=25, column=6).value =  (f"{self.employee_id.rank_id.name} {self.employee_id.name}" or '') 
             ws1.cell(row=25, column=6).alignment = Alignment(horizontal='center')
             
         except:
@@ -591,7 +622,10 @@ class FleetTrip(models.Model):
         ws1.merge_cells(start_row=25, start_column=6, end_row=25, end_column=13)  
 
         try:
-            ws1.cell(row=32, column=3).value = (self.department_id.manager_id.name or '')
+            # có 2 trường hợp văn phòng hoặc hậu cần self.department_id.manager_id.chức vụ, cấp bậc, name
+            # chức vụ
+            ws1.cell(row=27, column=3).value = self.department_id.manager_id.job_id.upper() or ""
+            ws1.cell(row=32, column=3).value = (f"{self.department_id.manager_id.rank_id.name} {self.department_id.manager_id.name}" or '')
             ws1.cell(row=32, column=3).alignment = Alignment(horizontal='center')
             
         except:
@@ -628,7 +662,7 @@ class FleetTrip(models.Model):
 
         # Create an attachment
         attachment = self.env['ir.attachment'].create({
-            'name': 'MY_TEMPLATE.xlsx',
+            'name': f'Du_tru_phuong_tien-{self.acronym_department_plan}-{self.fleet_code:02}.xlsx',
             'type': 'binary',
             'datas': file_data,
             'res_model': 'fleet.trip',
