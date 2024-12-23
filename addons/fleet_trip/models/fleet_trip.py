@@ -11,6 +11,7 @@ from openpyxl.utils import units
 from odoo.modules.module import get_module_resource
 from openpyxl.styles import Alignment
 from datetime import datetime
+import re
 
 def capitalize_first_letter(s):
     # Kiểm tra nếu chuỗi là False, None hoặc rỗng
@@ -18,6 +19,10 @@ def capitalize_first_letter(s):
         return s
     # Viết hoa chữ cái đầu tiên và giữ nguyên các ký tự còn lại
     return s[0].upper() + s[1:]
+
+def remove_duplicate_adjacent_words(sentence):
+    # This regex will match any word (\\w+) that is followed by the same word (\\1)
+    return re.sub(r'\b(\w+)\s+\1\b', r'\1', sentence)
 
 class FleetTrip(models.Model):
     _name = 'fleet.trip'
@@ -399,9 +404,9 @@ class FleetTrip(models.Model):
         # Access the worksheets
         ws1 = workbook['Lệnh']
         #update ma lệnh
-        ws1.cell(row=4, column=3).value = f"{self.fleet_command_code:02 or ''}"
+        ws1.cell(row=4, column=3).value = f"{self.fleet_command_code:02}" if self.fleet_command_code else ''
         ws1.cell(row=4, column=8).value = f"Hà Nội, ngày {now.day:02} tháng {now.month:02} Năm {now.year}"
-        ws1.cell(row=8, column=10).value = f"{self.fleet_code:02 or ''}"
+        ws1.cell(row=8, column=10).value = f"{self.fleet_code:02}" if self.fleet_code else ''
         ws1.cell(row=8, column=13).value = f"{self.acronym_department_plan or ''}"
         ws1.merge_cells(start_row=8, start_column=13, end_row=8, end_column=16)
 
@@ -451,7 +456,7 @@ class FleetTrip(models.Model):
         # employee_lead_id
         if(self.employee_lead_id):
             ws1.cell(row=19, column=6).value = (self.employee_lead_id.name.title()) or ''
-            ws1.cell(row=19, column=6).value =  f"{self.job_id.name or ''}"
+            # ws1.cell(row=19, column=6).value =  {self.job_id.name or ''}"
         ws1.cell(row=29, column=1).value = (
             f" {self.employee_command_id.job_id.name}: {self.employee_command_id.name or ''}" if (self.employee_command_id) else ""
         )
@@ -509,7 +514,7 @@ class FleetTrip(models.Model):
         # end phong dao tao
         ws1.cell(row=4, column=1).value = f"Số: {self.fleet_code:02}/DTPT-{self.acronym_department_plan}"
         ws1.merge_cells(start_row=4, start_column=1, end_row=4, end_column=4) 
-        ws1.cell(row=4, column=5).value = f"Hà Nội, ngày{now.day:02}tháng{now.month:02}Năm {now.year}"
+        ws1.cell(row=4, column=5).value = f"Hà Nội, ngày {now.day:02} tháng {now.month:02} Năm {now.year}"
         ws1.cell(row=10, column=7).value = (
             f"Tên phương tiện: {capitalize_first_letter(self.category_plan_name)}"
             if self.category_plan_name
@@ -566,7 +571,7 @@ class FleetTrip(models.Model):
                 + f" {self.location_dest_id.district_id.name or ''}," \
                 + f" {self.location_dest_id.state_id.name or ''}"       
             ws1.merge_cells(start_row=17, start_column=1, end_row=17, end_column=13)    
-        ws1.cell(row=18, column=1).value = f"Dự kiến tổng số km đi, về (giờ hoạt động) {self.time_day_compute * 8} km (giờ)./." 
+        ws1.cell(row=18, column=1).value = f"Dự kiến tổng số km đi, về (giờ hoạt động) {self.distance_plan} km (giờ)./." 
         ws1.merge_cells(start_row=18, start_column=1, end_row=18, end_column=13)  
 
         if self.employee_plan_id:
@@ -601,7 +606,9 @@ class FleetTrip(models.Model):
         ws1.merge_cells(start_row=25, start_column=1, end_row=25, end_column=4) 
         try:
             # start nguoi duyet du tru
-            ws1.cell(row=20, column=6).value =  (f"{self.employee_id.job_id.name} {' '.join(self.department_plan_id.name.split()[1:])}".upper() or '') 
+            approve_user = (f"{self.employee_id.job_id.name} {self.department_plan_id.name}".upper() or '')
+            approve_user = remove_duplicate_adjacent_words(approve_user)
+            ws1.cell(row=20, column=6).value =  approve_user
             #chu ky
             if self.employee_id.sign_image:
                 image_data = base64.b64decode(self.employee_id.sign_image)
