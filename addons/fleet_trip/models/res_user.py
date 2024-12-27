@@ -113,6 +113,7 @@ class HrEmployee(models.Model):
     job_with_name = fields.Text(string='tên kèm chức vụ', compute="get_name_with_job")
     department_manager_ids = fields.One2many('hr.department', 'manager_id', string="phòng ban quản lý")
     is_department_manager = fields.Boolean(string='Là một quản lý Phòng ban', compute="_compute_is_department_manager", store=True)
+    is_manage_vehicle = fields.Boolean(string="quản lý xe", store=True)
     # is_department_manager = fields.Boolean(string='là Trưởng Phòng', compute="_compute_check_manage_department")
     # check_is_manager_device_department = fields.Boolean(string='Trưởng Phòng quản lý xe', compute="_compute_check_manage_device_department")
 
