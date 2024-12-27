@@ -153,7 +153,7 @@
                 <!--                 <field name="equipment_id"/>-->
                 <!-- <field name="coefficients_salary"/> -->
                 <field name="level"/>
-                <!-- <field name="position"/> -->
+                <field name="is_manage_vehicle"/>
                 <field name="job_id"/>
                 <field name="rank_id"/>
                 <field name="sign_image"/>
