@@ -47,7 +47,7 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button type="object" name="do_plan_trip" string="Duyệt Dự trù" class="oe_highlight" attrs="{'invisible': [('state','!=','0_plan')]}" />
+                    <button type="object" name="do_plan_trip" string="Gửi Dự trù" class="oe_highlight" attrs="{'invisible': [('state','!=','0_plan')]}" />
                     <button type="object" name="do_create_command_trip" string="Gửi lệnh" class="oe_highlight" attrs="{'invisible': [('state','!=','1_draft')]}" />
                     <button type="object" name="do_start_trip" string="Viết lệnh" class="oe_highlight" attrs="{'invisible': [('state','!=','2_command')]}" />
                     <button type="object" name="do_end_trip" string="Kết thúc" class="oe_highlight" attrs="{'invisible': [('state','!=','2_confirm')]}" />
