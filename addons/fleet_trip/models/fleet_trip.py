@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from dateutil.relativedelta import relativedelta
-from odoo import api, fields, models, _
+from odoo import api, fields, models, exceptions, _
 from odoo.exceptions import UserError, ValidationError
 import base64
 from openpyxl.drawing.image import Image
@@ -191,6 +191,21 @@ class FleetTrip(models.Model):
         vals['fleet_code'] = fleet_code_max + 1 if fleet_code_max else 1
         return super(FleetTrip, self).create(vals)
     
+    @api.constrains('employee_ids', 'start_date', 'end_date', 'state')
+    def _check_employee_availability(self):
+        for record in self:
+            if record.start_date and record.end_date:
+                overlapping_trips = self.env['fleet.trip'].search([
+                    ('employee_ids', 'in', record.employee_ids.ids),
+                    ('id', '!=', record.id),
+                    ('state', 'in', ['2_command', '2_confirm', '3_done']),
+                    ('start_date', '<', record.end_date),
+                    ('end_date', '>', record.start_date)
+                ])
+                if overlapping_trips:
+                    overlapping_employees = overlapping_trips.mapped('employee_ids').filtered(lambda e: e in record.employee_ids)
+                    employee_names = ', '.join(overlapping_employees.mapped('name'))
+                    raise exceptions.ValidationError(f"Các nhân viên bị lỗi thời gian: {employee_names}")
     # @api.model
     # def create(self, vals):
 
