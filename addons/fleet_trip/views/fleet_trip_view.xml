@@ -239,14 +239,35 @@
 
     <menuitem id="fleet_trip_menu" name="Dự trù xe" parent="fleet_root_menu" action="fleet_trip_action" sequence="5" />
 
-    <record id="fleet_trip_command_action" model="ir.actions.act_window">
+    <!-- <record id="fleet_trip_command_action" model="ir.actions.act_window">
         <field name="name">Lệnh điều phương tiện</field>
         <field name="res_model">fleet.trip</field>
         <field name="type">ir.actions.act_window</field>
-        <!-- <field name="domain_force">[('state', '=', '1_draft')]</field> -->
         <field name="domain">[('state', '!=', '1_draft'), ('state', '!=', '0_plan')]</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
 
-    <menuitem id="fleet_command_menu" name="Lệnh điều phương tiện" parent="fleet_root_menu" action="fleet_trip_command_action" sequence="6" />
+    <!-- <menuitem id="fleet_command_menu" name="Lệnh điều phương tiện" parent="fleet_root_menu" action="fleet_trip_command_action" sequence="6" /> -->
+    <menuitem id="fleet_command_menu" name="Lệnh điều phương tiện" parent="fleet_root_menu" sequence="6" />
+
+<record id="fleet_trip_list_action" model="ir.actions.act_window">
+    <field name="name">Danh sách</field>
+    <field name="res_model">fleet.trip</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="domain">[('state', '!=', '1_draft'), ('state', '!=', '0_plan')]</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem id="fleet_trip_list_menu" name="Danh sách" parent="fleet_command_menu" action="fleet_trip_list_action" sequence="7"/>
+
+<record id="fleet_trip_approval_action" model="ir.actions.act_window">
+    <field name="name">Danh sách lệnh cần duyệt</field>
+    <field name="res_model">fleet.trip</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="domain">[('equipment_id.department_belong_id.manager_id', '=', user.id)]</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem id="fleet_trip_approval_menu" name="Danh sách lệnh cần duyệt" parent="fleet_command_menu" action="fleet_trip_approval_action" sequence="8"/>
+
 </odoo>
